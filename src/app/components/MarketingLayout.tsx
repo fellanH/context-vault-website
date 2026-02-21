@@ -63,7 +63,8 @@ export function MarketingLayout() {
       <footer className="border-t border-border/80">
         <div className="mx-auto flex w-full max-w-6xl flex-col gap-3 px-6 py-10 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-sm text-muted-foreground">
-            Context Vault is a memory layer for AI agents.
+            © {new Date().getFullYear()} Context Vault — memory layer for AI
+            agents.
           </p>
           <div className="flex items-center gap-3">
             <Button asChild variant="link" size="sm" className="px-0">
