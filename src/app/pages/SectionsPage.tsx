@@ -269,7 +269,7 @@ for entry in results:
   {
     label: "CLI",
     code: `# Install Context Vault MCP server
-npx -y context-vault-cli@latest init
+npx context-vault setup
 
 # Save context from terminal
 cv save --kind insight \\
@@ -677,7 +677,7 @@ export function SectionsPage() {
           output={codeOutput}
           skillHeading="Add the Context Vault Skill"
           skillDescription="Install the MCP server and connect any AI client in under 5 minutes."
-          skillCommand="npx -y context-vault-cli@latest init"
+          skillCommand="npx context-vault setup"
           skillCapabilities={[
             "Saves context across sessions",
             "Hybrid semantic + full-text search",
@@ -695,7 +695,7 @@ export function SectionsPage() {
         <SkillInstallSection
           heading="Add the Context Vault Skill"
           description="One command installs the MCP server and registers it with your AI client. Works with Claude Code, Cursor, and Windsurf out of the box."
-          command="npx -y context-vault-cli@latest init"
+          command="npx context-vault setup"
           capabilities={[
             "Saves context across sessions",
             "Hybrid semantic + full-text search",

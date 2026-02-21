@@ -223,7 +223,7 @@
       {
         "heading": "Setup in under 5 minutes",
         "paragraphs": [
-          "Install the Context Vault CLI globally with npm install -g context-vault, then run context-vault setup. This creates your local vault directory, downloads the embedding model on first run, and validates that all components are healthy.",
+          "Run npx context-vault setup to install and configure the MCP server in a single command. This creates your local vault directory, downloads the embedding model on first run, and validates that all components are healthy.",
           "Next, configure Cursor's MCP settings to point at the Context Vault endpoint. Open Cursor settings, navigate to the MCP configuration section, and add the context-vault server. For local usage, point to the local MCP endpoint. For hosted, use your API key and the hosted URL.",
           "Verify the connection by running a context_status call from Cursor's AI chat. If it returns your vault path and entry count, you are connected and ready to start saving context."
         ]
@@ -266,7 +266,7 @@
       {
         "heading": "Setup flow",
         "paragraphs": [
-          "Install the CLI globally and run setup. This configures your local vault, downloads embeddings, and validates tool health.",
+          "Run npx context-vault setup to install and configure everything in one command. This configures your local vault, downloads embeddings, and validates tool health.",
           "Then connect your client with one MCP endpoint and verify your first tool call using context_status, followed by save_context and get_context."
         ]
       },

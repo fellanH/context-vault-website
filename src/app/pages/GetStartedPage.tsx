@@ -8,8 +8,7 @@ import { appHref, docsQuickstartUrl } from "../lib/links";
 type Mode = "local" | "hosted";
 
 const localSteps = [
-  { label: "Install", command: "npm install -g context-vault" },
-  { label: "Setup", command: "context-vault setup" },
+  { label: "Install & setup", command: "npx context-vault setup" },
   { label: "Open dashboard (optional)", command: "context-vault ui" },
 ];
 
@@ -56,7 +55,7 @@ export function GetStartedPage() {
             <ul className="mt-3 space-y-1.5 text-sm text-muted-foreground">
               <li>No account needed</li>
               <li>Data stays on your machine</li>
-              <li>npm install</li>
+              <li>One command setup</li>
             </ul>
           </button>
           <button

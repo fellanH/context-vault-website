@@ -80,7 +80,7 @@ for entry in results:
   {
     label: "CLI",
     code: `# Install Context Vault MCP server
-npx -y context-vault-cli@latest init
+npx context-vault setup
 
 # Save context from terminal
 cv save --kind insight \\
@@ -222,7 +222,6 @@ export function LandingPage() {
         accentWord={hero.accentWord}
         subtitle={hero.subtitle}
         quickStartCommand="npx context-vault setup"
-        installCommand="npm install -g context-vault"
         trustPoints={hero.trustPoints}
         leftPanelBadge={hero.leftPanelBadge}
         leftPanelLines={
@@ -255,7 +254,7 @@ export function LandingPage() {
         output={codeOutput}
         skillHeading="Add the Context Vault Skill"
         skillDescription="One command installs the MCP server and registers it with your AI client."
-        skillCommand="npx -y context-vault-cli@latest init"
+        skillCommand="npx context-vault setup"
         skillCapabilities={[
           "Saves context across sessions automatically",
           "Hybrid semantic + full-text search",
