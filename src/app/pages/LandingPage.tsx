@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { PageHead } from "../components/PageHead";
 import {
@@ -10,6 +11,7 @@ import {
   HelpCircle,
   Layers,
   Lock,
+  Star,
   Terminal,
   Users,
   Zap,
@@ -199,6 +201,14 @@ const features = rawFeatures.map((f) => ({
 
 export function LandingPage() {
   const featured = posts.slice(0, 3);
+  const [stars, setStars] = useState<number | null>(null);
+
+  useEffect(() => {
+    fetch("https://api.github.com/repos/fellanH/context-vault")
+      .then((r) => r.json())
+      .then((d) => setStars(d.stargazers_count ?? null))
+      .catch(() => {});
+  }, []);
 
   return (
     <main>
@@ -234,6 +244,36 @@ export function LandingPage() {
         dotGrid
       />
 
+      {/* Social proof strip */}
+      <div className="border-b border-border/60 bg-muted/30">
+        <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-center gap-x-8 gap-y-2 px-6 py-3 text-xs text-muted-foreground">
+          <a
+            href="https://github.com/fellanH/context-vault"
+            target="_blank"
+            rel="noreferrer"
+            className="flex items-center gap-1.5 hover:text-foreground transition-colors"
+          >
+            <Star className="size-3.5" />
+            {stars !== null ? (
+              <span>{stars.toLocaleString()} stars on GitHub</span>
+            ) : (
+              <span>Open source on GitHub</span>
+            )}
+          </a>
+          <span className="hidden sm:block text-border">·</span>
+          <span>MIT License</span>
+          <span className="hidden sm:block text-border">·</span>
+          <a
+            href="https://modelcontextprotocol.io"
+            target="_blank"
+            rel="noreferrer"
+            className="hover:text-foreground transition-colors"
+          >
+            Built on MCP open standard
+          </a>
+        </div>
+      </div>
+
       <LogoCloud headline="Works with your AI tools" logos={logos} />
 
       <StatStrip stats={stats} />
@@ -247,6 +287,34 @@ export function LandingPage() {
         features={features}
         columns={4}
       />
+
+      {/* MCP explainer */}
+      <section className="border-t border-border">
+        <div className="mx-auto w-full max-w-6xl px-6 py-12">
+          <div className="max-w-2xl">
+            <Badge variant="outline" className="mb-4">
+              What is MCP?
+            </Badge>
+            <p className="text-muted-foreground leading-relaxed">
+              <strong className="text-foreground">
+                MCP (Model Context Protocol)
+              </strong>{" "}
+              is an open standard that lets AI tools like Claude Code and Cursor
+              connect to external data sources. Context Vault implements MCP to
+              give your AI a persistent, searchable memory layer —{" "}
+              <a
+                href="https://modelcontextprotocol.io"
+                target="_blank"
+                rel="noreferrer"
+                className="underline underline-offset-4 hover:text-foreground transition-colors"
+              >
+                learn more about MCP
+              </a>
+              .
+            </p>
+          </div>
+        </div>
+      </section>
 
       <CodeDemoSection
         tabs={codeTabs}
