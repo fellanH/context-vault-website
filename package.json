@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "generate:og": "tsx scripts/generate-og.ts",
+    "generate:favicons": "tsx scripts/generate-favicons.ts",
     "prebuild": "tsx scripts/generate-og.ts",
     "build": "vite build",
     "dev": "vite",
@@ -33,6 +34,7 @@
     "@tailwindcss/vite": "4.1.12",
     "@types/node": "^25.3.0",
     "@vitejs/plugin-react": "4.7.0",
+    "favicons": "^7.2.0",
     "satori": "^0.19.2",
     "tailwindcss": "4.1.12",
     "tsx": "^4.21.0",
