@@ -1,12 +1,9 @@
-import React from "react";
-import { Search, ArrowRight } from "lucide-react";
-import { AsciiArt } from "../AsciiArt";
+import { ArrowRight, CheckCircle2 } from "lucide-react";
 
-const HERO_FRAMES = [
-  `  . · · . : : . · .\n·:: .: ·- ·: .. :·:\n·:- ·· .: ·: +· .:·\n··: -· ·. :· ·: .::\n  ·· .: :· ·. .: ·`,
-  `  : · . · : . · : .\n·:· .. ·: -· :: ·:.\n·:· ·: -· ·. +: :-·\n··. ·: :. ·: ·- .::\n  ·: .· :· ·. .: ·`,
-  `  · : · . · : · . :\n:·: ·. ·: .: -· :·:\n·-· :· ·. ·: ·+ :·.\n:·: ·- ·. :· ·: ::.\n  .: :· ·. :· ·. :·`,
-];
+interface TerminalLine {
+  text: string;
+  variant?: "command" | "success" | "muted" | "default";
+}
 
 interface HeroSectionProps {
   badge?: string;
@@ -14,9 +11,11 @@ interface HeroSectionProps {
   heading: string;
   accentWord?: string;
   subtitle?: string;
-  tabs?: string[];
-  inputPlaceholder?: string;
+  primaryCta?: { label: string; href: string };
+  secondaryCta?: { label: string; href: string };
+  trustPoints?: string[];
   leftPanelBadge?: string;
+  leftPanelLines?: TerminalLine[];
   rightPanelBadge?: string;
   rightPanelLines?: string[];
   dotGrid?: boolean;
@@ -28,15 +27,15 @@ export function HeroSection({
   heading,
   accentWord,
   subtitle,
-  tabs = ["Scrape", "Search", "Agent", "Map", "Crawl"],
-  inputPlaceholder = "https://example.com",
-  leftPanelBadge = "[ .JSON ]",
+  primaryCta,
+  secondaryCta,
+  trustPoints,
+  leftPanelBadge = "[ terminal ]",
+  leftPanelLines = [],
   rightPanelBadge = "[ .MD ]",
   rightPanelLines = [],
   dotGrid = true,
 }: HeroSectionProps) {
-  const [activeTab, setActiveTab] = React.useState(0);
-
   const headingParts =
     accentWord && heading.includes(accentWord)
       ? heading.split(accentWord)
@@ -102,39 +101,44 @@ export function HeroSection({
           </p>
         )}
 
-        {/* URL input bar */}
-        <div className="flex items-center gap-0 border border-border rounded-md bg-background overflow-hidden mb-10">
-          <div className="flex items-center gap-2 px-3 py-2 border-r border-border text-muted-foreground">
-            <Search className="size-3.5" />
-            <input
-              type="text"
-              placeholder={inputPlaceholder}
-              className="text-xs bg-transparent outline-none placeholder:text-muted-foreground/60 w-36 text-foreground"
-            />
-          </div>
-          <div className="flex items-center px-1 py-1 gap-0.5 flex-1">
-            {tabs.map((tab, i) => (
-              <button
-                key={tab}
-                onClick={() => setActiveTab(i)}
-                className={`px-2.5 py-1 rounded text-xs transition-colors ${
-                  i === activeTab
-                    ? "bg-muted shadow-sm text-foreground"
-                    : "text-muted-foreground hover:text-foreground"
-                }`}
+        {/* CTAs */}
+        {(primaryCta || secondaryCta) && (
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-4">
+            {primaryCta && (
+              <a
+                href={primaryCta.href}
+                className="inline-flex items-center justify-center gap-2 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground hover:opacity-90 transition-opacity"
               >
-                {tab}
-              </button>
+                {primaryCta.label}
+                <ArrowRight className="size-4" />
+              </a>
+            )}
+            {secondaryCta && (
+              <a
+                href={secondaryCta.href}
+                className="inline-flex items-center justify-center gap-2 rounded-md border border-border px-5 py-2.5 text-sm font-medium hover:bg-muted/30 transition-colors"
+              >
+                {secondaryCta.label}
+              </a>
+            )}
+          </div>
+        )}
+
+        {/* Trust points */}
+        {trustPoints && trustPoints.length > 0 && (
+          <div className="flex flex-wrap items-center justify-center gap-4 mb-10 text-xs text-muted-foreground">
+            {trustPoints.map((point) => (
+              <div key={point} className="flex items-center gap-1.5">
+                <CheckCircle2 className="size-3.5" />
+                {point}
+              </div>
             ))}
           </div>
-          <button className="flex-shrink-0 flex items-center justify-center w-8 h-8 mr-1 rounded bg-primary text-primary-foreground hover:opacity-90 transition-opacity">
-            <ArrowRight className="size-3.5" />
-          </button>
-        </div>
+        )}
 
         {/* Dual mockup panel */}
         <div className="grid grid-cols-2 gap-3">
-          {/* Left panel — dark, ASCII art */}
+          {/* Left panel — dark terminal */}
           <div className="overflow-hidden rounded-md border border-border/50">
             <div className="flex items-center gap-1.5 border-b border-white/10 bg-zinc-950 px-3 py-2">
               <span className="size-2 rounded-full bg-red-400/70" />
@@ -144,12 +148,27 @@ export function HeroSection({
                 {leftPanelBadge}
               </span>
             </div>
-            <div className="bg-zinc-950 p-4 flex items-center justify-center min-h-[140px]">
-              <AsciiArt frames={HERO_FRAMES} className="text-primary" />
+            <div className="bg-zinc-950 p-4 min-h-[160px] text-left">
+              {leftPanelLines.map((line, i) => (
+                <div
+                  key={i}
+                  className={`font-mono text-[10px] leading-relaxed ${
+                    line.variant === "command"
+                      ? "text-primary"
+                      : line.variant === "success"
+                        ? "text-green-400"
+                        : line.variant === "muted"
+                          ? "text-zinc-500"
+                          : "text-zinc-400"
+                  }`}
+                >
+                  {line.text || "\u00A0"}
+                </div>
+              ))}
             </div>
           </div>
 
-          {/* Right panel — light, output */}
+          {/* Right panel — light markdown output */}
           <div className="overflow-hidden rounded-md border border-border">
             <div className="flex items-center gap-1.5 border-b border-border bg-muted/10 px-3 py-2">
               <span className="size-2 rounded-full bg-red-400/70" />
@@ -159,13 +178,17 @@ export function HeroSection({
                 {rightPanelBadge}
               </span>
             </div>
-            <div className="bg-background p-4 min-h-[140px] text-left">
+            <div className="bg-background p-4 min-h-[160px] text-left">
               {rightPanelLines.map((line, i) => (
                 <div
                   key={i}
-                  className="font-mono text-[10px] leading-relaxed text-muted-foreground"
+                  className={`font-mono text-[10px] leading-relaxed ${
+                    line.startsWith("# ")
+                      ? "text-foreground font-medium"
+                      : "text-muted-foreground"
+                  }`}
                 >
-                  {line}
+                  {line || "\u00A0"}
                 </div>
               ))}
             </div>

@@ -4,13 +4,12 @@ import {
   ArrowRight,
   BookOpen,
   CheckCircle2,
-  Code2,
-  Database,
+  Chrome,
   FileText,
   Globe,
   HelpCircle,
   Layers,
-  Shield,
+  Lock,
   Terminal,
   Users,
   Zap,
@@ -55,45 +54,47 @@ const stats = [
   {
     value: "< 5 min",
     label: "Setup time",
-    description: "Install once, connect your AI client through MCP, done.",
+    description:
+      "One command installs the MCP server and auto-detects your editor.",
+  },
+  {
+    value: "6+",
+    label: "AI tools supported",
+    description:
+      "Claude Code, Cursor, Windsurf, Zed, ChatGPT, and more — one vault, any client.",
   },
   {
     value: "100%",
-    label: "Local by default",
-    description: "Your data stays in plain markdown files on your own machine.",
-  },
-  {
-    value: "3+",
-    label: "AI clients supported",
+    label: "Your data",
     description:
-      "Claude Code, Cursor, Windsurf, and any MCP-compatible client.",
+      "Plain markdown files you own. Local by default, cloud when you need it.",
   },
 ];
 
 const features = [
   {
-    icon: Database,
+    icon: FileText,
     title: "Persistent memory",
     description:
-      "Save context across sessions in plain markdown. Your vault grows with every conversation.",
+      "Save decisions, patterns, and context across sessions. Your vault grows with every conversation — nothing is lost when the tab closes.",
   },
   {
     icon: Zap,
     title: "Hybrid search",
     description:
-      "Semantic + full-text search finds the right entry even when you can't recall the exact words.",
-  },
-  {
-    icon: Shield,
-    title: "Local-first",
-    description:
-      "All data lives in files on your machine. No cloud, no accounts, no data leaving your device.",
+      "Semantic + full-text search finds the right entry even when you can't recall the exact words you used.",
   },
   {
     icon: Globe,
-    title: "MCP native",
+    title: "Works everywhere",
     description:
-      "Works with any MCP-compatible AI client out of the box. Claude Code, Cursor, Windsurf, and more.",
+      "CLI tools via MCP, browser AI via Chrome extension, REST API for custom integrations. One vault, every interface.",
+  },
+  {
+    icon: Lock,
+    title: "Portable by design",
+    description:
+      "Plain markdown files you can read, grep, and git push. Start local, sync to cloud when you need it — no format conversion.",
   },
 ];
 
@@ -156,10 +157,10 @@ Use JWT + refresh tokens
 const useCases = [
   {
     icon: Terminal,
-    label: "Claude Code",
-    title: "Persistent memory for every session",
+    label: "Individual developers",
+    title: "Stop re-explaining your decisions",
     description:
-      "Save architecture decisions, debug findings, and project conventions. Claude Code retrieves them automatically at the start of every session.",
+      "Architecture calls, debug findings, project conventions — save them once. Context Vault retrieves the right entries automatically at the start of every new session in Claude Code, Cursor, or Windsurf.",
     mockupBadge: "Real-time · Updated 2 min ago",
     mockupContent: (
       <div className="font-mono text-xs text-muted-foreground space-y-1.5 w-full px-2">
@@ -171,29 +172,30 @@ const useCases = [
     ),
   },
   {
-    icon: Code2,
-    label: "Cursor / Windsurf",
-    title: "One vault, any IDE",
+    icon: Chrome,
+    label: "Browser AI users",
+    title: "One vault across every AI chat",
     description:
-      "The same MCP endpoint works across Cursor, Windsurf, Zed, and more. Context saved in one client is immediately available in all others.",
-    mockupBadge: "MCP · Connected",
+      "Switching between ChatGPT, Claude.ai, and Gemini? The browser extension injects your saved context into any AI chat — no copy-pasting, no re-explaining the same project background for the sixth time.",
+    mockupBadge: "Extension · Connected",
     mockupContent: (
       <div className="font-mono text-xs text-muted-foreground space-y-1.5 w-full px-2">
-        <div className="text-green-500">● MCP server connected</div>
+        <div className="text-green-500">● Context Vault connected</div>
         <div className="text-muted-foreground/60">
-          context-vault@localhost:3000
+          3 entries ready to inject
         </div>
-        <div className="mt-2">Tools: save_context, get_context,</div>
-        <div>list_context, delete_context</div>
+        <div className="mt-2">▸ Auth pattern (insight)</div>
+        <div>▸ Project stack (reference)</div>
+        <div>▸ API conventions (decision)</div>
       </div>
     ),
   },
   {
     icon: Users,
-    label: "Dev teams",
-    title: "Shared knowledge layer",
+    label: "Engineering teams",
+    title: "Decisions that survive the Slack scroll",
     description:
-      "Team conventions, past incident notes, and architecture gotchas — stored once in a shared vault, retrieved automatically by every agent on the team.",
+      '"We made that call six months ago — it\'s in a Slack thread somewhere." Context Vault preserves architectural decisions, incident notes, and onboarding context in a shared vault every team member and AI can query.',
     mockupBadge: "Team vault · 3 members",
     mockupContent: (
       <div className="font-mono text-xs text-muted-foreground space-y-1.5 w-full px-2">
@@ -201,7 +203,7 @@ const useCases = [
         <div className="pl-3">├── decisions/</div>
         <div className="pl-3">├── incidents/</div>
         <div className="pl-3">├── patterns/</div>
-        <div className="pl-3">└── references/</div>
+        <div className="pl-3">└── onboarding/</div>
       </div>
     ),
   },
@@ -233,17 +235,17 @@ const faqCategories = [
       {
         question: "What is Context Vault?",
         answer:
-          "Context Vault is a local-first MCP memory server. It lets AI coding agents — Claude Code, Cursor, Windsurf, and others — save and retrieve context across sessions using hybrid semantic + full-text search.",
+          "Context Vault is a persistent memory layer for AI tools. It lets Claude Code, Cursor, Windsurf, and browser-based AI (via Chrome extension) save and retrieve context across sessions using hybrid semantic + full-text search.",
       },
       {
-        question: "Which AI clients are supported?",
+        question: "Which AI tools are supported?",
         answer:
-          "Any MCP-compatible client works: Claude Code, Cursor, Windsurf, Zed, and more. For tools like ChatGPT, connect via GPT Actions using the hosted API.",
+          "Any MCP-compatible client works out of the box: Claude Code, Cursor, Windsurf, Zed, and more. For browser-based tools like ChatGPT, Claude.ai, and Gemini, the Chrome extension provides context injection without any CLI setup.",
       },
       {
         question: "Can I stay fully local?",
         answer:
-          "Yes. Context Vault runs entirely on your machine by default. Your data stays in a local folder as markdown files, and the SQLite index never leaves your disk. No account or network connection required.",
+          "Yes. Context Vault runs entirely on your machine by default — data stays in plain markdown files and the SQLite index never leaves your disk. No account or network connection required. You can migrate to the hosted tier later if you need cross-device sync or team sharing.",
       },
     ],
   },
@@ -253,27 +255,32 @@ const faqCategories = [
       {
         question: "Where is my data stored?",
         answer:
-          "All data is stored locally in plain markdown files on your machine. Nothing is sent to the cloud. The vault directory is configurable.",
+          "Locally by default — plain markdown files in a directory you control. The hosted tier syncs to our infrastructure, but your files are always exportable. We do not use your data to train AI models.",
       },
       {
-        question: "Can I move to hosted later?",
+        question: "What happens to my data if I cancel?",
         answer:
-          "Yes. Start local and switch to hosted when you need team access or cross-device retrieval. Your entries are portable markdown files, so migration is straightforward with no format conversion.",
+          "Nothing. Your vault is plain markdown files — export them at any time with one command. If you're on the hosted tier, you get a full data export before your account closes. No lock-in.",
       },
     ],
   },
   {
-    category: "Billing",
+    category: "Teams & Billing",
     items: [
+      {
+        question: "Can my whole team use Context Vault?",
+        answer:
+          "Yes. The Team tier gives every member their own vault plus a shared team vault. One invite link, one connect command per person. An admin dashboard shows usage and lets you manage members.",
+      },
       {
         question: "Is Context Vault free?",
         answer:
-          "The open-source server is free forever. A hosted tier with team sharing and priority support is available on a subscription basis.",
+          "The open-source local server is free forever. The hosted tier (cloud sync, team sharing, Chrome extension backend) is available on a subscription basis — no usage-based pricing, no surprise bills.",
       },
       {
         question: "Do you charge per request?",
         answer:
-          "No. The local server has no usage limits. The hosted tier is priced per seat, not per query.",
+          "No. Local mode has no limits. The hosted tier is priced per seat, not per query — so a productive session that saves 200 entries costs the same as a quiet one.",
       },
     ],
   },
@@ -287,8 +294,8 @@ export function LandingPage() {
   return (
     <main>
       <PageHead
-        title="Persistent Memory for AI Agents"
-        description="Context Vault gives Claude, Cursor, and MCP-compatible AI tools persistent memory across sessions. Local-first, open-core, setup in under 5 minutes."
+        title="Persistent Memory for AI Tools"
+        description="Context Vault gives Claude Code, Cursor, Windsurf, and browser-based AI a shared memory layer. Save decisions once, retrieve them in every session. Setup in under 5 minutes."
         canonical="/"
       />
 
@@ -300,14 +307,31 @@ export function LandingPage() {
       />
 
       <HeroSection
-        badge="Local-first MCP memory server"
+        badge="Free forever for local use"
         badgeHref={appHref("/register")}
-        heading="Persistent memory for AI agents."
-        accentWord="memory"
-        subtitle="Context Vault lets Claude Code, Cursor, and MCP-compatible workflows save and retrieve durable context across every session."
-        tabs={["Persist", "Search", "Retrieve"]}
-        inputPlaceholder="search your vault..."
-        leftPanelBadge="[ .vault ]"
+        heading="Your AI forgets everything between sessions."
+        accentWord="forgets"
+        subtitle="Context Vault gives Claude Code, Cursor, and Windsurf persistent memory. Save your decisions and context once — retrieved automatically when you start a new session."
+        primaryCta={{ label: "Get started free", href: appHref("/register") }}
+        secondaryCta={{ label: "See 2-min setup", href: "/get-started" }}
+        trustPoints={[
+          "No credit card required",
+          "Local by default",
+          "Export anytime",
+        ]}
+        leftPanelBadge="[ terminal ]"
+        leftPanelLines={[
+          { text: "$ claude code", variant: "command" },
+          { text: "" },
+          { text: "  context-vault · scanning vault...", variant: "muted" },
+          { text: "  ● 3 entries retrieved", variant: "success" },
+          { text: "" },
+          { text: "  auth-pattern     insight", variant: "default" },
+          { text: "  sqlite-arch      decision", variant: "default" },
+          { text: "  tailwind-v4      reference", variant: "default" },
+          { text: "" },
+          { text: "  context injected. ready.", variant: "muted" },
+        ]}
         rightPanelBadge="[ .MD ]"
         rightPanelLines={[
           "# Auth pattern",
@@ -335,9 +359,9 @@ export function LandingPage() {
       <FeatureCardGrid
         sectionTagIcon={Layers}
         sectionTag="Core capabilities"
-        heading="Everything your AI agent needs"
-        accentWord="AI agent"
-        subtitle="All the building blocks for a persistent, searchable knowledge layer."
+        heading="Everything a memory layer needs"
+        accentWord="memory layer"
+        subtitle="Built for developers who use multiple AI tools and can't afford to start from zero every session."
         features={features}
         columns={4}
       />
@@ -350,19 +374,19 @@ export function LandingPage() {
         skillDescription="One command installs the MCP server and registers it with your AI client."
         skillCommand="npx -y context-vault-cli@latest init"
         skillCapabilities={[
-          "Saves context across sessions",
+          "Saves context across sessions automatically",
           "Hybrid semantic + full-text search",
           "Works with Claude Code, Cursor, Windsurf",
-          "Local-first — data stays on your machine",
+          "Plain markdown files — your data, your format",
         ]}
       />
 
       <UseCaseDetailed
         sectionTagIcon={BookOpen}
         sectionTag="Use Cases"
-        heading="Built for every AI workflow"
-        accentWord="AI workflow"
-        subtitle="From solo developers to engineering teams — one vault, any client."
+        heading="Built for how developers actually work"
+        accentWord="actually work"
+        subtitle="Solo devs, browser-first users, and engineering teams — one vault adapts to every workflow."
         ctaLabel="Get started free"
         ctaHref={appHref("/register")}
         useCases={useCases}
@@ -387,7 +411,7 @@ export function LandingPage() {
         sectionTag="FAQ"
         heading="Frequently asked questions"
         accentWord="questions"
-        subtitle="Everything you need to know about Context Vault."
+        subtitle="Everything you need to know before you install."
         categories={faqCategories}
       />
 
@@ -451,11 +475,11 @@ export function LandingPage() {
         <div className="mx-auto w-full max-w-[80rem] px-[5vw] py-16">
           <div className="rounded-md border border-primary/20 bg-primary/5 px-8 py-12 text-center">
             <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">
-              Ship persistent memory for your AI stack
+              Stop starting from zero.
             </h2>
-            <p className="mt-3 text-muted-foreground max-w-md mx-auto">
-              Start free, connect in minutes, and turn stateless sessions into
-              cumulative knowledge.
+            <p className="mt-3 text-muted-foreground max-w-lg mx-auto">
+              Connect Context Vault to your AI tools in under 5 minutes. Every
+              session picks up exactly where you left off.
             </p>
             <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
               <a
@@ -471,18 +495,18 @@ export function LandingPage() {
                 See 2-minute setup
               </Link>
             </div>
-            <div className="mt-6 flex items-center justify-center gap-6 text-xs text-muted-foreground">
+            <div className="mt-6 flex flex-wrap items-center justify-center gap-6 text-xs text-muted-foreground">
               <div className="flex items-center gap-1.5">
                 <CheckCircle2 className="size-3.5" />
-                Local-first
+                Free forever for local use
               </div>
               <div className="flex items-center gap-1.5">
                 <CheckCircle2 className="size-3.5" />
-                Open-core
+                No credit card required
               </div>
               <div className="flex items-center gap-1.5">
                 <CheckCircle2 className="size-3.5" />
-                MCP-native
+                Export your data anytime
               </div>
             </div>
           </div>
