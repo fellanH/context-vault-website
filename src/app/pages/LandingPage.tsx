@@ -36,8 +36,14 @@ import {
   IntegrationsSplit,
   FAQSection,
 } from "../components/sections";
+import landingData from "../content/landing.json";
 
-// ─── Data ─────────────────────────────────────────────────────────────────────
+// ─── Icon map for features ─────────────────────────────────────────────────────
+
+const iconMap = { FileText, Zap, Globe, Lock } as const;
+type IconName = keyof typeof iconMap;
+
+// ─── Data (stays in TypeScript — contains JSX) ─────────────────────────────────
 
 const logos = [
   { name: "Claude Code", logo: "anthropic" },
@@ -48,54 +54,6 @@ const logos = [
   { name: "n8n", logo: "n8n" },
   { name: "Raycast", logo: "raycast" },
   { name: "VS Code", logo: "visualstudiocode" },
-];
-
-const stats = [
-  {
-    value: "< 5 min",
-    label: "Setup time",
-    description:
-      "One command installs the MCP server and auto-detects your editor.",
-  },
-  {
-    value: "6+",
-    label: "AI tools supported",
-    description:
-      "Claude Code, Cursor, Windsurf, Zed, ChatGPT, and more — one vault, any client.",
-  },
-  {
-    value: "100%",
-    label: "Your data",
-    description:
-      "Plain markdown files you own. Local by default, cloud when you need it.",
-  },
-];
-
-const features = [
-  {
-    icon: FileText,
-    title: "Persistent memory",
-    description:
-      "Save decisions, patterns, and context across sessions. Your vault grows with every conversation — nothing is lost when the tab closes.",
-  },
-  {
-    icon: Zap,
-    title: "Hybrid search",
-    description:
-      "Semantic + full-text search finds the right entry even when you can't recall the exact words you used.",
-  },
-  {
-    icon: Globe,
-    title: "Works everywhere",
-    description:
-      "CLI tools via MCP, browser AI via Chrome extension, REST API for custom integrations. One vault, every interface.",
-  },
-  {
-    icon: Lock,
-    title: "Portable by design",
-    description:
-      "Plain markdown files you can read, grep, and git push. Start local, sync to cloud when you need it — no format conversion.",
-  },
 ];
 
 const codeTabs = [
@@ -228,63 +186,14 @@ const commits = [
   { title: "chore: add SQLite WAL mode", number: "#136", date: "1w ago" },
 ];
 
-const faqCategories = [
-  {
-    category: "General",
-    items: [
-      {
-        question: "What is Context Vault?",
-        answer:
-          "Context Vault is a persistent memory layer for AI tools. It lets Claude Code, Cursor, Windsurf, and browser-based AI (via Chrome extension) save and retrieve context across sessions using hybrid semantic + full-text search.",
-      },
-      {
-        question: "Which AI tools are supported?",
-        answer:
-          "Any MCP-compatible client works out of the box: Claude Code, Cursor, Windsurf, Zed, and more. For browser-based tools like ChatGPT, Claude.ai, and Gemini, the Chrome extension provides context injection without any CLI setup.",
-      },
-      {
-        question: "Can I stay fully local?",
-        answer:
-          "Yes. Context Vault runs entirely on your machine by default — data stays in plain markdown files and the SQLite index never leaves your disk. No account or network connection required. You can migrate to the hosted tier later if you need cross-device sync or team sharing.",
-      },
-    ],
-  },
-  {
-    category: "Storage & Privacy",
-    items: [
-      {
-        question: "Where is my data stored?",
-        answer:
-          "Locally by default — plain markdown files in a directory you control. The hosted tier syncs to our infrastructure, but your files are always exportable. We do not use your data to train AI models.",
-      },
-      {
-        question: "What happens to my data if I cancel?",
-        answer:
-          "Nothing. Your vault is plain markdown files — export them at any time with one command. If you're on the hosted tier, you get a full data export before your account closes. No lock-in.",
-      },
-    ],
-  },
-  {
-    category: "Teams & Billing",
-    items: [
-      {
-        question: "Can my whole team use Context Vault?",
-        answer:
-          "Yes. The Team tier gives every member their own vault plus a shared team vault. One invite link, one connect command per person. An admin dashboard shows usage and lets you manage members.",
-      },
-      {
-        question: "Is Context Vault free?",
-        answer:
-          "The open-source local server is free forever. The hosted tier (cloud sync, team sharing, Chrome extension backend) is available on a subscription basis — no usage-based pricing, no surprise bills.",
-      },
-      {
-        question: "Do you charge per request?",
-        answer:
-          "No. Local mode has no limits. The hosted tier is priced per seat, not per query — so a productive session that saves 200 entries costs the same as a quiet one.",
-      },
-    ],
-  },
-];
+// ─── Derived data from JSON ────────────────────────────────────────────────────
+
+const { hero, stats, features: rawFeatures, faqs } = landingData;
+
+const features = rawFeatures.map((f) => ({
+  ...f,
+  icon: iconMap[f.iconName as IconName],
+}));
 
 // ─── Page ──────────────────────────────────────────────────────────────────────
 
@@ -307,48 +216,28 @@ export function LandingPage() {
       />
 
       <HeroSection
-        badge="Free forever for local use"
-        badgeHref={appHref("/register")}
-        heading="Your AI forgets everything between sessions."
-        accentWord="forgets"
-        subtitle="Context Vault gives Claude Code, Cursor, and Windsurf persistent memory. Save your decisions and context once — retrieved automatically when you start a new session."
-        primaryCta={{ label: "Get started free", href: appHref("/register") }}
-        secondaryCta={{ label: "See 2-min setup", href: "/get-started" }}
-        trustPoints={[
-          "No credit card required",
-          "Local by default",
-          "Export anytime",
-        ]}
-        leftPanelBadge="[ terminal ]"
-        leftPanelLines={[
-          { text: "$ claude code", variant: "command" },
-          { text: "" },
-          { text: "  context-vault · scanning vault...", variant: "muted" },
-          { text: "  ● 3 entries retrieved", variant: "success" },
-          { text: "" },
-          { text: "  auth-pattern     insight", variant: "default" },
-          { text: "  sqlite-arch      decision", variant: "default" },
-          { text: "  tailwind-v4      reference", variant: "default" },
-          { text: "" },
-          { text: "  context injected. ready.", variant: "muted" },
-        ]}
-        rightPanelBadge="[ .MD ]"
-        rightPanelLines={[
-          "# Auth pattern",
-          "",
-          "kind: insight  ·  tags: auth, jwt",
-          "created: 2026-02-20",
-          "",
-          "# SQLite for local storage",
-          "",
-          "kind: decision  ·  tags: architecture",
-          "created: 2026-02-19",
-          "",
-          "# Tailwind v4 migration notes",
-          "",
-          "kind: reference  ·  tags: tailwind",
-          "created: 2026-02-18",
-        ]}
+        badge={hero.badge}
+        badgeHref={appHref(hero.badgeHref)}
+        heading={hero.heading}
+        accentWord={hero.accentWord}
+        subtitle={hero.subtitle}
+        primaryCta={{
+          label: hero.primaryCta.label,
+          href: appHref(hero.primaryCta.href),
+        }}
+        secondaryCta={{
+          label: hero.secondaryCta.label,
+          href: hero.secondaryCta.href,
+        }}
+        trustPoints={hero.trustPoints}
+        leftPanelBadge={hero.leftPanelBadge}
+        leftPanelLines={
+          hero.leftPanelLines as Parameters<
+            typeof HeroSection
+          >[0]["leftPanelLines"]
+        }
+        rightPanelBadge={hero.rightPanelBadge}
+        rightPanelLines={hero.rightPanelLines}
         dotGrid
       />
 
@@ -412,7 +301,7 @@ export function LandingPage() {
         heading="Frequently asked questions"
         accentWord="questions"
         subtitle="Everything you need to know before you install."
-        categories={faqCategories}
+        categories={faqs}
       />
 
       {/* Blog posts */}
@@ -426,7 +315,7 @@ export function LandingPage() {
                 <span className="text-xs font-medium text-muted-foreground">
                   From the blog
                 </span>
-                <span className="font-mono text-xs">\\</span>
+                <span className="font-mono text-xs">\</span>
               </div>
               <Button asChild variant="outline" size="sm">
                 <Link to="/blog">View all</Link>
