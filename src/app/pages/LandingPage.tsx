@@ -307,8 +307,24 @@ export function LandingPage() {
         subtitle="Context Vault lets Claude Code, Cursor, and MCP-compatible workflows save and retrieve durable context across every session."
         tabs={["Persist", "Search", "Retrieve"]}
         inputPlaceholder="search your vault..."
-        leftPanelBadge="[ data-flow ]"
+        leftPanelBadge="[ .vault ]"
         rightPanelBadge="[ .MD ]"
+        rightPanelLines={[
+          "# Auth pattern",
+          "",
+          "kind: insight  ·  tags: auth, jwt",
+          "created: 2026-02-20",
+          "",
+          "# SQLite for local storage",
+          "",
+          "kind: decision  ·  tags: architecture",
+          "created: 2026-02-19",
+          "",
+          "# Tailwind v4 migration notes",
+          "",
+          "kind: reference  ·  tags: tailwind",
+          "created: 2026-02-18",
+        ]}
         dotGrid
       />
 
@@ -363,6 +379,7 @@ export function LandingPage() {
         stars="1.2K"
         commits={commits}
         repoCTA="View on GitHub"
+        repoCTAHref="https://github.com/fellanH/context-vault"
       />
 
       <FAQSection

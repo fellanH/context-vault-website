@@ -1,23 +1,11 @@
 import React from "react";
-import { Globe, ArrowRight } from "lucide-react";
+import { Search, ArrowRight } from "lucide-react";
 import { AsciiArt } from "../AsciiArt";
 
 const HERO_FRAMES = [
   `  . · · . : : . · .\n·:: .: ·- ·: .. :·:\n·:- ·· .: ·: +· .:·\n··: -· ·. :· ·: .::\n  ·· .: :· ·. .: ·`,
   `  : · . · : . · : .\n·:· .. ·: -· :: ·:.\n·:· ·: -· ·. +: :-·\n··. ·: :. ·: ·- .::\n  ·: .· :· ·. .: ·`,
   `  · : · . · : · . :\n:·: ·. ·: .: -· :·:\n·-· :· ·. ·: ·+ :·.\n:·: ·- ·. :· ·: ::.\n  .: :· ·. :· ·. :·`,
-];
-
-const RIGHT_PANEL_LINES = [
-  '{ "url": "https://example.com",',
-  '  "markdown": "# Example Domain\\n\\nThis domain...",',
-  '  "metadata": {',
-  '    "title": "Example Domain",',
-  '    "description": "Example domain for...",',
-  '    "language": "en",',
-  '    "statusCode": 200',
-  "  }",
-  "}",
 ];
 
 interface HeroSectionProps {
@@ -30,6 +18,7 @@ interface HeroSectionProps {
   inputPlaceholder?: string;
   leftPanelBadge?: string;
   rightPanelBadge?: string;
+  rightPanelLines?: string[];
   dotGrid?: boolean;
 }
 
@@ -43,6 +32,7 @@ export function HeroSection({
   inputPlaceholder = "https://example.com",
   leftPanelBadge = "[ .JSON ]",
   rightPanelBadge = "[ .MD ]",
+  rightPanelLines = [],
   dotGrid = true,
 }: HeroSectionProps) {
   const [activeTab, setActiveTab] = React.useState(0);
@@ -115,7 +105,7 @@ export function HeroSection({
         {/* URL input bar */}
         <div className="flex items-center gap-0 border border-border rounded-md bg-background overflow-hidden mb-10">
           <div className="flex items-center gap-2 px-3 py-2 border-r border-border text-muted-foreground">
-            <Globe className="size-3.5" />
+            <Search className="size-3.5" />
             <input
               type="text"
               placeholder={inputPlaceholder}
@@ -170,7 +160,7 @@ export function HeroSection({
               </span>
             </div>
             <div className="bg-background p-4 min-h-[140px]">
-              {RIGHT_PANEL_LINES.map((line, i) => (
+              {rightPanelLines.map((line, i) => (
                 <div
                   key={i}
                   className="font-mono text-[10px] leading-relaxed text-muted-foreground"

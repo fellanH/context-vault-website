@@ -23,6 +23,7 @@ interface IntegrationsSplitProps {
   stars?: string;
   commits?: CommitItem[];
   repoCTA?: string;
+  repoCTAHref?: string;
 }
 
 export function IntegrationsSplit({
@@ -36,6 +37,7 @@ export function IntegrationsSplit({
   stars,
   commits = [],
   repoCTA = "View on GitHub",
+  repoCTAHref = "#",
 }: IntegrationsSplitProps) {
   return (
     <div className="border-y border-border">
@@ -61,18 +63,18 @@ export function IntegrationsSplit({
               {integrations.map((item) => (
                 <div
                   key={item.name}
-                  className="flex items-center gap-2 rounded-md border border-border px-3 py-2 text-xs text-muted-foreground"
+                  className="flex items-center gap-2 rounded-md border border-border px-3 py-2 text-xs text-muted-foreground overflow-hidden"
                 >
                   {item.logo && (
                     <img
                       src={`https://cdn.simpleicons.org/${item.logo}`}
                       width={14}
                       height={14}
-                      alt={item.name}
-                      className="opacity-60"
+                      alt=""
+                      className="flex-shrink-0 opacity-60"
                     />
                   )}
-                  {item.name}
+                  <span className="truncate">{item.name}</span>
                 </div>
               ))}
             </div>
@@ -89,7 +91,9 @@ export function IntegrationsSplit({
             {openSourceDescription}
           </p>
           <a
-            href="#"
+            href={repoCTAHref}
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 rounded-md border border-border px-4 py-2 text-sm hover:bg-muted/30 transition-colors"
           >
             {repoCTA}
