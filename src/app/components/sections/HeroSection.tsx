@@ -84,16 +84,22 @@ export function HeroSection({
 
       <div className="relative mx-auto w-full max-w-2xl px-6 py-16 text-center">
         {/* Badge */}
-        {badge && (
-          <a
-            href={badgeHref ?? "#"}
-            className="mb-6 inline-flex items-center gap-2 rounded-full border border-border px-3 py-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
-          >
-            <span className="size-1.5 rounded-full bg-primary" />
-            {badge}
-            <ArrowRight className="size-3" />
-          </a>
-        )}
+        {badge &&
+          (badgeHref ? (
+            <a
+              href={badgeHref}
+              className="mb-6 inline-flex items-center gap-2 rounded-full border border-border px-3 py-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
+            >
+              <span className="size-1.5 rounded-full bg-primary" />
+              {badge}
+              <ArrowRight className="size-3" />
+            </a>
+          ) : (
+            <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-border px-3 py-1 text-xs text-muted-foreground">
+              <span className="size-1.5 rounded-full bg-primary" />
+              {badge}
+            </span>
+          ))}
 
         {/* Heading */}
         <h1 className="text-4xl font-semibold tracking-tight leading-tight mb-4">
