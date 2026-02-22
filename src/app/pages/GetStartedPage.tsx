@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { PageHead } from "../components/PageHead";
 import { HardDrive, Cloud, Copy, Check, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -15,6 +15,11 @@ const localSteps = [
 export function GetStartedPage() {
   const [mode, setMode] = useState<Mode>("local");
   const [copiedIdx, setCopiedIdx] = useState<number | null>(null);
+
+  useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (window as any).dataLayer?.push({ event: "get_started_view" });
+  }, []);
 
   const copyCommand = async (command: string, idx: number) => {
     await navigator.clipboard.writeText(command);
@@ -107,7 +112,18 @@ export function GetStartedPage() {
                 </div>
               ))}
               <Button asChild variant="outline" className="w-full">
-                <a href={docsQuickstartUrl} target="_blank" rel="noreferrer">
+                <a
+                  href={docsQuickstartUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  onClick={() =>
+                    (window as any).dataLayer?.push({
+                      event: "outbound_click",
+                      destination: "docs",
+                    })
+                  }
+                >
                   View full documentation <ArrowRight className="size-4 ml-1" />
                 </a>
               </Button>
@@ -120,7 +136,17 @@ export function GetStartedPage() {
                 Create your free account to get started with hosted mode.
               </p>
               <Button asChild size="lg">
-                <a href={appHref("/register")}>
+                <a
+                  href={appHref("/register")}
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  onClick={() =>
+                    (window as any).dataLayer?.push({
+                      event: "cta_click",
+                      label: "Start free",
+                      source: "get_started",
+                    })
+                  }
+                >
                   Start free <ArrowRight className="size-4 ml-1" />
                 </a>
               </Button>

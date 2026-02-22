@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Link, useParams } from "react-router";
 import { PageHead } from "../components/PageHead";
 import { ArrowLeft, ArrowRight } from "lucide-react";
@@ -10,6 +11,15 @@ import { appHref, formatDate } from "../lib/links";
 export function BlogPostPage() {
   const { slug } = useParams();
   const post = getPostBySlug(slug);
+
+  useEffect(() => {
+    if (!post) return;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (window as any).dataLayer?.push({
+      event: "blog_post_view",
+      slug: post.slug,
+    });
+  }, [post?.slug]);
 
   if (!post) {
     return (
@@ -90,7 +100,17 @@ export function BlogPostPage() {
               </p>
             </div>
             <Button asChild>
-              <a href={ctaHref}>
+              <a
+                href={ctaHref}
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                onClick={() =>
+                  (window as any).dataLayer?.push({
+                    event: "cta_click",
+                    label: post.ctaLabel,
+                    source: "blog_post",
+                  })
+                }
+              >
                 {post.ctaLabel}
                 <ArrowRight className="size-4" />
               </a>

@@ -267,6 +267,13 @@ export function LandingPage() {
             target="_blank"
             rel="noreferrer"
             className="flex items-center gap-1.5 hover:text-foreground transition-colors"
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            onClick={() =>
+              (window as any).dataLayer?.push({
+                event: "outbound_click",
+                destination: "github",
+              })
+            }
           >
             <Star className="size-3.5" />
             {stars !== null ? (
@@ -450,6 +457,14 @@ export function LandingPage() {
               <a
                 href={appHref("/register")}
                 className="inline-flex items-center justify-center gap-2 rounded-md bg-primary px-6 py-2.5 text-sm font-medium text-primary-foreground hover:opacity-90 transition-opacity"
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                onClick={() =>
+                  (window as any).dataLayer?.push({
+                    event: "cta_click",
+                    label: "Start free",
+                    source: "landing_final_cta",
+                  })
+                }
               >
                 Start free <ArrowRight className="size-4" />
               </a>
