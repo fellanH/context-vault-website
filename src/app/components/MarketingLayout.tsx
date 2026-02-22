@@ -96,32 +96,34 @@ export function MarketingLayout() {
                 You're subscribed. Thanks!
               </p>
             ) : (
-              <form
-                onSubmit={handleSubscribe}
-                className="flex w-full gap-2 sm:w-auto"
-              >
-                <Input
-                  type="email"
-                  placeholder="you@example.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  disabled={subscribeStatus === "loading"}
-                  className="w-full sm:w-56"
-                />
-                <Button
-                  type="submit"
-                  size="sm"
-                  disabled={subscribeStatus === "loading"}
+              <div className="flex flex-col gap-1.5">
+                <form
+                  onSubmit={handleSubscribe}
+                  className="flex w-full gap-2 sm:w-auto"
                 >
-                  {subscribeStatus === "loading" ? "..." : "Subscribe"}
-                </Button>
-              </form>
-            )}
-            {subscribeStatus === "error" && (
-              <p className="text-xs text-destructive">
-                Something went wrong. Please try again.
-              </p>
+                  <Input
+                    type="email"
+                    placeholder="you@example.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    disabled={subscribeStatus === "loading"}
+                    className="w-full sm:w-56"
+                  />
+                  <Button
+                    type="submit"
+                    size="sm"
+                    disabled={subscribeStatus === "loading"}
+                  >
+                    {subscribeStatus === "loading" ? "..." : "Subscribe"}
+                  </Button>
+                </form>
+                {subscribeStatus === "error" && (
+                  <p className="text-xs text-destructive">
+                    Something went wrong. Please try again.
+                  </p>
+                )}
+              </div>
             )}
           </div>
 
