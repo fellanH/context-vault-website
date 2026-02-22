@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { type ReactNode, useEffect, useState } from "react";
 import { Link } from "react-router";
 import { PageHead } from "../components/PageHead";
 import {
@@ -31,19 +31,44 @@ import {
   AnnouncementBar,
   HeroSection,
   LogoCloud,
-  StatStrip,
   FeatureCardGrid,
   CodeDemoSection,
   UseCaseDetailed,
   IntegrationsSplit,
   FAQSection,
+  ProblemStrip,
 } from "../components/sections";
 import landingData from "../content/landing.json";
+import { useInView } from "../hooks/useInView";
 
 // ─── Icon map for features ─────────────────────────────────────────────────────
 
 const iconMap = { FileText, Zap, Globe, Lock } as const;
 type IconName = keyof typeof iconMap;
+
+// ─── Reveal wrapper ────────────────────────────────────────────────────────────
+
+function Reveal({
+  children,
+  delay = "",
+}: {
+  children: ReactNode;
+  delay?: string;
+}) {
+  const { ref, inView } = useInView();
+  return (
+    <div
+      ref={ref}
+      className={
+        inView
+          ? `animate-in fade-in-0 slide-in-from-bottom-4 duration-700 fill-mode-both ${delay}`
+          : "opacity-0"
+      }
+    >
+      {children}
+    </div>
+  );
+}
 
 // ─── Data (stays in TypeScript — contains JSX) ─────────────────────────────────
 
@@ -205,7 +230,7 @@ const commits = [
 
 // ─── Derived data from JSON ────────────────────────────────────────────────────
 
-const { hero, stats, features: rawFeatures, faqs } = landingData;
+const { hero, features: rawFeatures, faqs } = landingData;
 
 const features = rawFeatures.map((f) => ({
   ...f,
@@ -298,94 +323,78 @@ export function LandingPage() {
 
       <LogoCloud headline="Works with your AI tools" logos={logos} />
 
-      <StatStrip stats={stats} />
+      <Reveal>
+        <ProblemStrip />
+      </Reveal>
 
-      <FeatureCardGrid
-        sectionTagIcon={Layers}
-        sectionTag="Core capabilities"
-        heading="Everything a memory layer needs"
-        accentWord="memory layer"
-        subtitle="Built for developers who use multiple AI tools and can't afford to start from zero every session."
-        features={features}
-        columns={4}
-      />
+      <Reveal>
+        <UseCaseDetailed
+          sectionTagIcon={BookOpen}
+          sectionTag="Scenarios"
+          heading="From your actual day, not a demo."
+          accentWord="actual day"
+          subtitle="Three situations every developer recognises. One tool that fixes all of them."
+          ctaLabel="Get started free"
+          ctaHref={appHref("/register")}
+          useCases={useCases}
+        />
+      </Reveal>
 
-      {/* MCP explainer */}
-      <section className="border-t border-border">
-        <div className="mx-auto w-full max-w-6xl px-6 py-12">
-          <div className="max-w-2xl">
-            <Badge variant="outline" className="mb-4">
-              What is MCP?
-            </Badge>
-            <p className="text-muted-foreground leading-relaxed">
-              <strong className="text-foreground">
-                MCP (Model Context Protocol)
-              </strong>{" "}
-              is an open standard that lets AI tools like Claude Code and Cursor
-              connect to external data sources. Context Vault implements MCP to
-              give your AI a persistent, searchable memory layer —{" "}
-              <a
-                href="https://modelcontextprotocol.io"
-                target="_blank"
-                rel="noreferrer"
-                className="underline underline-offset-4 hover:text-foreground transition-colors"
-              >
-                learn more about MCP
-              </a>
-              .
-            </p>
-          </div>
-        </div>
-      </section>
+      <Reveal>
+        <FeatureCardGrid
+          sectionTagIcon={Layers}
+          sectionTag="Core capabilities"
+          heading="What your AI gains"
+          accentWord="AI gains"
+          subtitle="Built for developers who use multiple AI tools and can't afford to start from zero every session."
+          features={features}
+          columns={4}
+        />
+      </Reveal>
 
-      <CodeDemoSection
-        tabs={codeTabs}
-        outputLabel="[ .MD ]"
-        output={codeOutput}
-        skillHeading="Add the Context Vault Skill"
-        skillDescription="One command installs the MCP server and registers it with your AI client."
-        skillCommand="npx context-vault setup"
-        skillCapabilities={[
-          "Saves context across sessions automatically",
-          "Hybrid semantic + full-text search",
-          "Works with Claude Code, Cursor, Windsurf",
-          "Plain markdown files — your data, your format",
-        ]}
-      />
+      <Reveal>
+        <CodeDemoSection
+          tabs={codeTabs}
+          outputLabel="[ .MD ]"
+          output={codeOutput}
+          skillHeading="Add the Context Vault Skill"
+          skillDescription="One command installs the MCP server and registers it with your AI client."
+          skillCommand="npx context-vault setup"
+          skillCapabilities={[
+            "Saves context across sessions automatically",
+            "Hybrid semantic + full-text search",
+            "Works with Claude Code, Cursor, Windsurf",
+            "Plain markdown files — your data, your format",
+          ]}
+        />
+      </Reveal>
 
-      <UseCaseDetailed
-        sectionTagIcon={BookOpen}
-        sectionTag="Scenarios"
-        heading="From your actual day, not a demo."
-        accentWord="actual day"
-        subtitle="Three situations every developer recognises. One tool that fixes all of them."
-        ctaLabel="Get started free"
-        ctaHref={appHref("/register")}
-        useCases={useCases}
-      />
+      <Reveal>
+        <IntegrationsSplit
+          integrationsHeading="Works with your tools"
+          integrationsDescription="Connect Context Vault to any MCP-compatible AI client. Claude Code, Cursor, Windsurf, Zed, and more — one endpoint, every client."
+          integrationsCTA="Browse integrations"
+          integrations={integrationLogos}
+          openSourceHeading="Open source at its core"
+          openSourceDescription="The Context Vault server is open-source. Self-host it, contribute to it, or build on top of it. Plain markdown files, no lock-in."
+          repoName="fellanH/context-vault"
+          stars={stars !== null ? stars.toLocaleString() : undefined}
+          commits={commits}
+          repoCTA="View on GitHub"
+          repoCTAHref="https://github.com/fellanH/context-vault"
+        />
+      </Reveal>
 
-      <IntegrationsSplit
-        integrationsHeading="Works with your tools"
-        integrationsDescription="Connect Context Vault to any MCP-compatible AI client. Claude Code, Cursor, Windsurf, Zed, and more — one endpoint, every client."
-        integrationsCTA="Browse integrations"
-        integrations={integrationLogos}
-        openSourceHeading="Open source at its core"
-        openSourceDescription="The Context Vault server is open-source. Self-host it, contribute to it, or build on top of it. Plain markdown files, no lock-in."
-        repoName="fellanH/context-vault"
-        stars={stars !== null ? stars.toLocaleString() : undefined}
-        commits={commits}
-        repoCTA="View on GitHub"
-        repoCTAHref="https://github.com/fellanH/context-vault"
-      />
-
-      <FAQSection
-        sectionTagIcon={HelpCircle}
-        sectionTag="FAQ"
-        heading="Frequently asked questions"
-        accentWord="questions"
-        subtitle="Everything you need to know before you install."
-        categories={faqs}
-      />
+      <Reveal>
+        <FAQSection
+          sectionTagIcon={HelpCircle}
+          sectionTag="FAQ"
+          heading="Frequently asked questions"
+          accentWord="questions"
+          subtitle="Everything you need to know before you install."
+          categories={faqs}
+        />
+      </Reveal>
 
       {/* Blog posts */}
       {featured.length > 0 && (

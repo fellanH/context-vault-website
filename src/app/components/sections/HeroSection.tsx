@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ArrowRight, CheckCircle2, Copy, Check } from "lucide-react";
 
 interface TerminalLine {
@@ -42,6 +42,29 @@ export function HeroSection({
   dotGrid = true,
 }: HeroSectionProps) {
   const [copied, setCopied] = useState(false);
+  const [revealedCount, setRevealedCount] = useState(0);
+
+  useEffect(() => {
+    if (leftPanelLines.length === 0) return;
+    const reduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    if (reduced) {
+      setRevealedCount(leftPanelLines.length);
+      return;
+    }
+    let count = 0;
+    const timer = setInterval(() => {
+      count += 1;
+      setRevealedCount(count);
+      if (count >= leftPanelLines.length) {
+        clearInterval(timer);
+      }
+    }, 100);
+    return () => clearInterval(timer);
+  }, [leftPanelLines.length]);
+
+  const rightPanelReady = revealedCount >= leftPanelLines.length;
 
   const headingParts =
     accentWord && heading.includes(accentWord)
@@ -199,7 +222,7 @@ export function HeroSection({
               </span>
             </div>
             <div className="bg-zinc-950 p-4 min-h-[160px] text-left">
-              {leftPanelLines.map((line, i) => (
+              {leftPanelLines.slice(0, revealedCount).map((line, i) => (
                 <div
                   key={i}
                   className={`font-mono text-[10px] leading-relaxed ${
@@ -228,7 +251,11 @@ export function HeroSection({
                 {rightPanelBadge}
               </span>
             </div>
-            <div className="bg-background p-4 min-h-[160px] text-left">
+            <div
+              className={`bg-background p-4 min-h-[160px] text-left transition-opacity duration-500 ${
+                rightPanelReady ? "opacity-100" : "opacity-0"
+              }`}
+            >
               {rightPanelLines.map((line, i) => (
                 <div
                   key={i}

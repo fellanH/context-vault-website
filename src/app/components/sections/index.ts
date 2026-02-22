@@ -14,3 +14,4 @@ export { SkillInstallSection } from "./SkillInstallSection";
 export { IntegrationsSplit } from "./IntegrationsSplit";
 export { PerformanceSection } from "./PerformanceSection";
 export { UseCaseDetailed } from "./UseCaseDetailed";
+export { ProblemStrip } from "./ProblemStrip";
