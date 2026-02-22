@@ -365,7 +365,7 @@ export function LandingPage() {
         openSourceHeading="Open source at its core"
         openSourceDescription="The Context Vault server is open-source. Self-host it, contribute to it, or build on top of it. Plain markdown files, no lock-in."
         repoName="fellanH/context-vault"
-        stars="1.2K"
+        stars={stars !== null ? stars.toLocaleString() : undefined}
         commits={commits}
         repoCTA="View on GitHub"
         repoCTAHref="https://github.com/fellanH/context-vault"
