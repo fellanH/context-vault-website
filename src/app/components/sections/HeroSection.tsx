@@ -96,7 +96,7 @@ export function HeroSection({
         )}
 
         {/* Heading */}
-        <h1 className="text-4xl font-semibold tracking-tight leading-tight mb-4">
+        <h1 className="text-3xl font-semibold tracking-tight leading-tight mb-4">
           {headingParts ? (
             <>
               {headingParts[0]}
