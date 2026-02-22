@@ -1,4 +1,5 @@
 import type { LucideIcon } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 interface FeatureCard {
   icon: LucideIcon;
@@ -18,6 +19,8 @@ interface FeatureCardGridProps {
   features: Array<FeatureCard>;
   /** Number of equal-width columns. Defaults to 3. */
   columns?: 2 | 3 | 4;
+  /** Optional CTA rendered below the feature grid */
+  cta?: { label: string; href: string };
 }
 
 function AccentHeading({
@@ -52,6 +55,7 @@ export function FeatureCardGrid({
   subtitle,
   features,
   columns = 3,
+  cta,
 }: FeatureCardGridProps) {
   return (
     <div className="border-y border-border">
@@ -85,7 +89,7 @@ export function FeatureCardGrid({
         >
           {features.map((feature) => (
             <div key={feature.title} className="flex flex-col gap-4 px-8 py-10">
-              <feature.icon className="size-7 text-muted-foreground/40 stroke-[1.25]" />
+              <feature.icon className="size-6 text-primary/60" />
               <div>
                 <h3 className="text-sm font-semibold text-foreground">
                   {feature.title}
@@ -97,6 +101,18 @@ export function FeatureCardGrid({
             </div>
           ))}
         </div>
+
+        {cta && (
+          <div className="border-t border-border py-8 text-center">
+            <a
+              href={cta.href}
+              className="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground hover:opacity-90 transition-opacity"
+            >
+              {cta.label}
+              <ArrowRight className="size-4" />
+            </a>
+          </div>
+        )}
       </div>
     </div>
   );

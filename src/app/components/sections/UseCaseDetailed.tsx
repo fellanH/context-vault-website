@@ -60,7 +60,7 @@ export function UseCaseDetailed({
   return (
     <div className="border-y border-border">
       <div className="mx-auto w-full max-w-[80rem] px-[5vw]">
-        {/* Header */}
+        {/* Header — no CTA here, it fires after the use cases */}
         <div className="border-b border-border py-14 text-center">
           {sectionTag && (
             <div className="mb-4 inline-flex items-center gap-1.5 text-muted-foreground/60">
@@ -77,15 +77,6 @@ export function UseCaseDetailed({
             <p className="mt-3 text-sm text-muted-foreground max-w-sm mx-auto leading-relaxed">
               {subtitle}
             </p>
-          )}
-          {ctaLabel && ctaHref && (
-            <a
-              href={ctaHref}
-              className="inline-flex items-center gap-2 mt-4 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground hover:opacity-90 transition-opacity"
-            >
-              {ctaLabel}
-              <ArrowRight className="size-3.5" />
-            </a>
           )}
         </div>
 
@@ -143,6 +134,19 @@ export function UseCaseDetailed({
             </div>
           ))}
         </div>
+
+        {/* CTA fires after all scenarios have been read */}
+        {ctaLabel && ctaHref && (
+          <div className="border-t border-border py-10 text-center">
+            <a
+              href={ctaHref}
+              className="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground hover:opacity-90 transition-opacity"
+            >
+              {ctaLabel}
+              <ArrowRight className="size-3.5" />
+            </a>
+          </div>
+        )}
       </div>
     </div>
   );

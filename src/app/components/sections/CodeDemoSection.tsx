@@ -49,8 +49,15 @@ export function CodeDemoSection({
   skillCapabilities = [],
 }: CodeDemoSectionProps) {
   const [activeTab, setActiveTab] = React.useState(initialTab);
+  const [copied, setCopied] = React.useState(false);
   const currentCode = tabs[activeTab]?.code ?? "";
   const lines = currentCode.split("\n");
+
+  function copyCode() {
+    navigator.clipboard.writeText(currentCode);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1500);
+  }
 
   return (
     <div className="border-y border-border">
@@ -75,8 +82,11 @@ export function CodeDemoSection({
               </button>
             ))}
           </div>
-          <button className="ml-auto text-xs text-muted-foreground hover:text-foreground transition-colors">
-            Copy code
+          <button
+            onClick={copyCode}
+            className="ml-auto text-xs text-muted-foreground hover:text-foreground transition-colors"
+          >
+            {copied ? "Copied!" : "Copy code"}
           </button>
         </div>
 

@@ -4,13 +4,13 @@
     "badgeHref": "",
     "heading": "Give Memory to AI That's Yours. Always.",
     "accentWord": "Memory to AI",
-    "subtitle": "Every session picks up where you left off. Save decisions, patterns, and context once — retrieved automatically by any MCP-compatible AI tool. Plain markdown files. Zero lock-in. Fully open source.",
+    "subtitle": "Your AI starts every session knowing your stack, your decisions, your patterns. Save context once — Claude Code, Cursor, Windsurf, and more retrieve it automatically. No re-explaining. Plain markdown, open source.",
     "primaryCta": {
       "label": "Install now",
       "href": "/get-started"
     },
     "secondaryCta": {
-      "label": "Sign up",
+      "label": "Sign up free",
       "href": "/register"
     },
     "trustPoints": [
@@ -97,22 +97,22 @@
     {
       "iconName": "FileText",
       "title": "Persistent memory",
-      "description": "Save decisions, patterns, and context across sessions. Your vault grows with every conversation — nothing is lost when the tab closes."
+      "description": "You saved it two months ago under a different name — it still shows up. Decisions, patterns, and context persist forever, growing richer with every session."
     },
     {
       "iconName": "Zap",
       "title": "Hybrid search",
-      "description": "Semantic + full-text search finds the right entry even when you can't recall the exact words you used."
+      "description": "You wrote 'SQLite' then, search 'local database' now — it still finds it. Semantic and full-text search work together across everything you've ever saved."
     },
     {
       "iconName": "Globe",
       "title": "Works everywhere",
-      "description": "CLI tools via MCP, browser AI via Chrome extension, REST API for custom integrations. One vault, every interface."
+      "description": "Same vault, every interface. CLI via MCP, browser AI via Chrome extension, REST API for scripts. One memory layer, every tool."
     },
     {
       "iconName": "Lock",
       "title": "Portable by design",
-      "description": "Plain markdown files you can read, grep, and git push. Start local, sync to cloud when you need it — no format conversion."
+      "description": "Your data stays yours. Plain markdown files you can read, grep, and git push. Start local, move to cloud when ready — no lock-in, no conversion."
     }
   ],
   "faqs": [

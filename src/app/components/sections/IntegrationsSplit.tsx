@@ -16,6 +16,7 @@ interface IntegrationsSplitProps {
   integrationsHeading?: string;
   integrationsDescription?: string;
   integrationsCTA?: string;
+  integrationsCTAHref?: string;
   integrations: LogoItem[];
   openSourceHeading?: string;
   openSourceDescription?: string;
@@ -30,6 +31,7 @@ export function IntegrationsSplit({
   integrationsHeading = "Works with your tools",
   integrationsDescription = "Connect Context Vault to any MCP-compatible AI client in minutes.",
   integrationsCTA = "Browse integrations",
+  integrationsCTAHref = "#",
   integrations = [],
   openSourceHeading = "Open source at its core",
   openSourceDescription = "The Context Vault server is open-source. Self-host it, contribute to it, or build on top of it.",
@@ -52,7 +54,7 @@ export function IntegrationsSplit({
             {integrationsDescription}
           </p>
           <a
-            href="#"
+            href={integrationsCTAHref}
             className="inline-flex items-center gap-1.5 rounded-md border border-border px-4 py-2 text-sm hover:bg-muted/30 transition-colors"
           >
             {integrationsCTA}

@@ -171,6 +171,19 @@ export function HeroSection({
                 </code>
               </p>
             )}
+
+            {secondaryCta && (
+              <p className="text-xs text-muted-foreground">
+                or{" "}
+                <a
+                  href={secondaryCta.href}
+                  className="text-primary underline underline-offset-4 hover:opacity-80 transition-opacity"
+                >
+                  {secondaryCta.label}
+                </a>{" "}
+                — no CLI setup needed
+              </p>
+            )}
           </div>
         ) : (
           /* Fallback: original CTA buttons */

@@ -87,38 +87,28 @@ const codeTabs = [
   {
     label: "Python",
     code: `import context_vault
-
-# Initialize vault client
 vault = context_vault.Client()
 
-# Save context from a session
-vault.save(
-    kind="decision",
-    title="Use SQLite for local storage",
-    body="Chose SQLite over Postgres for local-first arch.",
-    tags=["architecture", "database"]
-)
+# Save a decision once
+vault.save(kind="decision", title="Use SQLite",
+           body="Local-first, no infra overhead")
 
-# Retrieve relevant context
-results = vault.search("database architecture")
-for entry in results:
-    print(entry.title, entry.body)`,
+# Retrieve it in any future session
+results = vault.search("database")
+print(results[0].title)  # → Use SQLite`,
   },
   {
     label: "CLI",
-    code: `# Install Context Vault MCP server
+    code: `# Install once
 npx context-vault setup
 
-# Save context from terminal
-cv save --kind insight \\
-  --title "Auth pattern" \\
-  --body "Use JWT + refresh tokens"
+# Save from any session
+cv save --kind decision --title "Use SQLite" \\
+        --body "Local-first, no infra overhead"
 
-# Search your vault
-cv search "authentication"
-
-# List recent entries
-cv list --limit 10`,
+# Retrieve it anytime
+cv search "database"
+# → Use SQLite  [decision · 2d ago]`,
   },
 ];
 
@@ -272,6 +262,10 @@ export function LandingPage() {
         accentWord={hero.accentWord}
         subtitle={hero.subtitle}
         quickStartCommand="npx context-vault setup"
+        secondaryCta={{
+          label: hero.secondaryCta.label,
+          href: appHref(hero.secondaryCta.href),
+        }}
         trustPoints={hero.trustPoints}
         leftPanelBadge={hero.leftPanelBadge}
         leftPanelLines={
@@ -318,6 +312,8 @@ export function LandingPage() {
           >
             Built on MCP open standard
           </a>
+          <span className="hidden sm:block text-border">·</span>
+          <span className="text-primary/80">Free forever for local use</span>
         </div>
       </div>
 
@@ -349,6 +345,7 @@ export function LandingPage() {
           subtitle="Built for developers who use multiple AI tools and can't afford to start from zero every session."
           features={features}
           columns={4}
+          cta={{ label: "Get started free", href: appHref("/register") }}
         />
       </Reveal>
 
@@ -374,6 +371,7 @@ export function LandingPage() {
           integrationsHeading="Works with your tools"
           integrationsDescription="Connect Context Vault to any MCP-compatible AI client. Claude Code, Cursor, Windsurf, Zed, and more — one endpoint, every client."
           integrationsCTA="Browse integrations"
+          integrationsCTAHref="/get-started"
           integrations={integrationLogos}
           openSourceHeading="Open source at its core"
           openSourceDescription="The Context Vault server is open-source. Self-host it, contribute to it, or build on top of it. Plain markdown files, no lock-in."
@@ -389,9 +387,9 @@ export function LandingPage() {
         <FAQSection
           sectionTagIcon={HelpCircle}
           sectionTag="FAQ"
-          heading="Frequently asked questions"
-          accentWord="questions"
-          subtitle="Everything you need to know before you install."
+          heading="Before you install"
+          accentWord="install"
+          subtitle="Common questions about setup, data ownership, and pricing."
           categories={faqs}
         />
       </Reveal>
