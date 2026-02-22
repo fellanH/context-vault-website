@@ -3,7 +3,7 @@
     "badge": "Free forever for local use",
     "badgeHref": "/register",
     "heading": "MCP for private AI memory storage.",
-    "accentWord": "private AI memory",
+    "accentWord": "AI memory",
     "subtitle": "Stop re-explaining your project to every AI tool. Save decisions, patterns, and context once — retrieved automatically via MCP. Plain markdown files, zero vendor lock-in, fully open source.",
     "primaryCta": {
       "label": "Install now",
