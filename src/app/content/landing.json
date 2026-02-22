@@ -2,9 +2,9 @@
   "hero": {
     "badge": "Free forever for local use",
     "badgeHref": "/register",
-    "heading": "Persistent memory for Claude Code, Cursor, and Windsurf.",
-    "accentWord": "Persistent memory",
-    "subtitle": "Save decisions, patterns, and project context once — retrieved automatically across every new session via MCP. Local-first by default, stored as plain markdown, fully open source.",
+    "heading": "Save context across all your AI tools — local, human-readable, always yours.",
+    "accentWord": "local, human-readable, always yours",
+    "subtitle": "Stop re-explaining your project to every AI tool. Save decisions, patterns, and context once — retrieved automatically via MCP. Plain markdown files, zero vendor lock-in, fully open source.",
     "primaryCta": {
       "label": "Install now",
       "href": "/get-started"
