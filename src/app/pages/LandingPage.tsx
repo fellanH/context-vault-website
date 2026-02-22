@@ -4,8 +4,8 @@ import { PageHead } from "../components/PageHead";
 import {
   ArrowRight,
   BookOpen,
+  Briefcase,
   CheckCircle2,
-  Chrome,
   FileText,
   Globe,
   HelpCircle,
@@ -117,53 +117,68 @@ Use JWT + refresh tokens
 const useCases = [
   {
     icon: Terminal,
-    label: "Individual developers",
-    title: "Stop re-explaining your decisions",
+    label: "Solo developer",
+    title: "Back after the weekend. Zero re-explaining.",
     description:
-      "Architecture calls, debug findings, project conventions — save them once. Context Vault retrieves the right entries automatically at the start of every new session in Claude Code, Cursor, or Windsurf.",
-    mockupBadge: "Real-time · Updated 2 min ago",
+      "It's Monday. You open Cursor. Last Friday you were deep in an auth refactor — JWT strategy chosen, Postgres rejected, a session handler edge case still open. Context Vault already retrieved it. You pick up mid-thought.",
+    mockupBadge: "Claude Code · Session started",
     mockupContent: (
       <div className="font-mono text-xs text-muted-foreground space-y-1.5 w-full px-2">
-        <div className="text-primary">▸ Retrieved 3 relevant entries</div>
-        <div>• Use SQLite for local storage (decision)</div>
-        <div>• JWT + refresh token auth pattern (insight)</div>
-        <div>• Tailwind v4 migration notes (reference)</div>
-      </div>
-    ),
-  },
-  {
-    icon: Chrome,
-    label: "Browser AI users",
-    title: "One vault across every AI chat",
-    description:
-      "Switching between ChatGPT, Claude.ai, and Gemini? The browser extension injects your saved context into any AI chat — no copy-pasting, no re-explaining the same project background for the sixth time.",
-    mockupBadge: "Extension · Connected",
-    mockupContent: (
-      <div className="font-mono text-xs text-muted-foreground space-y-1.5 w-full px-2">
-        <div className="text-green-500">● Context Vault connected</div>
-        <div className="text-muted-foreground/60">
-          3 entries ready to inject
+        <div className="text-primary">
+          ▸ vault scan complete — 3 entries retrieved
         </div>
-        <div className="mt-2">▸ Auth pattern (insight)</div>
-        <div>▸ Project stack (reference)</div>
-        <div>▸ API conventions (decision)</div>
+        <div>• auth-refactor: JWT chosen, Postgres rejected (decision)</div>
+        <div>• db-decision: SQLite for local-first arch (decision)</div>
+        <div>• session-bug: edge case in handler still open (note)</div>
       </div>
     ),
   },
   {
     icon: Users,
-    label: "Engineering teams",
-    title: "Decisions that survive the Slack scroll",
+    label: "Engineering team",
+    title: "We made that call six months ago.",
     description:
-      '"We made that call six months ago — it\'s in a Slack thread somewhere." Context Vault preserves architectural decisions, incident notes, and onboarding context in a shared vault every team member and AI can query.',
-    mockupBadge: "Team vault · 3 members",
+      'New team member asks why SQLite over Postgres. Instead of Slack archaeology, they run `cv search "database"` and get the full decision note — context, trade-offs, the date it was made. Onboarding done in seconds.',
+    mockupBadge: "vault search · 'database'",
+    mockupContent: (
+      <div className="font-mono text-xs text-muted-foreground space-y-1.5 w-full px-2">
+        <div className="text-primary">▸ 1 result for "database"</div>
+        <div className="mt-1 border border-border/40 rounded px-2 py-1.5 space-y-1">
+          <div className="text-foreground font-semibold">
+            Use SQLite for local storage
+          </div>
+          <div className="text-muted-foreground/70">
+            Chose SQLite over Postgres — local-first arch, no infra overhead,
+            easier onboarding...
+          </div>
+          <div className="flex gap-2 text-muted-foreground/50">
+            <span>[architecture]</span>
+            <span>[database]</span>
+            <span>· 2025-08-14</span>
+          </div>
+        </div>
+      </div>
+    ),
+  },
+  {
+    icon: Briefcase,
+    label: "Freelancer / consultant",
+    title: "Three clients. Every session starts right.",
+    description:
+      "Morning: a React fintech app. Afternoon: a Python data pipeline. Each client has a different stack, different conventions, ongoing decisions. Context Vault keeps a separate namespace per project. Open the session, get the right context — automatically.",
+    mockupBadge: "vault · project switch",
     mockupContent: (
       <div className="font-mono text-xs text-muted-foreground space-y-1.5 w-full px-2">
         <div>vault/</div>
-        <div className="pl-3">├── decisions/</div>
-        <div className="pl-3">├── incidents/</div>
-        <div className="pl-3">├── patterns/</div>
-        <div className="pl-3">└── onboarding/</div>
+        <div className="pl-3">├── acme-fintech/</div>
+        <div className="pl-6">│ ├── decisions/</div>
+        <div className="pl-6">│ └── patterns/</div>
+        <div className="pl-3">├── data-pipeline-co/</div>
+        <div className="pl-6">│ ├── decisions/</div>
+        <div className="pl-6">│ └── notes/</div>
+        <div className="pl-3">└── saas-client-three/</div>
+        <div className="pl-6"> ├── decisions/</div>
+        <div className="pl-6"> └── patterns/</div>
       </div>
     ),
   },
@@ -333,10 +348,10 @@ export function LandingPage() {
 
       <UseCaseDetailed
         sectionTagIcon={BookOpen}
-        sectionTag="Use Cases"
-        heading="Built for how developers actually work"
-        accentWord="actually work"
-        subtitle="Solo devs, browser-first users, and engineering teams — one vault adapts to every workflow."
+        sectionTag="Scenarios"
+        heading="From your actual day, not a demo."
+        accentWord="actual day"
+        subtitle="Three situations every developer recognises. One tool that fixes all of them."
         ctaLabel="Get started free"
         ctaHref={appHref("/register")}
         useCases={useCases}
