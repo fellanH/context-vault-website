@@ -4,7 +4,7 @@
     "badgeHref": "/register",
     "heading": "Persistent memory for Claude Code, Cursor, and Windsurf.",
     "accentWord": "Persistent memory",
-    "subtitle": "Context Vault gives Claude Code, Cursor, and Windsurf persistent memory. Save your decisions and context once, retrieved automatically when you start a new session.",
+    "subtitle": "Save decisions, patterns, and project context once — retrieved automatically across every new session via MCP. Local-first by default, stored as plain markdown, fully open source.",
     "primaryCta": {
       "label": "Install now",
       "href": "/get-started"
