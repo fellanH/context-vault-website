@@ -278,9 +278,7 @@ Apply: `bg-[url('/grid.svg')] bg-repeat` on the hero `<section>`.
 Dark terminal frame replacing bare `<pre>` blocks in HOW_IT_WORKS cards.
 
 ```tsx
-<TerminalMockup title="optional filename">
-  npm install -g context-vault{"\n"}context-vault setup
-</TerminalMockup>
+<TerminalMockup title="optional filename">npx context-vault</TerminalMockup>
 ```
 
 - Frame: `bg-zinc-950 rounded-md border border-border/70`
