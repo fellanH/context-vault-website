@@ -8,7 +8,8 @@ import { appHref, docsQuickstartUrl } from "../lib/links";
 type Mode = "local" | "hosted";
 
 const localSteps = [
-  { label: "Install & setup", command: "npx context-vault" },
+  { label: "Install", command: "npm install -g context-vault" },
+  { label: "Setup", command: "context-vault setup" },
   { label: "Open dashboard (optional)", command: "context-vault ui" },
 ];
 

@@ -100,7 +100,8 @@ print(results[0].title)  # → Use SQLite`,
   {
     label: "CLI",
     code: `# Install once
-npx context-vault
+npm install -g context-vault
+context-vault setup
 
 # Save from any session
 cv save --kind decision --title "Use SQLite" \\
@@ -261,7 +262,7 @@ export function LandingPage() {
         heading={hero.heading}
         accentWord={hero.accentWord}
         subtitle={hero.subtitle}
-        quickStartCommand="npx context-vault"
+        quickStartCommand="npm install -g context-vault"
         secondaryCta={{
           label: hero.secondaryCta.label,
           href: appHref(hero.secondaryCta.href),
@@ -356,7 +357,7 @@ export function LandingPage() {
           output={codeOutput}
           skillHeading="Add the Context Vault Skill"
           skillDescription="One command installs the MCP server and registers it with your AI client."
-          skillCommand="npx context-vault"
+          skillCommand="npm install -g context-vault"
           skillCapabilities={[
             "Saves context across sessions automatically",
             "Hybrid semantic + full-text search",
