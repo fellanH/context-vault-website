@@ -37,7 +37,7 @@ function LogoCell({ item }: { item: LogoItem }) {
     );
 
   return (
-    <div className="flex-shrink-0 flex items-center justify-center border-r border-border px-8 py-5">
+    <div className="flex-shrink-0 flex items-center justify-center px-8 py-5">
       {item.href ? (
         <a
           href={item.href}
@@ -55,41 +55,44 @@ function LogoCell({ item }: { item: LogoItem }) {
 }
 
 export function LogoCloud({ headline, logos, animate = true }: LogoCloudProps) {
-  // Duplicate logos only (not the headline) for a seamless loop
+  // Duplicate logos for a seamless loop
   const items = [...logos, ...logos];
 
   return (
-    <div className="border-y border-border flex">
-      {/* Static headline cell — sits outside the animation */}
-      {headline && (
-        <div className="flex-shrink-0 flex items-center border-r border-border px-[5vw] py-5 min-w-[160px] bg-background z-10">
-          <p className="text-xs text-muted-foreground leading-snug max-w-[130px]">
+    <section className="py-10">
+      <div className="mx-auto max-w-6xl px-6">
+        {headline && (
+          <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground text-center mb-6">
             {headline}
           </p>
-        </div>
-      )}
+        )}
 
-      {/* Animated logo track — overflow clips the scrolling content */}
-      <div
-        className="overflow-hidden flex-1 group"
-        style={{
-          maskImage:
-            "linear-gradient(to right, transparent, black 4%, black 96%, transparent)",
-          WebkitMaskImage:
-            "linear-gradient(to right, transparent, black 4%, black 96%, transparent)",
-        }}
-      >
-        <div
-          className="flex w-max group-hover:[animation-play-state:paused]"
-          style={
-            animate ? { animation: "marquee 32s linear infinite" } : undefined
-          }
-        >
-          {items.map((logo, i) => (
-            <LogoCell key={i} item={logo} />
-          ))}
+        {/* Marquee container */}
+        <div className="rounded-2xl border border-border/60 bg-muted/20 overflow-hidden">
+          <div
+            className="overflow-hidden group"
+            style={{
+              maskImage:
+                "linear-gradient(to right, transparent, black 4%, black 96%, transparent)",
+              WebkitMaskImage:
+                "linear-gradient(to right, transparent, black 4%, black 96%, transparent)",
+            }}
+          >
+            <div
+              className="flex w-max group-hover:[animation-play-state:paused]"
+              style={
+                animate
+                  ? { animation: "marquee 32s linear infinite" }
+                  : undefined
+              }
+            >
+              {items.map((logo, i) => (
+                <LogoCell key={i} item={logo} />
+              ))}
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

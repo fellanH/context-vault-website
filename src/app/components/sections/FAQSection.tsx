@@ -64,12 +64,14 @@ export function FAQSection({
   const renderHeading = () => {
     if (!accentWord || !heading.includes(accentWord)) {
       return (
-        <h2 className="text-3xl font-semibold tracking-tight">{heading}</h2>
+        <h2 className="text-3xl font-semibold tracking-tight text-center">
+          {heading}
+        </h2>
       );
     }
     const [before, after] = heading.split(accentWord);
     return (
-      <h2 className="text-3xl font-semibold tracking-tight">
+      <h2 className="text-3xl font-semibold tracking-tight text-center">
         {before}
         <span className="text-primary">{accentWord}</span>
         {after}
@@ -78,18 +80,16 @@ export function FAQSection({
   };
 
   return (
-    <div className="border-y border-border">
-      <div className="mx-auto w-full max-w-[80rem] px-[5vw]">
+    <div className="py-16">
+      <div className="mx-auto w-full max-w-3xl px-6">
         {/* Section header */}
-        <div className="border-b border-border py-14">
+        <div className="py-14 text-center">
           {sectionTag && (
-            <div className="mb-4 inline-flex items-center gap-1.5 text-muted-foreground/60">
-              <span className="font-mono text-xs">//</span>
+            <div className="mb-4 inline-flex items-center gap-1.5">
               {TagIcon && <TagIcon className="size-3.5 text-primary" />}
-              <span className="text-xs font-medium text-muted-foreground">
+              <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
                 {sectionTag}
               </span>
-              <span className="font-mono text-xs">\\</span>
             </div>
           )}
           {renderHeading()}
@@ -100,25 +100,25 @@ export function FAQSection({
           )}
         </div>
 
-        {/* Category rows: category label left, accordions right */}
-        <div className="divide-y divide-border">
+        {/* Category groups */}
+        <div>
           {categories.map((cat) => (
-            <div key={cat.category} className="grid grid-cols-3 items-start">
-              {/* Left col — category name */}
-              <div className="border-r border-border px-8 py-8">
-                <span className="text-sm font-semibold text-foreground">
-                  {cat.category}
-                </span>
-              </div>
-              {/* Right col — accordion items */}
-              <div className="col-span-2 px-8 py-2">
-                {cat.items.map((item) => (
-                  <AccordionItem
-                    key={item.question}
-                    question={item.question}
-                    answer={item.answer}
-                  />
-                ))}
+            <div key={cat.category}>
+              <h3
+                className={`text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-3 ${categories.indexOf(cat) === 0 ? "mt-0" : "mt-8"}`}
+              >
+                {cat.category}
+              </h3>
+              <div className="rounded-2xl border border-border/60 bg-card shadow-[var(--shadow-card)] overflow-hidden">
+                <div className="px-6">
+                  {cat.items.map((item) => (
+                    <AccordionItem
+                      key={item.question}
+                      question={item.question}
+                      answer={item.answer}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
           ))}

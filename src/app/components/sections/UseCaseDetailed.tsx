@@ -18,8 +18,6 @@ interface UseCaseDetailedProps {
   heading: string;
   accentWord?: string;
   subtitle?: string;
-  ctaLabel?: string;
-  ctaHref?: string;
   useCases: UseCaseItem[];
 }
 
@@ -53,23 +51,19 @@ export function UseCaseDetailed({
   heading,
   accentWord,
   subtitle,
-  ctaLabel,
-  ctaHref,
   useCases,
 }: UseCaseDetailedProps) {
   return (
-    <div className="border-y border-border">
-      <div className="mx-auto w-full max-w-[80rem] px-[5vw]">
-        {/* Header — no CTA here, it fires after the use cases */}
-        <div className="border-b border-border py-14 text-center">
+    <div className="py-16">
+      <div className="mx-auto w-full max-w-6xl px-6">
+        {/* Header */}
+        <div className="py-14 text-center">
           {sectionTag && (
-            <div className="mb-4 inline-flex items-center gap-1.5 text-muted-foreground/60">
-              <span className="font-mono text-xs">//</span>
+            <div className="mb-4 inline-flex items-center gap-1.5">
               {TagIcon && <TagIcon className="size-3.5 text-primary" />}
-              <span className="text-xs font-medium text-muted-foreground">
+              <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
                 {sectionTag}
               </span>
-              <span className="font-mono text-xs">\\</span>
             </div>
           )}
           <AccentHeading heading={heading} accentWord={accentWord} />
@@ -81,11 +75,11 @@ export function UseCaseDetailed({
         </div>
 
         {/* Use cases list */}
-        <div className="divide-y divide-border">
+        <div className="space-y-0">
           {useCases.map((item) => (
             <div
               key={item.title}
-              className="grid grid-cols-1 md:grid-cols-[2fr_3fr]"
+              className="grid grid-cols-1 md:grid-cols-[2fr_3fr] border-b border-border/40 last:border-b-0"
             >
               {/* Left: text */}
               <div className="px-8 py-10">
@@ -112,7 +106,7 @@ export function UseCaseDetailed({
                 )}
               </div>
               {/* Right: mockup */}
-              <div className="border-l border-border">
+              <div className="bg-muted/30 md:rounded-r-2xl">
                 <div className="flex items-center gap-1.5 border-b border-border bg-muted/10 px-4 py-2.5">
                   <span className="size-2 rounded-full bg-red-400/70" />
                   <span className="size-2 rounded-full bg-yellow-400/70" />
@@ -123,7 +117,7 @@ export function UseCaseDetailed({
                     </span>
                   )}
                 </div>
-                <div className="p-4 min-h-[140px] flex items-center justify-center bg-muted/5">
+                <div className="p-4 min-h-[140px] flex items-center justify-center">
                   {item.mockupContent ? (
                     item.mockupContent
                   ) : (
@@ -134,19 +128,6 @@ export function UseCaseDetailed({
             </div>
           ))}
         </div>
-
-        {/* CTA fires after all scenarios have been read */}
-        {ctaLabel && ctaHref && (
-          <div className="border-t border-border py-10 text-center">
-            <a
-              href={ctaHref}
-              className="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground hover:opacity-90 transition-opacity"
-            >
-              {ctaLabel}
-              <ArrowRight className="size-3.5" />
-            </a>
-          </div>
-        )}
       </div>
     </div>
   );

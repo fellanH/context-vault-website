@@ -10,7 +10,7 @@ interface FeatureCard {
 interface FeatureCardGridProps {
   /** Optional icon shown inside the section tag badge */
   sectionTagIcon?: LucideIcon;
-  /** Short label shown inside the `// label \\` badge above the heading */
+  /** Short label shown above the heading */
   sectionTag?: string;
   heading: string;
   /** Word inside heading to render in primary color */
@@ -32,14 +32,20 @@ function AccentHeading({
 }) {
   if (!accentWord || !heading.includes(accentWord)) {
     return (
-      <h2 className="text-3xl font-semibold tracking-tight text-center">
+      <h2
+        id="features-heading"
+        className="text-3xl font-semibold tracking-tight text-center"
+      >
         {heading}
       </h2>
     );
   }
   const [before, after] = heading.split(accentWord);
   return (
-    <h2 className="text-3xl font-semibold tracking-tight text-center">
+    <h2
+      id="features-heading"
+      className="text-3xl font-semibold tracking-tight text-center"
+    >
       {before}
       <span className="text-primary">{accentWord}</span>
       {after}
@@ -58,18 +64,16 @@ export function FeatureCardGrid({
   cta,
 }: FeatureCardGridProps) {
   return (
-    <div className="border-y border-border">
-      <div className="mx-auto w-full max-w-[80rem] px-[5vw]">
+    <div className="py-16" aria-labelledby="features-heading">
+      <div className="mx-auto w-full max-w-6xl px-6">
         {/* Centered section header */}
-        <div className="border-b border-border py-14 text-center">
+        <div className="py-14 text-center">
           {sectionTag && (
-            <div className="mb-4 inline-flex items-center gap-1.5 text-muted-foreground/60">
-              <span className="font-mono text-xs">//</span>
+            <div className="mb-4 inline-flex items-center gap-1.5">
               {TagIcon && <TagIcon className="size-3.5 text-primary" />}
-              <span className="text-xs font-medium text-muted-foreground">
+              <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
                 {sectionTag}
               </span>
-              <span className="font-mono text-xs">\\</span>
             </div>
           )}
           <AccentHeading heading={heading} accentWord={accentWord} />
@@ -82,14 +86,22 @@ export function FeatureCardGrid({
 
         {/* Feature card grid */}
         <div
-          className="grid divide-x divide-border"
-          style={{
-            gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`,
-          }}
+          className={`grid gap-5 grid-cols-1 sm:grid-cols-2 ${
+            columns === 4
+              ? "lg:grid-cols-4"
+              : columns === 2
+                ? "sm:grid-cols-2"
+                : "md:grid-cols-3"
+          }`}
         >
           {features.map((feature) => (
-            <div key={feature.title} className="flex flex-col gap-4 px-8 py-10">
-              <feature.icon className="size-6 text-primary/60" />
+            <div
+              key={feature.title}
+              className="rounded-2xl border border-border/60 bg-card p-8 shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-card-hover)] transition-shadow flex flex-col gap-4"
+            >
+              <div className="flex size-12 items-center justify-center rounded-xl bg-primary/8">
+                <feature.icon className="size-6 text-primary" />
+              </div>
               <div>
                 <h3 className="text-sm font-semibold text-foreground">
                   {feature.title}
@@ -103,7 +115,7 @@ export function FeatureCardGrid({
         </div>
 
         {cta && (
-          <div className="border-t border-border py-8 text-center">
+          <div className="py-8 text-center">
             <a
               href={cta.href}
               className="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground hover:opacity-90 transition-opacity"

@@ -1,165 +1,134 @@
 {
   "hero": {
-    "badge": "Open source, runs locally",
-    "badgeHref": "",
-    "heading": "Give Memory to AI That's Yours. Always.",
-    "accentWord": "Memory to AI",
-    "subtitle": "Your AI starts every session knowing your stack, your decisions, your patterns. Save context once — Claude Code, Cursor, Windsurf, and more retrieve it automatically. No re-explaining. Plain markdown, open source.",
+    "badge": "Open source. Runs 100% on your machine.",
+    "badgeHref": "https://github.com/fellanH/context-vault",
+    "heading": "Your AI forgets everything between sessions",
+    "accentWord": "everything",
+    "subtitle": "Context Vault saves your decisions, patterns, and project context once, then retrieves them automatically in every future session. Works with Claude Code, Cursor, Windsurf, and any MCP-compatible tool.",
     "primaryCta": {
-      "label": "Install now",
+      "label": "Get started free",
       "href": "/get-started"
     },
     "secondaryCta": {
-      "label": "Sign up free",
-      "href": "/register"
+      "label": "View on GitHub",
+      "href": "https://github.com/fellanH/context-vault"
     },
-    "trustPoints": [
-      "No credit card required",
-      "Local by default",
-      "Export anytime"
-    ],
-    "leftPanelBadge": "[ terminal ]",
+    "trustPoints": ["2-minute setup", "MIT License", "No account needed"],
+    "leftPanelBadge": "Monday morning",
     "leftPanelLines": [
+      { "text": "$ cursor .", "variant": "command" },
+      { "text": "" },
       {
-        "text": "$ claude code",
-        "variant": "command"
-      },
-      {
-        "text": ""
-      },
-      {
-        "text": "  context-vault · scanning vault...",
+        "text": "  context-vault · loading your context...",
         "variant": "muted"
       },
+      { "text": "  ✓ 3 entries found", "variant": "success" },
+      { "text": "" },
       {
-        "text": "  ● 3 entries retrieved",
-        "variant": "success"
-      },
-      {
-        "text": ""
-      },
-      {
-        "text": "  auth-pattern     insight",
+        "text": "  jwt-auth-decision      decision · Fri",
         "variant": "default"
       },
       {
-        "text": "  sqlite-arch      decision",
+        "text": "  sqlite-over-postgres   decision · Thu",
         "variant": "default"
       },
-      {
-        "text": "  tailwind-v4      reference",
-        "variant": "default"
-      },
-      {
-        "text": ""
-      },
-      {
-        "text": "  context injected. ready.",
-        "variant": "muted"
-      }
+      { "text": "  session-handler-bug    note · Fri", "variant": "default" },
+      { "text": "" },
+      { "text": "  Ready. Picking up where you left off.", "variant": "muted" }
     ],
-    "rightPanelBadge": "[ .MD ]",
+    "rightPanelBadge": "Your vault",
     "rightPanelLines": [
-      "# Auth pattern",
+      "# JWT auth decision",
       "",
-      "kind: insight  ·  tags: auth, jwt",
-      "created: 2026-02-20",
+      "Chose JWT + refresh tokens over",
+      "session cookies. Stateless, works",
+      "across services.",
       "",
-      "# SQLite for local storage",
-      "",
-      "kind: decision  ·  tags: architecture",
-      "created: 2026-02-19",
-      "",
-      "# Tailwind v4 migration notes",
-      "",
-      "kind: reference  ·  tags: tailwind",
-      "created: 2026-02-18"
+      "kind: decision",
+      "tags: auth, architecture",
+      "saved: Friday 4:32pm"
     ]
   },
   "stats": [
     {
-      "value": "1 minute",
-      "label": "Setup",
-      "description": "One command installs the MCP server and auto-detects your editor."
+      "value": "2 min",
+      "label": "Setup time",
+      "description": "One command installs the server and connects it to your AI editor automatically."
     },
     {
-      "value": "All",
-      "label": "AI tools supported",
-      "description": "Claude Code, Cursor, Windsurf, Zed, ChatGPT, and more — one vault, any client."
+      "value": "Any",
+      "label": "MCP client",
+      "description": "Claude Code, Cursor, Windsurf, Zed, ChatGPT, VS Code. One vault, every tool."
     },
     {
       "value": "100%",
-      "label": "Your data",
-      "description": "Plain markdown files you own. Local by default, cloud when you need it."
+      "label": "Local & yours",
+      "description": "Plain markdown files on your machine. No cloud, no account, no lock-in."
     }
   ],
   "features": [
     {
       "iconName": "FileText",
-      "title": "Persistent memory",
-      "description": "You saved it two months ago under a different name — it still shows up. Decisions, patterns, and context persist forever, growing richer with every session."
+      "title": "Never re-explain your stack",
+      "description": "Every decision, pattern, and convention you save persists forever. Start a new session next week and your AI already knows your architecture."
     },
     {
       "iconName": "Zap",
-      "title": "Hybrid search",
-      "description": "You wrote 'SQLite' then, search 'local database' now — it still finds it. Semantic and full-text search work together across everything you've ever saved."
+      "title": "Find anything, however you described it",
+      "description": "Wrote 'SQLite' last month, search 'local database' today? It still finds it. Semantic and full-text search work together across your entire vault."
     },
     {
       "iconName": "Globe",
-      "title": "Works everywhere",
-      "description": "Same vault, every interface. CLI via MCP, browser AI via Chrome extension, REST API for scripts. One memory layer, every tool."
+      "title": "One memory across every AI tool",
+      "description": "Same vault, every editor. Save context in Claude Code, retrieve it in Cursor. Your knowledge follows you, not the tool."
     },
     {
       "iconName": "Lock",
-      "title": "Portable by design",
-      "description": "Your data stays yours. Plain markdown files you can read, grep, and git push. Start local, move to cloud when ready — no lock-in, no conversion."
+      "title": "Your data stays on your machine",
+      "description": "Plain markdown files you can read, grep, and git push. No cloud dependency, no vendor lock-in. You own every byte."
     }
   ],
   "faqs": [
     {
-      "category": "General",
+      "category": "Getting Started",
       "items": [
         {
           "question": "What is Context Vault?",
-          "answer": "Context Vault is a persistent memory layer for AI tools. It lets Claude Code, Cursor, Windsurf, and browser-based AI (via Chrome extension) save and retrieve context across sessions using hybrid semantic + full-text search."
+          "answer": "Context Vault is a persistent memory layer for AI coding tools. It saves your decisions, patterns, and project context as plain markdown files, then automatically retrieves them in every new AI session. Think of it as long-term memory for Claude Code, Cursor, Windsurf, and any MCP-compatible client."
+        },
+        {
+          "question": "How long does setup take?",
+          "answer": "About 2 minutes. Run 'npm i -g context-vault' to install, then 'context-vault setup' to configure. It auto-detects your AI editor and sets up the MCP connection. No account, no API key, no configuration files to edit."
         },
         {
           "question": "Which AI tools are supported?",
-          "answer": "Any MCP-compatible client works out of the box: Claude Code, Cursor, Windsurf, Zed, and more. For browser-based tools like ChatGPT, Claude.ai, and Gemini, the Chrome extension provides context injection without any CLI setup."
-        },
-        {
-          "question": "Can I stay fully local?",
-          "answer": "Yes. Context Vault runs entirely on your machine by default — data stays in plain markdown files and the SQLite index never leaves your disk. No account or network connection required. You can migrate to the hosted tier later if you need cross-device sync or team sharing."
+          "answer": "Any MCP-compatible client works out of the box: Claude Code, Cursor, Windsurf, Zed, and more. Browser-based tools like ChatGPT can connect via the REST API."
         }
       ]
     },
     {
-      "category": "Storage & Privacy",
+      "category": "Data & Privacy",
       "items": [
         {
           "question": "Where is my data stored?",
-          "answer": "Locally by default — plain markdown files in a directory you control. The hosted tier syncs to our infrastructure, but your files are always exportable. We do not use your data to train AI models."
+          "answer": "On your machine, in a folder you choose. Context Vault stores everything as plain markdown files with a local SQLite index for search. Nothing is sent to the cloud. We never see or access your data."
         },
         {
-          "question": "What happens to my data if I cancel?",
-          "answer": "Nothing. Your vault is plain markdown files — export them at any time with one command. If you're on the hosted tier, you get a full data export before your account closes. No lock-in."
+          "question": "Can I move or back up my vault?",
+          "answer": "Yes, it's just a folder of markdown files. Copy it, git push it, sync it with Dropbox, or move it to another machine. No export step, no migration tool needed."
         }
       ]
     },
     {
-      "category": "Teams & Billing",
+      "category": "Open Source",
       "items": [
         {
-          "question": "Can my whole team use Context Vault?",
-          "answer": "Yes. The Team tier gives every member their own vault plus a shared team vault. One invite link, one connect command per person. An admin dashboard shows usage and lets you manage members."
-        },
-        {
           "question": "Is Context Vault free?",
-          "answer": "The open-source local server is free forever. The hosted tier (cloud sync, team sharing, Chrome extension backend) is available on a subscription basis — no usage-based pricing, no surprise bills."
+          "answer": "Yes, completely. Context Vault is MIT-licensed and free forever. The entire codebase is open source. You can self-host, modify, and redistribute it."
         },
         {
-          "question": "Do you charge per request?",
-          "answer": "No. Local mode has no limits. The hosted tier is priced per seat, not per query — so a productive session that saves 200 entries costs the same as a quiet one."
+          "question": "How can I contribute?",
+          "answer": "Context Vault is built in the open on GitHub. File issues, submit pull requests, or build your own integrations. The project is actively maintained and contributions are welcome."
         }
       ]
     }

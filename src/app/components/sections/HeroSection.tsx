@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ArrowRight, CheckCircle2, Copy, Check } from "lucide-react";
+import { ArrowRight, Copy, Check } from "lucide-react";
 
 interface TerminalLine {
   text: string;
@@ -80,56 +80,51 @@ export function HeroSection({
 
   return (
     <section
-      className="relative border-b border-border overflow-hidden"
+      id="main-content"
+      aria-labelledby="hero-heading"
+      className="relative overflow-hidden"
       style={
         dotGrid
           ? {
               backgroundImage:
                 "radial-gradient(circle, var(--border) 1px, transparent 1px)",
-              backgroundSize: "24px 24px",
+              backgroundSize: "32px 32px",
+              maskImage:
+                "radial-gradient(ellipse 70% 70% at 50% 50%, black 40%, transparent 100%)",
+              WebkitMaskImage:
+                "radial-gradient(ellipse 70% 70% at 50% 50%, black 40%, transparent 100%)",
             }
           : undefined
       }
     >
-      {/* Corner accent marks */}
-      <span className="absolute top-6 left-6 font-mono text-lg text-primary opacity-50 select-none">
-        +
-      </span>
-      <span className="absolute top-6 right-6 font-mono text-lg text-primary opacity-50 select-none">
-        +
-      </span>
-      <span className="absolute bottom-6 left-6 font-mono text-lg text-primary opacity-50 select-none">
-        +
-      </span>
-      <span className="absolute bottom-6 right-6 font-mono text-lg text-primary opacity-50 select-none">
-        +
-      </span>
-
-      <div className="relative mx-auto w-full max-w-2xl px-6 py-16 text-center">
+      <div className="relative mx-auto w-full max-w-3xl px-6 pt-20 pb-10 sm:pt-28 sm:pb-16 text-center">
         {/* Badge */}
         {badge &&
           (badgeHref ? (
             <a
               href={badgeHref}
-              className="mb-6 inline-flex items-center gap-2 rounded-full border border-border px-3 py-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
+              className="mb-6 inline-flex items-center gap-2 rounded-full border border-border px-3 py-1 text-xs text-muted-foreground hover:text-foreground hover:shadow-sm transition-colors"
             >
-              <span className="size-1.5 rounded-full bg-primary" />
+              <span className="size-1.5 rounded-full bg-primary animate-pulse" />
               {badge}
               <ArrowRight className="size-3" />
             </a>
           ) : (
-            <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-border px-3 py-1 text-xs text-muted-foreground">
-              <span className="size-1.5 rounded-full bg-primary" />
+            <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-border px-3 py-1 text-xs text-muted-foreground hover:shadow-sm">
+              <span className="size-1.5 rounded-full bg-primary animate-pulse" />
               {badge}
             </span>
           ))}
 
         {/* Heading */}
-        <h1 className="text-4xl font-semibold tracking-tight leading-tight mb-4">
+        <h1
+          id="hero-heading"
+          className="text-4xl font-semibold tracking-tight leading-tight mb-4"
+        >
           {headingParts ? (
             <>
               {headingParts[0]}
-              <span className="text-primary">{accentWord}</span>
+              <span className="gradient-brand-text">{accentWord}</span>
               {headingParts[1]}
             </>
           ) : (
@@ -139,7 +134,7 @@ export function HeroSection({
 
         {/* Subtitle */}
         {subtitle && (
-          <p className="text-sm text-muted-foreground leading-relaxed mb-8 max-w-md mx-auto">
+          <p className="text-base text-muted-foreground leading-relaxed mb-8 max-w-md mx-auto">
             {subtitle}
           </p>
         )}
@@ -147,7 +142,11 @@ export function HeroSection({
         {/* Quick-start commands */}
         {quickStartCommand ? (
           <div className="mb-4 space-y-3">
-            <div className="inline-flex items-center gap-3 rounded-md border border-border/50 bg-zinc-950 px-4 py-2.5 text-sm font-mono">
+            <div
+              role="region"
+              aria-label="Install command"
+              className="inline-flex items-center gap-3 rounded-2xl bg-zinc-950 shadow-[var(--shadow-hero-panel)] px-5 py-3.5 text-sm font-mono"
+            >
               <span className="text-zinc-500 select-none">$</span>
               <span className="text-zinc-100">{quickStartCommand}</span>
               <button
@@ -180,8 +179,7 @@ export function HeroSection({
                   className="text-primary underline underline-offset-4 hover:opacity-80 transition-opacity"
                 >
                   {secondaryCta.label}
-                </a>{" "}
-                — no CLI setup needed
+                </a>
               </p>
             )}
           </div>
@@ -212,20 +210,19 @@ export function HeroSection({
 
         {/* Trust points */}
         {trustPoints && trustPoints.length > 0 && (
-          <div className="flex flex-wrap items-center justify-center gap-4 mb-10 text-xs text-muted-foreground">
+          <div className="flex flex-wrap items-center justify-center gap-2 mb-10 text-xs text-muted-foreground">
             {trustPoints.map((point) => (
-              <div key={point} className="flex items-center gap-1.5">
-                <CheckCircle2 className="size-3.5" />
+              <span key={point} className="rounded-full bg-muted/50 px-3 py-1">
                 {point}
-              </div>
+              </span>
             ))}
           </div>
         )}
 
         {/* Dual mockup panel */}
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {/* Left panel — dark terminal */}
-          <div className="overflow-hidden rounded-md border border-border/50">
+          <div className="overflow-hidden rounded-2xl border border-border/50 shadow-[var(--shadow-hero-panel)]">
             <div className="flex items-center gap-1.5 border-b border-white/10 bg-zinc-950 px-3 py-2">
               <span className="size-2 rounded-full bg-red-400/70" />
               <span className="size-2 rounded-full bg-yellow-400/70" />
@@ -255,7 +252,7 @@ export function HeroSection({
           </div>
 
           {/* Right panel — light markdown output */}
-          <div className="overflow-hidden rounded-md border border-border">
+          <div className="overflow-hidden rounded-2xl border border-border shadow-[var(--shadow-hero-panel)]">
             <div className="flex items-center gap-1.5 border-b border-border bg-muted/10 px-3 py-2">
               <span className="size-2 rounded-full bg-red-400/70" />
               <span className="size-2 rounded-full bg-yellow-400/70" />

@@ -3,7 +3,7 @@
 :root {
   --font-size: clamp(14px, 0.5vw + 12px, 17px);
   --font-mono: "JetBrains Mono", "Courier New", monospace;
-  --background: #f8f8f8;
+  --background: #fafafa;
   --foreground: #212121;
   --card: #ffffff;
   --card-foreground: #212121;
@@ -11,18 +11,18 @@
   --popover-foreground: #212121;
   --primary: oklch(0.55 0.22 285);
   --primary-foreground: oklch(0.98 0.005 285);
-  --secondary: #e5e5e5;
+  --secondary: #ebebeb;
   --secondary-foreground: #212121;
-  --muted: #e5e5e5;
+  --muted: #ebebeb;
   --muted-foreground: #717171;
   --accent: oklch(0.97 0.02 285);
   --accent-foreground: oklch(0.55 0.22 285);
   --destructive: #dc2626;
   --destructive-foreground: #ffffff;
-  --border: #e5e5e5;
-  --input: #e5e5e5;
+  --border: #ebebeb;
+  --input: #ebebeb;
   --input-background: #ffffff;
-  --switch-background: #e5e5e5;
+  --switch-background: #ebebeb;
   --font-weight-medium: 500;
   --font-weight-normal: 400;
   --ring: oklch(0.55 0.22 285);
@@ -31,14 +31,14 @@
   --chart-3: #737373;
   --chart-4: #a3a3a3;
   --chart-5: #d4d4d4;
-  --radius: 0.375rem;
+  --radius: 0.75rem;
   --sidebar: #ffffff;
   --sidebar-foreground: #212121;
   --sidebar-primary: #212121;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #f8f8f8;
+  --sidebar-accent: #fafafa;
   --sidebar-accent-foreground: #212121;
-  --sidebar-border: #e5e5e5;
+  --sidebar-border: #ebebeb;
   --sidebar-ring: #212121;
   --surface: #ffffff;
   --text-meta: 13px;
@@ -48,8 +48,19 @@
   --brand-muted: oklch(0.97 0.02 285);
   --brand-foreground: oklch(0.98 0.005 285);
   /* Fluid display text — override Tailwind defaults */
-  --text-3xl: clamp(1.875rem, 2.5vw + 0.75rem, 2.75rem);
+  --text-3xl: clamp(1.875rem, 3vw + 0.75rem, 3rem);
   --text-4xl: clamp(2.25rem, 3.5vw + 0.75rem, 3.5rem);
+  --text-5xl: clamp(2.5rem, 3.5vw + 1rem, 3.75rem);
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+  --shadow-card-hover:
+    0 4px 12px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
+  --shadow-hero-panel:
+    0 8px 30px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
+  --gradient-brand: linear-gradient(
+    135deg,
+    oklch(0.55 0.22 285),
+    oklch(0.65 0.18 310)
+  );
 }
 
 .dark {
@@ -61,16 +72,16 @@
   --popover-foreground: #f8f8f8;
   --primary: oklch(0.72 0.18 285);
   --primary-foreground: oklch(0.13 0.02 285);
-  --secondary: #404040;
+  --secondary: #333333;
   --secondary-foreground: #f8f8f8;
-  --muted: #404040;
+  --muted: #333333;
   --muted-foreground: #a3a3a3;
   --accent: oklch(0.22 0.05 285);
   --accent-foreground: oklch(0.72 0.18 285);
   --destructive: #dc2626;
   --destructive-foreground: #f8f8f8;
-  --border: #404040;
-  --input: #404040;
+  --border: #333333;
+  --input: #333333;
   --ring: oklch(0.72 0.18 285);
   --font-weight-medium: 500;
   --font-weight-normal: 400;
@@ -83,14 +94,24 @@
   --sidebar-foreground: #f8f8f8;
   --sidebar-primary: #f8f8f8;
   --sidebar-primary-foreground: #2a2a2a;
-  --sidebar-accent: #404040;
+  --sidebar-accent: #333333;
   --sidebar-accent-foreground: #f8f8f8;
-  --sidebar-border: #404040;
+  --sidebar-border: #333333;
   --sidebar-ring: #f8f8f8;
   --surface: #2a2a2a;
   --brand: oklch(0.72 0.18 285);
   --brand-muted: oklch(0.22 0.05 285);
   --brand-foreground: oklch(0.13 0.02 285);
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow-card-hover:
+    0 4px 12px rgba(0, 0, 0, 0.4), 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-hero-panel:
+    0 8px 30px rgba(0, 0, 0, 0.5), 0 2px 8px rgba(0, 0, 0, 0.3);
+  --gradient-brand: linear-gradient(
+    135deg,
+    oklch(0.72 0.18 285),
+    oklch(0.78 0.15 310)
+  );
 }
 
 @theme inline {
@@ -142,6 +163,10 @@
     @apply border-border outline-ring/50;
   }
 
+  *:focus-visible {
+    @apply outline-2 outline-offset-2 outline-ring;
+  }
+
   body {
     @apply bg-background text-foreground;
     font-family:
@@ -150,6 +175,12 @@
       BlinkMacSystemFont,
       "Segoe UI",
       sans-serif;
+    font-feature-settings:
+      "cv02" 1,
+      "cv03" 1,
+      "cv04" 1,
+      "cv11" 1;
+    font-optical-sizing: auto;
   }
 
   html {
@@ -158,8 +189,9 @@
 
   h1 {
     font-size: var(--text-2xl);
-    font-weight: var(--font-weight-medium);
-    line-height: 1.25;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
   }
 
   h2 {
@@ -208,6 +240,13 @@
   }
 }
 
+.gradient-brand-text {
+  background: var(--gradient-brand);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
 @keyframes marquee {
   from {
     transform: translateX(0);
@@ -218,10 +257,6 @@
 }
 
 .dot-grid {
-  background-image: radial-gradient(
-    circle,
-    var(--border) 1.5px,
-    transparent 1.5px
-  );
-  background-size: 28px 28px;
+  background-image: radial-gradient(circle, var(--border) 1px, transparent 1px);
+  background-size: 32px 32px;
 }

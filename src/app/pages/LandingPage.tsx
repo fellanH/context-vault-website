@@ -6,11 +6,15 @@ import {
   BookOpen,
   Briefcase,
   CheckCircle2,
+  Copy,
+  Check,
+  Download,
   FileText,
   Globe,
   HelpCircle,
   Layers,
   Lock,
+  Repeat,
   Star,
   Terminal,
   Users,
@@ -26,7 +30,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { posts } from "../content/posts";
-import { appHref, formatDate } from "../lib/links";
+import { formatDate } from "../lib/links";
 import {
   AnnouncementBar,
   HeroSection,
@@ -61,7 +65,7 @@ function Reveal({
       ref={ref}
       className={
         inView
-          ? `animate-in fade-in-0 slide-in-from-bottom-4 duration-700 fill-mode-both ${delay}`
+          ? `animate-in fade-in-0 slide-in-from-bottom-6 duration-700 ease-out fill-mode-both ${delay}`
           : "opacity-0"
       }
     >
@@ -70,7 +74,7 @@ function Reveal({
   );
 }
 
-// ─── Data (stays in TypeScript — contains JSX) ─────────────────────────────────
+// ─── Data ───────────────────────────────────────────────────────────────────────
 
 const logos = [
   { name: "Claude Code", logo: "anthropic" },
@@ -134,28 +138,29 @@ const useCases = [
   {
     icon: Terminal,
     label: "Solo developer",
-    title: "Back after the weekend. Zero re-explaining.",
+    title: "Monday morning. Zero re-explaining.",
     description:
-      "It's Monday. You open Cursor. Last Friday you were deep in an auth refactor — JWT strategy chosen, Postgres rejected, a session handler edge case still open. Context Vault already retrieved it. You pick up mid-thought.",
-    mockupBadge: "Claude Code · Session started",
+      "You open Cursor on Monday. Last Friday you were deep in an auth refactor. JWT chosen, Postgres rejected, a session handler edge case still open. Context Vault already loaded it all. You pick up mid-thought, as if the weekend never happened.",
+    mockupBadge: "session start · Monday 9:04am",
     mockupContent: (
       <div className="font-mono text-xs text-muted-foreground space-y-1.5 w-full px-2">
-        <div className="text-primary">
-          ▸ vault scan complete — 3 entries retrieved
+        <div className="text-primary">▸ context loaded: 3 entries</div>
+        <div>• jwt-auth-decision: JWT over sessions (decision)</div>
+        <div>• sqlite-arch: local-first, no Postgres (decision)</div>
+        <div>• session-bug: edge case in refresh handler (note)</div>
+        <div className="text-muted-foreground/50 mt-2">
+          Ready. Picking up from Friday.
         </div>
-        <div>• auth-refactor: JWT chosen, Postgres rejected (decision)</div>
-        <div>• db-decision: SQLite for local-first arch (decision)</div>
-        <div>• session-bug: edge case in handler still open (note)</div>
       </div>
     ),
   },
   {
     icon: Users,
     label: "Engineering team",
-    title: "We made that call six months ago.",
+    title: '"Why did we choose SQLite?" answered in 3 seconds.',
     description:
-      'New team member asks why SQLite over Postgres. Instead of Slack archaeology, they run `cv search "database"` and get the full decision note — context, trade-offs, the date it was made. Onboarding done in seconds.',
-    mockupBadge: "vault search · 'database'",
+      "A new team member asks about your database choice. Instead of digging through Slack threads, they run one search and get the full decision: context, trade-offs, date, author. Institutional knowledge that survives team changes.",
+    mockupBadge: "vault search · results",
     mockupContent: (
       <div className="font-mono text-xs text-muted-foreground space-y-1.5 w-full px-2">
         <div className="text-primary">▸ 1 result for "database"</div>
@@ -164,13 +169,13 @@ const useCases = [
             Use SQLite for local storage
           </div>
           <div className="text-muted-foreground/70">
-            Chose SQLite over Postgres — local-first arch, no infra overhead,
-            easier onboarding...
+            Chose SQLite over Postgres. Local-first, no infra, easier
+            onboarding. Benchmarks in /docs...
           </div>
           <div className="flex gap-2 text-muted-foreground/50">
             <span>[architecture]</span>
             <span>[database]</span>
-            <span>· 2025-08-14</span>
+            <span>· Aug 14</span>
           </div>
         </div>
       </div>
@@ -179,22 +184,36 @@ const useCases = [
   {
     icon: Briefcase,
     label: "Freelancer / consultant",
-    title: "Three clients. Every session starts right.",
+    title: "Three clients. Zero context bleed.",
     description:
-      "Morning: a React fintech app. Afternoon: a Python data pipeline. Each client has a different stack, different conventions, ongoing decisions. Context Vault keeps a separate namespace per project. Open the session, get the right context — automatically.",
-    mockupBadge: "vault · project switch",
+      "Morning: a React fintech app. Afternoon: a Python data pipeline. Each project has different patterns, different decisions, different constraints. Context Vault keeps a separate namespace per project. Open the session, get the right context automatically.",
+    mockupBadge: "vault · project namespaces",
     mockupContent: (
       <div className="font-mono text-xs text-muted-foreground space-y-1.5 w-full px-2">
         <div>vault/</div>
         <div className="pl-3">├── acme-fintech/</div>
-        <div className="pl-6">│ ├── decisions/</div>
-        <div className="pl-6">│ └── patterns/</div>
+        <div className="pl-6">
+          │ ├── decisions/ <span className="text-muted-foreground/40">(4)</span>
+        </div>
+        <div className="pl-6">
+          │ └── patterns/ <span className="text-muted-foreground/40">(7)</span>
+        </div>
         <div className="pl-3">├── data-pipeline-co/</div>
-        <div className="pl-6">│ ├── decisions/</div>
-        <div className="pl-6">│ └── notes/</div>
-        <div className="pl-3">└── saas-client-three/</div>
-        <div className="pl-6"> ├── decisions/</div>
-        <div className="pl-6"> └── patterns/</div>
+        <div className="pl-6">
+          │ ├── decisions/ <span className="text-muted-foreground/40">(2)</span>
+        </div>
+        <div className="pl-6">
+          │ └── notes/ <span className="text-muted-foreground/40">(5)</span>
+        </div>
+        <div className="pl-3">└── saas-startup/</div>
+        <div className="pl-6">
+          {" "}
+          ├── decisions/ <span className="text-muted-foreground/40">(3)</span>
+        </div>
+        <div className="pl-6">
+          {" "}
+          └── patterns/ <span className="text-muted-foreground/40">(6)</span>
+        </div>
       </div>
     ),
   },
@@ -219,6 +238,32 @@ const commits = [
   { title: "chore: add SQLite WAL mode", number: "#136", date: "1w ago" },
 ];
 
+// ─── How it works steps ─────────────────────────────────────────────────────────
+
+const howItWorksSteps = [
+  {
+    icon: Download,
+    step: "01",
+    title: "Install in one command",
+    description:
+      "Run npm i -g context-vault, then context-vault setup. It auto-detects your AI editor and connects the memory layer. No config files, no API keys.",
+  },
+  {
+    icon: FileText,
+    step: "02",
+    title: "Work as usual. Context saves automatically.",
+    description:
+      "As you code, your AI saves decisions, patterns, and project insights as plain markdown files in your vault. No extra steps.",
+  },
+  {
+    icon: Repeat,
+    step: "03",
+    title: "Every session starts where you left off",
+    description:
+      "Open a new session tomorrow, next week, or next month. Your AI automatically retrieves the right context. No re-explaining.",
+  },
+];
+
 // ─── Derived data from JSON ────────────────────────────────────────────────────
 
 const { hero, features: rawFeatures, faqs } = landingData;
@@ -228,11 +273,53 @@ const features = rawFeatures.map((f) => ({
   icon: iconMap[f.iconName as IconName],
 }));
 
+// ─── JSON-LD Structured Data ───────────────────────────────────────────────────
+
+const jsonLdSoftware = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "Context Vault",
+  description:
+    "Persistent memory layer for AI coding tools. Save decisions, patterns, and project context once. They are automatically retrieved in every future session.",
+  applicationCategory: "DeveloperApplication",
+  operatingSystem: "macOS, Windows, Linux",
+  offers: {
+    "@type": "Offer",
+    price: "0",
+    priceCurrency: "USD",
+  },
+  license: "https://opensource.org/licenses/MIT",
+  url: "https://contextvault.dev",
+  downloadUrl: "https://www.npmjs.com/package/context-vault",
+  softwareRequirements: "Node.js 18+",
+  author: {
+    "@type": "Organization",
+    name: "Context Vault",
+    url: "https://contextvault.dev",
+  },
+};
+
+const jsonLdFaq = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.flatMap((cat) =>
+    cat.items.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
+      },
+    })),
+  ),
+};
+
 // ─── Page ──────────────────────────────────────────────────────────────────────
 
 export function LandingPage() {
   const featured = posts.slice(0, 3);
   const [stars, setStars] = useState<number | null>(null);
+  const [finalCopied, setFinalCopied] = useState(false);
 
   useEffect(() => {
     fetch("https://api.github.com/repos/fellanH/context-vault")
@@ -241,31 +328,53 @@ export function LandingPage() {
       .catch(() => {});
   }, []);
 
+  function copyFinalCommand() {
+    navigator.clipboard.writeText("npm i -g context-vault");
+    setFinalCopied(true);
+    setTimeout(() => setFinalCopied(false), 1500);
+  }
+
   return (
     <main>
       <PageHead
-        title="Persistent Memory for AI Tools"
-        description="Context Vault gives Claude Code, Cursor, Windsurf, and browser-based AI a shared memory layer. Save decisions once, retrieve them in every session. Setup in under 5 minutes."
+        title="Context Vault: Persistent Memory for AI Coding Tools"
+        description="Your AI forgets everything between sessions. Context Vault saves decisions, patterns, and context once. Claude Code, Cursor, and Windsurf retrieve them automatically. Free, open source, 2-minute setup."
         canonical="/"
       />
 
-      <AnnouncementBar
-        message="Context Vault is open-source — star the repo, contribute, or self-host."
-        linkText="View on GitHub"
-        linkHref="https://github.com/fellanH/context-vault"
-        variant="neutral"
+      {/* JSON-LD structured data for SEO/AEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(jsonLdSoftware),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(jsonLdFaq),
+        }}
       />
 
+      {/* 1. Announcement Bar */}
+      <AnnouncementBar
+        message="Context Vault is open-source. Star the repo, contribute, or self-host."
+        linkText="View on GitHub"
+        linkHref="https://github.com/fellanH/context-vault"
+        variant="brand"
+      />
+
+      {/* 2. Hero */}
       <HeroSection
         badge={hero.badge}
-        badgeHref={appHref(hero.badgeHref)}
+        badgeHref={hero.badgeHref || undefined}
         heading={hero.heading}
         accentWord={hero.accentWord}
         subtitle={hero.subtitle}
-        quickStartCommand="npm install -g context-vault"
+        quickStartCommand="npm i -g context-vault"
         secondaryCta={{
           label: hero.secondaryCta.label,
-          href: appHref(hero.secondaryCta.href),
+          href: hero.secondaryCta.href,
         }}
         trustPoints={hero.trustPoints}
         leftPanelBadge={hero.leftPanelBadge}
@@ -279,103 +388,157 @@ export function LandingPage() {
         dotGrid
       />
 
-      {/* Social proof strip */}
-      <div className="border-b border-border/60 bg-muted/30">
-        <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-center gap-x-8 gap-y-2 px-6 py-3 text-xs text-muted-foreground">
+      {/* 3. Social proof */}
+      <div className="py-4" role="region" aria-label="Trust signals">
+        <div className="mx-auto flex w-full max-w-3xl flex-wrap items-center justify-center gap-3 px-6">
           <a
             href="https://github.com/fellanH/context-vault"
             target="_blank"
             rel="noreferrer"
-            className="flex items-center gap-1.5 hover:text-foreground transition-colors"
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            onClick={() =>
-              (window as any).dataLayer?.push({
-                event: "outbound_click",
-                destination: "github",
-              })
-            }
+            className="inline-flex items-center gap-1.5 rounded-full bg-muted/50 px-4 py-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
           >
-            <Star className="size-3.5" />
+            <Star className="size-3.5" aria-hidden="true" />
             {stars !== null ? (
               <span>{stars.toLocaleString()} stars on GitHub</span>
             ) : (
               <span>Open source on GitHub</span>
             )}
           </a>
-          <span className="hidden sm:block text-border">·</span>
-          <span>MIT License</span>
-          <span className="hidden sm:block text-border">·</span>
+          <span className="inline-flex items-center rounded-full bg-muted/50 px-4 py-1.5 text-xs text-muted-foreground">
+            MIT License
+          </span>
           <a
             href="https://modelcontextprotocol.io"
             target="_blank"
             rel="noreferrer"
-            className="hover:text-foreground transition-colors"
+            className="inline-flex items-center rounded-full bg-muted/50 px-4 py-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
           >
-            Built on MCP open standard
+            Built on MCP standard
           </a>
-          <span className="hidden sm:block text-border">·</span>
-          <span className="text-primary/80">Free forever for local use</span>
+          <span className="inline-flex items-center rounded-full bg-primary/10 px-4 py-1.5 text-xs font-medium text-primary">
+            Free forever
+          </span>
         </div>
       </div>
 
+      {/* 4. Logo cloud */}
       <LogoCloud headline="Works with your AI tools" logos={logos} />
 
+      {/* 5. The problem */}
       <Reveal>
         <ProblemStrip />
       </Reveal>
 
+      {/* 6. How it works */}
+      <Reveal>
+        <section aria-labelledby="how-it-works-heading" className="py-16">
+          <div className="mx-auto w-full max-w-6xl px-6">
+            <div className="text-center mb-12">
+              <div className="mb-4 inline-flex items-center gap-1.5">
+                <Zap className="size-3.5 text-primary" aria-hidden="true" />
+                <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                  How it works
+                </span>
+              </div>
+              <h2
+                id="how-it-works-heading"
+                className="text-3xl font-semibold tracking-tight"
+              >
+                Three steps. Two minutes.{" "}
+                <span className="text-primary">Done.</span>
+              </h2>
+              <p className="mt-3 text-base text-muted-foreground max-w-lg mx-auto leading-relaxed">
+                No accounts, no config files, no cloud setup. Install it and
+                start working.
+              </p>
+            </div>
+
+            <div className="grid gap-8 md:grid-cols-3" role="list">
+              {howItWorksSteps.map((step) => (
+                <div
+                  key={step.step}
+                  role="listitem"
+                  className="relative rounded-2xl border border-border/60 bg-card p-8 shadow-[var(--shadow-card)] text-center"
+                >
+                  <div className="mx-auto mb-4 flex size-14 items-center justify-center rounded-2xl bg-primary/8">
+                    <step.icon
+                      className="size-6 text-primary"
+                      aria-hidden="true"
+                    />
+                  </div>
+                  <span className="text-xs font-mono text-primary mb-2 block">
+                    Step {step.step}
+                  </span>
+                  <h3 className="text-base font-semibold tracking-tight mb-2">
+                    {step.title}
+                  </h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    {step.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      </Reveal>
+
+      {/* 7. Use cases */}
       <Reveal>
         <UseCaseDetailed
           sectionTagIcon={BookOpen}
-          sectionTag="Scenarios"
-          heading="From your actual day, not a demo."
-          accentWord="actual day"
-          subtitle="Three situations every developer recognises. One tool that fixes all of them."
-          ctaLabel="Get started free"
-          ctaHref={appHref("/register")}
+          sectionTag="Real scenarios"
+          heading="From your actual workday"
+          accentWord="actual"
+          subtitle="Three situations every developer recognises. One tool that solves all of them."
           useCases={useCases}
         />
       </Reveal>
 
+      {/* 8. Features */}
       <Reveal>
         <FeatureCardGrid
           sectionTagIcon={Layers}
           sectionTag="Core capabilities"
-          heading="What your AI gains"
-          accentWord="AI gains"
-          subtitle="Built for developers who use multiple AI tools and can't afford to start from zero every session."
+          heading="What Context Vault gives you"
+          accentWord="gives you"
+          subtitle="Built for developers who use multiple AI tools and want to stop starting from zero."
           features={features}
           columns={4}
-          cta={{ label: "Get started free", href: appHref("/register") }}
+          cta={{
+            label: "Get started, it's free",
+            href: "https://github.com/fellanH/context-vault",
+          }}
         />
       </Reveal>
 
+      {/* 9. Code demo */}
       <Reveal>
         <CodeDemoSection
           tabs={codeTabs}
-          outputLabel="[ .MD ]"
+          outputLabel="vault output"
           output={codeOutput}
-          skillHeading="Add the Context Vault Skill"
-          skillDescription="One command installs the MCP server and registers it with your AI client."
+          skillHeading="Install the Context Vault MCP server"
+          skillDescription="One command connects persistent memory to your AI editor."
           skillCommand="npm install -g context-vault"
           skillCapabilities={[
             "Saves context across sessions automatically",
             "Hybrid semantic + full-text search",
             "Works with Claude Code, Cursor, Windsurf",
-            "Plain markdown files — your data, your format",
+            "Plain markdown files. Your data, your format.",
           ]}
         />
       </Reveal>
 
+      {/* 10. Integrations + open source */}
       <Reveal>
         <IntegrationsSplit
-          integrationsHeading="Works with your tools"
-          integrationsDescription="Connect Context Vault to any MCP-compatible AI client. Claude Code, Cursor, Windsurf, Zed, and more — one endpoint, every client."
-          integrationsCTA="Browse integrations"
+          integrationsHeading="Connects to your workflow"
+          integrationsDescription="Context Vault works with any MCP-compatible AI client. Claude Code, Cursor, Windsurf, Zed. One vault, every tool."
+          integrationsCTA="Setup guide"
           integrationsCTAHref="/get-started"
           integrations={integrationLogos}
-          openSourceHeading="Open source at its core"
-          openSourceDescription="The Context Vault server is open-source. Self-host it, contribute to it, or build on top of it. Plain markdown files, no lock-in."
+          openSourceHeading="Open source, MIT licensed"
+          openSourceDescription="The entire codebase is open source. Self-host it, audit it, extend it, contribute to it. Plain markdown files, no lock-in, no vendor dependency."
           repoName="fellanH/context-vault"
           stars={stars !== null ? stars.toLocaleString() : undefined}
           commits={commits}
@@ -384,37 +547,129 @@ export function LandingPage() {
         />
       </Reveal>
 
+      {/* 11. FAQ */}
       <Reveal>
         <FAQSection
           sectionTagIcon={HelpCircle}
           sectionTag="FAQ"
-          heading="Before you install"
-          accentWord="install"
-          subtitle="Common questions about setup, data ownership, and pricing."
+          heading="Common questions"
+          accentWord="questions"
+          subtitle="Everything you need to know before installing."
           categories={faqs}
         />
       </Reveal>
 
-      {/* Blog posts */}
+      {/* 12. Final CTA */}
+      <section aria-labelledby="final-cta-heading" className="py-20">
+        <div className="mx-auto w-full max-w-3xl px-6 text-center">
+          <h2
+            id="final-cta-heading"
+            className="text-3xl font-semibold tracking-tight sm:text-4xl"
+          >
+            Ready to stop starting from zero?
+          </h2>
+          <p className="mt-4 text-base text-muted-foreground max-w-lg mx-auto leading-relaxed">
+            Install Context Vault in 2 minutes. Every AI session picks up
+            exactly where you left off, automatically.
+          </p>
+
+          <div className="mt-8 flex flex-col items-center gap-4">
+            <div
+              role="region"
+              aria-label="Install command"
+              className="inline-flex items-center gap-3 rounded-2xl bg-zinc-950 px-5 py-3.5 text-sm font-mono shadow-[var(--shadow-hero-panel)]"
+            >
+              <span className="text-zinc-500 select-none" aria-hidden="true">
+                $
+              </span>
+              <span className="text-zinc-100">npm i -g context-vault</span>
+              <button
+                onClick={copyFinalCommand}
+                aria-label="Copy install command"
+                className="ml-1 text-zinc-500 hover:text-zinc-200 transition-colors"
+              >
+                {finalCopied ? (
+                  <Check
+                    className="size-3.5 text-green-400"
+                    aria-hidden="true"
+                  />
+                ) : (
+                  <Copy className="size-3.5" aria-hidden="true" />
+                )}
+              </button>
+            </div>
+
+            <a
+              href="https://github.com/fellanH/context-vault"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 rounded-full border border-border px-6 py-2.5 text-sm font-medium hover:bg-muted/30 transition-colors"
+            >
+              View on GitHub{" "}
+              <ArrowRight className="size-4" aria-hidden="true" />
+            </a>
+          </div>
+
+          <div
+            className="mt-8 flex flex-wrap items-center justify-center gap-3"
+            role="list"
+            aria-label="Product guarantees"
+          >
+            <span
+              role="listitem"
+              className="inline-flex items-center gap-1.5 rounded-full bg-muted/50 px-3 py-1 text-xs text-muted-foreground"
+            >
+              <CheckCircle2 className="size-3.5" aria-hidden="true" />
+              MIT License, free forever
+            </span>
+            <span
+              role="listitem"
+              className="inline-flex items-center gap-1.5 rounded-full bg-muted/50 px-3 py-1 text-xs text-muted-foreground"
+            >
+              <CheckCircle2 className="size-3.5" aria-hidden="true" />
+              Data stays on your machine
+            </span>
+            <span
+              role="listitem"
+              className="inline-flex items-center gap-1.5 rounded-full bg-muted/50 px-3 py-1 text-xs text-muted-foreground"
+            >
+              <CheckCircle2 className="size-3.5" aria-hidden="true" />
+              2-minute setup
+            </span>
+          </div>
+        </div>
+      </section>
+
+      {/* 13. Blog posts */}
       {featured.length > 0 && (
-        <section className="border-t border-border">
-          <div className="mx-auto w-full max-w-[80rem] px-[5vw] py-14">
+        <section
+          aria-labelledby="blog-heading"
+          className="border-t border-border/60"
+        >
+          <div className="mx-auto w-full max-w-6xl px-6 py-14">
             <div className="flex items-center justify-between gap-3 mb-8">
-              <div className="inline-flex items-center gap-1.5 text-muted-foreground/60">
-                <span className="font-mono text-xs">//</span>
-                <FileText className="size-3.5 text-primary" />
-                <span className="text-xs font-medium text-muted-foreground">
+              <div className="inline-flex items-center gap-2">
+                <FileText
+                  className="size-3.5 text-primary"
+                  aria-hidden="true"
+                />
+                <span
+                  id="blog-heading"
+                  className="text-xs font-semibold uppercase tracking-widest text-muted-foreground"
+                >
                   From the blog
                 </span>
-                <span className="font-mono text-xs">\</span>
               </div>
               <Button asChild variant="outline" size="sm">
                 <Link to="/blog">View all</Link>
               </Button>
             </div>
-            <div className="grid gap-4 md:grid-cols-3">
+            <div className="grid gap-5 md:grid-cols-3">
               {featured.map((post) => (
-                <Card key={post.slug}>
+                <Card
+                  key={post.slug}
+                  className="rounded-2xl border border-border/60 shadow-[var(--shadow-card)]"
+                >
                   <CardHeader>
                     <div className="flex items-center gap-2 text-xs text-muted-foreground">
                       <Badge variant="secondary">{post.category}</Badge>
@@ -439,7 +694,8 @@ export function LandingPage() {
                       className="w-fit"
                     >
                       <Link to={`/blog/${post.slug}`}>
-                        Read post <ArrowRight className="size-4" />
+                        Read post{" "}
+                        <ArrowRight className="size-4" aria-hidden="true" />
                       </Link>
                     </Button>
                   </CardFooter>
@@ -449,57 +705,6 @@ export function LandingPage() {
           </div>
         </section>
       )}
-
-      {/* Final CTA */}
-      <section className="border-t border-border">
-        <div className="mx-auto w-full max-w-[80rem] px-[5vw] py-16">
-          <div className="rounded-md border border-primary/20 bg-primary/5 px-8 py-12 text-center">
-            <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">
-              Stop starting from zero.
-            </h2>
-            <p className="mt-3 text-muted-foreground max-w-lg mx-auto">
-              Connect Context Vault to your AI tools in under 5 minutes. Every
-              session picks up exactly where you left off.
-            </p>
-            <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
-              <a
-                href={appHref("/register")}
-                className="inline-flex items-center justify-center gap-2 rounded-md bg-primary px-6 py-2.5 text-sm font-medium text-primary-foreground hover:opacity-90 transition-opacity"
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                onClick={() =>
-                  (window as any).dataLayer?.push({
-                    event: "cta_click",
-                    label: "Start free",
-                    source: "landing_final_cta",
-                  })
-                }
-              >
-                Start free <ArrowRight className="size-4" />
-              </a>
-              <Link
-                to="/get-started"
-                className="inline-flex items-center justify-center gap-2 rounded-md border border-border px-6 py-2.5 text-sm font-medium hover:bg-muted/30 transition-colors"
-              >
-                See 2-minute setup
-              </Link>
-            </div>
-            <div className="mt-6 flex flex-wrap items-center justify-center gap-6 text-xs text-muted-foreground">
-              <div className="flex items-center gap-1.5">
-                <CheckCircle2 className="size-3.5" />
-                Free forever for local use
-              </div>
-              <div className="flex items-center gap-1.5">
-                <CheckCircle2 className="size-3.5" />
-                No credit card required
-              </div>
-              <div className="flex items-center gap-1.5">
-                <CheckCircle2 className="size-3.5" />
-                Export your data anytime
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
     </main>
   );
 }
