@@ -3,6 +3,11 @@
 This file is the authoritative SOP for all agents and contributors working on
 this repository. Read it before starting any task.
 
+- **GitHub repo:** fellanH/context-vault-website
+- **Vercel project:** `context-vault-marketing` (scope: `klarhimmel`)
+- **Production domain:** context-vault.com
+- **Deploy:** `npm run deploy` (Vercel CLI, `--prod`)
+
 ---
 
 ## Stack
