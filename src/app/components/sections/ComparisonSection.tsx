@@ -1,4 +1,4 @@
-import { CheckCircle2, X } from "lucide-react";
+import { CheckCircle2, X } from 'lucide-react';
 
 interface ComparisonFeature {
   label: string;
@@ -20,10 +20,10 @@ function Cell({ value }: { value: boolean | string }) {
 }
 
 export function ComparisonSection({
-  heading = "Context Vault vs. alternatives",
+  heading = 'Context Vault vs. alternatives',
   subtitle,
   features,
-  alternativeLabel = "DIY / BYOM",
+  alternativeLabel = 'DIY / BYOM',
 }: ComparisonSectionProps) {
   return (
     <div className="border-y border-border">
@@ -33,9 +33,7 @@ export function ComparisonSection({
           <div className="border-r border-border px-8 py-10">
             <h2 className="text-2xl font-semibold tracking-tight">{heading}</h2>
             {subtitle && (
-              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                {subtitle}
-              </p>
+              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{subtitle}</p>
             )}
           </div>
           <div className="px-8 py-10 flex flex-col justify-end">
@@ -54,9 +52,7 @@ export function ComparisonSection({
           {features.map((row) => (
             <div key={row.label} className="grid grid-cols-3 items-center">
               <div className="border-r border-border px-8 py-5">
-                <span className="text-sm text-muted-foreground">
-                  {row.label}
-                </span>
+                <span className="text-sm text-muted-foreground">{row.label}</span>
               </div>
               <div className="border-r border-border px-8 py-5 flex items-center">
                 <Cell value={row.contextVault} />

@@ -1,7 +1,7 @@
-import React from "react";
-import { ChevronDown } from "lucide-react";
-import { cn } from "@/components/ui/utils";
-import type { LucideIcon } from "lucide-react";
+import React from 'react';
+import { ChevronDown } from 'lucide-react';
+import { cn } from '@/components/ui/utils';
+import type { LucideIcon } from 'lucide-react';
 
 interface FAQItem {
   question: string;
@@ -37,16 +37,12 @@ function AccordionItem({ question, answer }: FAQItem) {
         <span className="font-medium text-foreground">{question}</span>
         <ChevronDown
           className={cn(
-            "size-4 flex-shrink-0 text-muted-foreground transition-transform duration-200",
-            open && "rotate-180",
+            'size-4 flex-shrink-0 text-muted-foreground transition-transform duration-200',
+            open && 'rotate-180'
           )}
         />
       </button>
-      <p
-        id={panelId}
-        hidden={!open}
-        className="pb-4 text-sm text-muted-foreground leading-relaxed"
-      >
+      <p id={panelId} hidden={!open} className="pb-4 text-sm text-muted-foreground leading-relaxed">
         {answer}
       </p>
     </div>
@@ -56,18 +52,14 @@ function AccordionItem({ question, answer }: FAQItem) {
 export function FAQSection({
   sectionTagIcon: TagIcon,
   sectionTag,
-  heading = "Frequently asked questions",
+  heading = 'Frequently asked questions',
   accentWord,
   subtitle,
   categories,
 }: FAQSectionProps) {
   const renderHeading = () => {
     if (!accentWord || !heading.includes(accentWord)) {
-      return (
-        <h2 className="text-3xl font-semibold tracking-tight text-center">
-          {heading}
-        </h2>
-      );
+      return <h2 className="text-3xl font-semibold tracking-tight text-center">{heading}</h2>;
     }
     const [before, after] = heading.split(accentWord);
     return (
@@ -94,9 +86,7 @@ export function FAQSection({
           )}
           {renderHeading()}
           {subtitle && (
-            <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
-              {subtitle}
-            </p>
+            <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{subtitle}</p>
           )}
         </div>
 
@@ -105,7 +95,7 @@ export function FAQSection({
           {categories.map((cat) => (
             <div key={cat.category}>
               <h3
-                className={`text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-3 ${categories.indexOf(cat) === 0 ? "mt-0" : "mt-8"}`}
+                className={`text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-3 ${categories.indexOf(cat) === 0 ? 'mt-0' : 'mt-8'}`}
               >
                 {cat.category}
               </h3>

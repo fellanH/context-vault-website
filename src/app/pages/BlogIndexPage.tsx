@@ -1,17 +1,11 @@
-import { Link } from "react-router";
-import { ArrowRight } from "lucide-react";
-import { PageHead } from "../components/PageHead";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { posts } from "../content/posts";
-import { formatDate } from "../lib/links";
+import { Link } from 'react-router';
+import { ArrowRight } from 'lucide-react';
+import { PageHead } from '../components/PageHead';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { posts } from '../content/posts';
+import { formatDate } from '../lib/links';
 
 export function BlogIndexPage() {
   return (
@@ -27,8 +21,8 @@ export function BlogIndexPage() {
           Guides for shipping persistent AI memory
         </h1>
         <p className="mt-3 text-muted-foreground">
-          Integration tutorials, architecture deep-dives, and conversion-focused
-          playbooks for Context Vault users.
+          Integration tutorials, architecture deep-dives, and conversion-focused playbooks for
+          Context Vault users.
         </p>
       </div>
 
@@ -47,9 +41,7 @@ export function BlogIndexPage() {
                     {post.title}
                   </Link>
                 </CardTitle>
-                <CardDescription className="mt-2">
-                  {post.description}
-                </CardDescription>
+                <CardDescription className="mt-2">{post.description}</CardDescription>
               </div>
               <Button asChild variant="outline" className="w-fit">
                 <Link to={`/blog/${post.slug}`}>

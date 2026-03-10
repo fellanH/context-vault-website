@@ -1,9 +1,9 @@
-import { Helmet } from "react-helmet-async";
+import { Helmet } from 'react-helmet-async';
 
-const BASE_URL = "https://context-vault.com";
-const SITE_NAME = "Context Vault";
+const BASE_URL = 'https://context-vault.com';
+const SITE_NAME = 'Context Vault';
 const DEFAULT_DESCRIPTION =
-  "Context Vault gives Claude, Cursor, and MCP-compatible AI tools persistent memory across sessions. Local-first, open-core, and setup in under 5 minutes.";
+  'Context Vault gives Claude, Cursor, and MCP-compatible AI tools persistent memory across sessions. Local-first, open-core, and setup in under 5 minutes.';
 const DEFAULT_OG_IMAGE = `${BASE_URL}/og/default.png`;
 
 type PageHeadProps = {
@@ -13,17 +13,12 @@ type PageHeadProps = {
   image?: string; // absolute URL or root-relative path like /og/blog-slug.png
 };
 
-export function PageHead({
-  title,
-  description,
-  canonical,
-  image,
-}: PageHeadProps) {
+export function PageHead({ title, description, canonical, image }: PageHeadProps) {
   const fullTitle = `${title} | ${SITE_NAME}`;
   const desc = description ?? DEFAULT_DESCRIPTION;
   const url = `${BASE_URL}${canonical}`;
   const imageUrl = image
-    ? image.startsWith("http")
+    ? image.startsWith('http')
       ? image
       : `${BASE_URL}${image}`
     : DEFAULT_OG_IMAGE;

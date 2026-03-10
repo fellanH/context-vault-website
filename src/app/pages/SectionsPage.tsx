@@ -1,5 +1,5 @@
-import React from "react";
-import { Helmet } from "react-helmet-async";
+import React from 'react';
+import { Helmet } from 'react-helmet-async';
 import {
   Code2,
   Terminal,
@@ -16,8 +16,8 @@ import {
   Layers,
   Cpu,
   BookOpen,
-} from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+} from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
 import {
   AnnouncementBar,
   SectionMarker,
@@ -35,207 +35,206 @@ import {
   IntegrationsSplit,
   PerformanceSection,
   UseCaseDetailed,
-} from "../components/sections";
+} from '../components/sections';
 
 // ─── Sample data ────────────────────────────────────────────────────────────
 
 const sampleLogos = [
-  { name: "Claude Code", logo: "anthropic" },
-  { name: "Cursor", logo: "cursor" },
-  { name: "Windsurf", logo: undefined },
-  { name: "Zed", logo: "zed" },
-  { name: "ChatGPT", logo: "openai" },
-  { name: "n8n", logo: "n8n" },
-  { name: "Raycast", logo: "raycast" },
-  { name: "VS Code", logo: "visualstudiocode" },
+  { name: 'Claude Code', logo: 'anthropic' },
+  { name: 'Cursor', logo: 'cursor' },
+  { name: 'Windsurf', logo: undefined },
+  { name: 'Zed', logo: 'zed' },
+  { name: 'ChatGPT', logo: 'openai' },
+  { name: 'n8n', logo: 'n8n' },
+  { name: 'Raycast', logo: 'raycast' },
+  { name: 'VS Code', logo: 'visualstudiocode' },
 ];
 
 const sampleStats = [
   {
-    value: "< 5 min",
-    label: "Setup time",
-    description: "Install once, connect your AI client through MCP, done.",
+    value: '< 5 min',
+    label: 'Setup time',
+    description: 'Install once, connect your AI client through MCP, done.',
   },
   {
-    value: "100%",
-    label: "Local by default",
-    description: "Your data stays in plain markdown files on your own machine.",
+    value: '100%',
+    label: 'Local by default',
+    description: 'Your data stays in plain markdown files on your own machine.',
   },
   {
-    value: "3+",
-    label: "AI clients supported",
-    description:
-      "Claude Code, Cursor, Windsurf, and any MCP-compatible client.",
+    value: '3+',
+    label: 'AI clients supported',
+    description: 'Claude Code, Cursor, Windsurf, and any MCP-compatible client.',
   },
 ];
 
 const sampleTestimonials = [
   {
     quote:
-      "Context Vault changed how I work with Claude Code. I no longer re-explain architecture decisions at the start of every session.",
-    name: "Alex R.",
-    role: "Staff Engineer",
-    handle: "@alexr on X",
+      'Context Vault changed how I work with Claude Code. I no longer re-explain architecture decisions at the start of every session.',
+    name: 'Alex R.',
+    role: 'Staff Engineer',
+    handle: '@alexr on X',
   },
   {
     quote:
       "The hybrid search actually works. It finds relevant context even when I can't remember the exact words I used to save it.",
-    name: "Priya M.",
-    role: "AI Product Engineer",
-    handle: "@priya_builds on X",
+    name: 'Priya M.',
+    role: 'AI Product Engineer',
+    handle: '@priya_builds on X',
   },
   {
     quote:
-      "Setup took 4 minutes. I pointed Cursor at the MCP endpoint and it just worked. Exactly what I wanted.",
-    name: "Chris T.",
-    role: "Indie developer",
-    handle: "@chris_t on X",
+      'Setup took 4 minutes. I pointed Cursor at the MCP endpoint and it just worked. Exactly what I wanted.',
+    name: 'Chris T.',
+    role: 'Indie developer',
+    handle: '@chris_t on X',
   },
 ];
 
 const sampleFeatures = [
-  { label: "Local-first storage", contextVault: true, alternative: false },
+  { label: 'Local-first storage', contextVault: true, alternative: false },
   {
-    label: "Hybrid search (semantic + FTS)",
+    label: 'Hybrid search (semantic + FTS)',
     contextVault: true,
     alternative: false,
   },
-  { label: "MCP native", contextVault: true, alternative: false },
-  { label: "Plain markdown files", contextVault: true, alternative: false },
-  { label: "Setup time", contextVault: "5 min", alternative: "Days" },
-  { label: "Open-core", contextVault: true, alternative: false },
+  { label: 'MCP native', contextVault: true, alternative: false },
+  { label: 'Plain markdown files', contextVault: true, alternative: false },
+  { label: 'Setup time', contextVault: '5 min', alternative: 'Days' },
+  { label: 'Open-core', contextVault: true, alternative: false },
 ];
 
 const sampleUseCases = [
   {
     icon: Terminal,
-    label: "Claude Code users",
-    title: "Stop re-explaining yourself",
+    label: 'Claude Code users',
+    title: 'Stop re-explaining yourself',
     description:
-      "Persist project decisions, architecture notes, and recurring patterns across every session. Your agent picks up exactly where you left off.",
+      'Persist project decisions, architecture notes, and recurring patterns across every session. Your agent picks up exactly where you left off.',
   },
   {
     icon: Code2,
-    label: "Cursor / Windsurf",
-    title: "Shared context across IDE sessions",
+    label: 'Cursor / Windsurf',
+    title: 'Shared context across IDE sessions',
     description:
-      "Share context across your IDE sessions without re-pasting the same background every chat. One vault, every client.",
+      'Share context across your IDE sessions without re-pasting the same background every chat. One vault, every client.',
   },
   {
     icon: Users,
-    label: "Dev teams",
-    title: "A knowledge layer for your whole team",
+    label: 'Dev teams',
+    title: 'A knowledge layer for your whole team',
     description:
-      "Conventions, past decisions, architecture gotchas — stored once, retrieved by every agent on the team automatically.",
+      'Conventions, past decisions, architecture gotchas — stored once, retrieved by every agent on the team automatically.',
   },
 ];
 
 const sampleFeatureCards = [
   {
     icon: Database,
-    title: "Persistent memory",
+    title: 'Persistent memory',
     description:
-      "Save context across sessions in plain markdown. Your vault grows with every conversation.",
+      'Save context across sessions in plain markdown. Your vault grows with every conversation.',
   },
   {
     icon: Zap,
-    title: "Hybrid search",
+    title: 'Hybrid search',
     description:
       "Semantic + full-text search finds the right entry even when you can't recall the exact words.",
   },
   {
     icon: Shield,
-    title: "Local-first",
+    title: 'Local-first',
     description:
-      "All data lives in files on your machine. No cloud, no accounts, no data leaving your device.",
+      'All data lives in files on your machine. No cloud, no accounts, no data leaving your device.',
   },
   {
     icon: Globe,
-    title: "MCP native",
+    title: 'MCP native',
     description:
-      "Works with any MCP-compatible AI client out of the box. Claude Code, Cursor, Windsurf, and more.",
+      'Works with any MCP-compatible AI client out of the box. Claude Code, Cursor, Windsurf, and more.',
   },
 ];
 
 const sampleSplitBlocks = [
   {
     icon: Database,
-    label: "Local storage",
-    title: "Plain markdown files.",
+    label: 'Local storage',
+    title: 'Plain markdown files.',
     description:
-      "Your context is stored in readable .md files — no proprietary formats, no lock-in. Git-friendly by default.",
+      'Your context is stored in readable .md files — no proprietary formats, no lock-in. Git-friendly by default.',
   },
   {
     icon: Zap,
-    label: "Sub-second retrieval",
-    title: "Blazingly fast.",
+    label: 'Sub-second retrieval',
+    title: 'Blazingly fast.',
     description:
-      "Hybrid search returns results in milliseconds, fast enough for real-time agent workflows.",
+      'Hybrid search returns results in milliseconds, fast enough for real-time agent workflows.',
   },
   {
     icon: Shield,
-    label: "Zero configuration",
-    title: "Five-minute setup.",
+    label: 'Zero configuration',
+    title: 'Five-minute setup.',
     description:
-      "Install the server, point your AI client at the MCP endpoint, and start saving context. No config files.",
+      'Install the server, point your AI client at the MCP endpoint, and start saving context. No config files.',
   },
   {
     icon: Clock,
-    label: "Always available",
-    title: "Works offline.",
+    label: 'Always available',
+    title: 'Works offline.',
     description:
-      "No internet required. The vault server runs locally and is always available — even on a plane.",
+      'No internet required. The vault server runs locally and is always available — even on a plane.',
   },
 ];
 
 const sampleFAQCategories = [
   {
-    category: "General",
+    category: 'General',
     items: [
       {
-        question: "What is Context Vault?",
+        question: 'What is Context Vault?',
         answer:
-          "Context Vault is a local-first MCP memory server. It lets AI coding agents — Claude Code, Cursor, Windsurf, and others — save and retrieve context across sessions using hybrid semantic + full-text search.",
+          'Context Vault is a local-first MCP memory server. It lets AI coding agents — Claude Code, Cursor, Windsurf, and others — save and retrieve context across sessions using hybrid semantic + full-text search.',
       },
       {
-        question: "Is it open-source?",
+        question: 'Is it open-source?',
         answer:
-          "Yes, the core server is open-source on GitHub. You can self-host, contribute, or build on top of it. A hosted version with additional features is also available.",
+          'Yes, the core server is open-source on GitHub. You can self-host, contribute, or build on top of it. A hosted version with additional features is also available.',
       },
       {
-        question: "Which AI clients are supported?",
+        question: 'Which AI clients are supported?',
         answer:
-          "Any MCP-compatible client works: Claude Code, Cursor, Windsurf, Zed, and more. If your client supports the Model Context Protocol, Context Vault will work with it.",
+          'Any MCP-compatible client works: Claude Code, Cursor, Windsurf, Zed, and more. If your client supports the Model Context Protocol, Context Vault will work with it.',
       },
     ],
   },
   {
-    category: "Storage & Privacy",
+    category: 'Storage & Privacy',
     items: [
       {
-        question: "Where is my data stored?",
+        question: 'Where is my data stored?',
         answer:
-          "All data is stored locally in plain markdown files on your machine. Nothing is sent to the cloud. The vault directory is configurable.",
+          'All data is stored locally in plain markdown files on your machine. Nothing is sent to the cloud. The vault directory is configurable.',
       },
       {
-        question: "Can I version-control my vault?",
+        question: 'Can I version-control my vault?',
         answer:
-          "Yes. Because entries are plain .md files, you can put the vault directory under git and get full version history, diffing, and collaboration for free.",
+          'Yes. Because entries are plain .md files, you can put the vault directory under git and get full version history, diffing, and collaboration for free.',
       },
     ],
   },
   {
-    category: "Billing",
+    category: 'Billing',
     items: [
       {
-        question: "Is Context Vault free?",
+        question: 'Is Context Vault free?',
         answer:
-          "The open-source server is free forever. A hosted tier with team sharing and priority support is available on a subscription basis.",
+          'The open-source server is free forever. A hosted tier with team sharing and priority support is available on a subscription basis.',
       },
       {
-        question: "Do you charge per request?",
+        question: 'Do you charge per request?',
         answer:
-          "No. The local server has no usage limits. The hosted tier is priced per seat, not per query.",
+          'No. The local server has no usage limits. The hosted tier is priced per seat, not per query.',
       },
     ],
   },
@@ -243,11 +242,11 @@ const sampleFAQCategories = [
 
 // ─── New section data ────────────────────────────────────────────────────────
 
-const heroTabs = ["Persist", "Search", "Retrieve"];
+const heroTabs = ['Persist', 'Search', 'Retrieve'];
 
 const codeTabs = [
   {
-    label: "Python",
+    label: 'Python',
     code: `import context_vault
 
 # Initialize vault client
@@ -267,7 +266,7 @@ for entry in results:
     print(entry.title, entry.body)`,
   },
   {
-    label: "CLI",
+    label: 'CLI',
     code: `# Install Context Vault MCP server
 npm install -g context-vault
 context-vault setup
@@ -303,36 +302,36 @@ Use JWT + refresh tokens
 **Created:** 2026-02-20`;
 
 const integrationLogos = [
-  { name: "Claude Code", logo: "anthropic" },
-  { name: "Cursor", logo: "cursor" },
-  { name: "Windsurf", logo: undefined },
-  { name: "Zed", logo: "zed" },
-  { name: "VS Code", logo: "visualstudiocode" },
-  { name: "Raycast", logo: "raycast" },
+  { name: 'Claude Code', logo: 'anthropic' },
+  { name: 'Cursor', logo: 'cursor' },
+  { name: 'Windsurf', logo: undefined },
+  { name: 'Zed', logo: 'zed' },
+  { name: 'VS Code', logo: 'visualstudiocode' },
+  { name: 'Raycast', logo: 'raycast' },
 ];
 
 const sampleCommits = [
-  { title: "feat: hybrid search with FTS5", number: "#142", date: "2d ago" },
+  { title: 'feat: hybrid search with FTS5', number: '#142', date: '2d ago' },
   {
-    title: "fix: vault path resolution on Windows",
-    number: "#139",
-    date: "4d ago",
+    title: 'fix: vault path resolution on Windows',
+    number: '#139',
+    date: '4d ago',
   },
-  { title: "chore: add SQLite WAL mode", number: "#136", date: "1w ago" },
+  { title: 'chore: add SQLite WAL mode', number: '#136', date: '1w ago' },
 ];
 
 const performanceCompetitors = [
-  { name: "Context Vault", fillPercent: 98 },
-  { name: "BYOM (manual)", fillPercent: 62 },
-  { name: "Cloud notes", fillPercent: 45 },
-  { name: "Paste-in context", fillPercent: 28 },
+  { name: 'Context Vault', fillPercent: 98 },
+  { name: 'BYOM (manual)', fillPercent: 62 },
+  { name: 'Cloud notes', fillPercent: 45 },
+  { name: 'Paste-in context', fillPercent: 28 },
 ];
 
 const performanceBenchmarks = [
-  { url: "Exact match", crawlMs: "4 ms", scrapeMs: "2 ms" },
-  { url: "Semantic query", crawlMs: "18 ms", scrapeMs: "11 ms" },
-  { url: "Full-text search", crawlMs: "6 ms", scrapeMs: "3 ms" },
-  { url: "Tag filter", crawlMs: "3 ms", scrapeMs: "1 ms" },
+  { url: 'Exact match', crawlMs: '4 ms', scrapeMs: '2 ms' },
+  { url: 'Semantic query', crawlMs: '18 ms', scrapeMs: '11 ms' },
+  { url: 'Full-text search', crawlMs: '6 ms', scrapeMs: '3 ms' },
+  { url: 'Tag filter', crawlMs: '3 ms', scrapeMs: '1 ms' },
 ];
 
 const performanceAscii = `  ·:·
@@ -344,11 +343,11 @@ const performanceAscii = `  ·:·
 const detailedUseCases = [
   {
     icon: Terminal,
-    label: "Claude Code",
-    title: "Persistent memory for every session",
+    label: 'Claude Code',
+    title: 'Persistent memory for every session',
     description:
-      "Save architecture decisions, debug findings, and project conventions. Claude Code retrieves them automatically at the start of every session.",
-    mockupBadge: "Real-time · Updated 2 min ago",
+      'Save architecture decisions, debug findings, and project conventions. Claude Code retrieves them automatically at the start of every session.',
+    mockupBadge: 'Real-time · Updated 2 min ago',
     mockupContent: (
       <div className="font-mono text-xs text-muted-foreground space-y-1.5 w-full px-2">
         <div className="text-primary">▸ Retrieved 3 relevant entries</div>
@@ -360,17 +359,15 @@ const detailedUseCases = [
   },
   {
     icon: Code2,
-    label: "Cursor / Windsurf",
-    title: "One vault, any IDE",
+    label: 'Cursor / Windsurf',
+    title: 'One vault, any IDE',
     description:
-      "The same MCP endpoint works across Cursor, Windsurf, Zed, and more. Context saved in one client is immediately available in all others.",
-    mockupBadge: "MCP · Connected",
+      'The same MCP endpoint works across Cursor, Windsurf, Zed, and more. Context saved in one client is immediately available in all others.',
+    mockupBadge: 'MCP · Connected',
     mockupContent: (
       <div className="font-mono text-xs text-muted-foreground space-y-1.5 w-full px-2">
         <div className="text-green-500">● MCP server connected</div>
-        <div className="text-muted-foreground/60">
-          context-vault@localhost:3000
-        </div>
+        <div className="text-muted-foreground/60">context-vault@localhost:3000</div>
         <div className="mt-2">Tools: save_context, get_context,</div>
         <div>list_context, delete_context</div>
       </div>
@@ -378,11 +375,11 @@ const detailedUseCases = [
   },
   {
     icon: Users,
-    label: "Dev teams",
-    title: "Shared knowledge layer",
+    label: 'Dev teams',
+    title: 'Shared knowledge layer',
     description:
-      "Team conventions, past incident notes, and architecture gotchas — stored once in a shared vault, retrieved automatically by every agent on the team.",
-    mockupBadge: "Team vault · 3 members",
+      'Team conventions, past incident notes, and architecture gotchas — stored once in a shared vault, retrieved automatically by every agent on the team.',
+    mockupBadge: 'Team vault · 3 members',
     mockupContent: (
       <div className="font-mono text-xs text-muted-foreground space-y-1.5 w-full px-2">
         <div>vault/</div>
@@ -395,20 +392,18 @@ const detailedUseCases = [
   },
   {
     icon: BookOpen,
-    label: "Knowledge base",
-    title: "Searchable by meaning, not just keywords",
+    label: 'Knowledge base',
+    title: 'Searchable by meaning, not just keywords',
     description:
       "Hybrid search combines vector embeddings with full-text search. Find entries even when you can't recall the exact words you used to save them.",
-    mockupBadge: "Search · 12 entries",
+    mockupBadge: 'Search · 12 entries',
     mockupContent: (
       <div className="font-mono text-xs text-muted-foreground space-y-1.5 w-full px-2">
         <div>
-          <span className="text-muted-foreground/60">query:</span>{" "}
+          <span className="text-muted-foreground/60">query:</span>{' '}
           <span className="text-primary">"database choice"</span>
         </div>
-        <div className="text-muted-foreground/60 text-[10px]">
-          ↳ semantic match
-        </div>
+        <div className="text-muted-foreground/60 text-[10px]">↳ semantic match</div>
         <div>• Use SQLite for local storage</div>
         <div>• Postgres vs SQLite trade-offs</div>
       </div>
@@ -434,12 +429,8 @@ function SectionEntry({
   return (
     <div id={id}>
       <div className="mx-auto w-full max-w-none px-6 py-3 flex items-center gap-3 border-b border-border bg-muted/10">
-        <code className="rounded bg-muted px-2 py-0.5 text-xs font-mono text-primary">
-          {name}
-        </code>
-        {description && (
-          <span className="text-xs text-muted-foreground">{description}</span>
-        )}
+        <code className="rounded bg-muted px-2 py-0.5 text-xs font-mono text-primary">{name}</code>
+        {description && <span className="text-xs text-muted-foreground">{description}</span>}
         <code className="ml-auto rounded bg-muted px-2 py-0.5 text-xs font-mono text-muted-foreground hidden md:block">
           {usage}
         </code>
@@ -452,22 +443,22 @@ function SectionEntry({
 // ─── Page ────────────────────────────────────────────────────────────────────
 
 const allSections: Array<[string, string]> = [
-  ["hero", "HeroSection"],
-  ["announcement-bar", "AnnouncementBar"],
-  ["section-marker", "SectionMarker"],
-  ["feature-card-grid", "FeatureCardGrid"],
-  ["split-feature", "SplitFeatureSection"],
-  ["faq", "FAQSection"],
-  ["logo-cloud", "LogoCloud"],
-  ["stat-strip", "StatStrip"],
-  ["testimonials", "TestimonialStrip"],
-  ["comparison", "ComparisonSection"],
-  ["use-cases", "UseCaseGrid"],
-  ["code-demo", "CodeDemoSection"],
-  ["skill-install", "SkillInstallSection"],
-  ["integrations-split", "IntegrationsSplit"],
-  ["performance", "PerformanceSection"],
-  ["use-case-detailed", "UseCaseDetailed"],
+  ['hero', 'HeroSection'],
+  ['announcement-bar', 'AnnouncementBar'],
+  ['section-marker', 'SectionMarker'],
+  ['feature-card-grid', 'FeatureCardGrid'],
+  ['split-feature', 'SplitFeatureSection'],
+  ['faq', 'FAQSection'],
+  ['logo-cloud', 'LogoCloud'],
+  ['stat-strip', 'StatStrip'],
+  ['testimonials', 'TestimonialStrip'],
+  ['comparison', 'ComparisonSection'],
+  ['use-cases', 'UseCaseGrid'],
+  ['code-demo', 'CodeDemoSection'],
+  ['skill-install', 'SkillInstallSection'],
+  ['integrations-split', 'IntegrationsSplit'],
+  ['performance', 'PerformanceSection'],
+  ['use-case-detailed', 'UseCaseDetailed'],
 ];
 
 export function SectionsPage() {
@@ -483,9 +474,7 @@ export function SectionsPage() {
           <Badge variant="outline" className="mb-3">
             Internal
           </Badge>
-          <h1 className="text-3xl font-semibold tracking-tight">
-            Section Library
-          </h1>
+          <h1 className="text-3xl font-semibold tracking-tight">Section Library</h1>
           <p className="mt-2 text-muted-foreground">
             Reusable section components. Drop into any page.
           </p>
@@ -610,10 +599,7 @@ export function SectionsPage() {
         usage={`<LogoCloud logos={[{ name, logo }]} />`}
         description="Infinite-scroll logo strip — Simple Icons slug or image URL"
       >
-        <LogoCloud
-          headline="Used across AI tools worldwide"
-          logos={sampleLogos}
-        />
+        <LogoCloud headline="Used across AI tools worldwide" logos={sampleLogos} />
       </SectionEntry>
 
       <SectionEntry
@@ -680,9 +666,9 @@ export function SectionsPage() {
           skillDescription="Install the MCP server and connect any AI client in under 5 minutes."
           skillCommand="npm install -g context-vault"
           skillCapabilities={[
-            "Saves context across sessions",
-            "Hybrid semantic + full-text search",
-            "Works with Claude Code, Cursor, Windsurf",
+            'Saves context across sessions',
+            'Hybrid semantic + full-text search',
+            'Works with Claude Code, Cursor, Windsurf',
           ]}
         />
       </SectionEntry>
@@ -698,12 +684,12 @@ export function SectionsPage() {
           description="One command installs the MCP server and registers it with your AI client. Works with Claude Code, Cursor, and Windsurf out of the box."
           command="npm install -g context-vault"
           capabilities={[
-            "Saves context across sessions",
-            "Hybrid semantic + full-text search",
-            "Local-first — data stays on your machine",
-            "Zero configuration required",
+            'Saves context across sessions',
+            'Hybrid semantic + full-text search',
+            'Local-first — data stays on your machine',
+            'Zero configuration required',
           ]}
-          compatibleWith={["Claude Code", "Cursor", "Windsurf", "Zed"]}
+          compatibleWith={['Claude Code', 'Cursor', 'Windsurf', 'Zed']}
         />
       </SectionEntry>
 

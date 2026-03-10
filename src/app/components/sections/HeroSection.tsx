@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
-import { ArrowRight, Copy, Check } from "lucide-react";
+import { useState, useEffect } from 'react';
+import { ArrowRight, Copy, Check } from 'lucide-react';
 
 interface TerminalLine {
   text: string;
-  variant?: "command" | "success" | "muted" | "default";
+  variant?: 'command' | 'success' | 'muted' | 'default';
 }
 
 interface HeroSectionProps {
@@ -35,9 +35,9 @@ export function HeroSection({
   quickStartCommand,
   installCommand,
   trustPoints,
-  leftPanelBadge = "[ terminal ]",
+  leftPanelBadge = '[ terminal ]',
   leftPanelLines = [],
-  rightPanelBadge = "[ .MD ]",
+  rightPanelBadge = '[ .MD ]',
   rightPanelLines = [],
   dotGrid = true,
 }: HeroSectionProps) {
@@ -46,9 +46,7 @@ export function HeroSection({
 
   useEffect(() => {
     if (leftPanelLines.length === 0) return;
-    const reduced = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (reduced) {
       setRevealedCount(leftPanelLines.length);
       return;
@@ -67,9 +65,7 @@ export function HeroSection({
   const rightPanelReady = revealedCount >= leftPanelLines.length;
 
   const headingParts =
-    accentWord && heading.includes(accentWord)
-      ? heading.split(accentWord)
-      : null;
+    accentWord && heading.includes(accentWord) ? heading.split(accentWord) : null;
 
   function copyCommand() {
     if (!quickStartCommand) return;
@@ -86,13 +82,11 @@ export function HeroSection({
       style={
         dotGrid
           ? {
-              backgroundImage:
-                "radial-gradient(circle, var(--border) 1px, transparent 1px)",
-              backgroundSize: "32px 32px",
-              maskImage:
-                "radial-gradient(ellipse 70% 70% at 50% 50%, black 40%, transparent 100%)",
+              backgroundImage: 'radial-gradient(circle, var(--border) 1px, transparent 1px)',
+              backgroundSize: '32px 32px',
+              maskImage: 'radial-gradient(ellipse 70% 70% at 50% 50%, black 40%, transparent 100%)',
               WebkitMaskImage:
-                "radial-gradient(ellipse 70% 70% at 50% 50%, black 40%, transparent 100%)",
+                'radial-gradient(ellipse 70% 70% at 50% 50%, black 40%, transparent 100%)',
             }
           : undefined
       }
@@ -117,10 +111,7 @@ export function HeroSection({
           ))}
 
         {/* Heading */}
-        <h1
-          id="hero-heading"
-          className="text-4xl font-semibold tracking-tight leading-tight mb-4"
-        >
+        <h1 id="hero-heading" className="text-4xl font-semibold tracking-tight leading-tight mb-4">
           {headingParts ? (
             <>
               {headingParts[0]}
@@ -165,15 +156,13 @@ export function HeroSection({
             {installCommand && (
               <p className="text-xs text-muted-foreground">
                 or, prefer permanent&nbsp;·&nbsp;
-                <code className="font-mono text-muted-foreground/80">
-                  {installCommand}
-                </code>
+                <code className="font-mono text-muted-foreground/80">{installCommand}</code>
               </p>
             )}
 
             {secondaryCta && (
               <p className="text-xs text-muted-foreground">
-                or{" "}
+                or{' '}
                 <a
                   href={secondaryCta.href}
                   className="text-primary underline underline-offset-4 hover:opacity-80 transition-opacity"
@@ -227,25 +216,23 @@ export function HeroSection({
               <span className="size-2 rounded-full bg-red-400/70" />
               <span className="size-2 rounded-full bg-yellow-400/70" />
               <span className="size-2 rounded-full bg-green-400/70" />
-              <span className="ml-auto font-mono text-[10px] text-zinc-500">
-                {leftPanelBadge}
-              </span>
+              <span className="ml-auto font-mono text-[10px] text-zinc-500">{leftPanelBadge}</span>
             </div>
             <div className="bg-zinc-950 p-4 min-h-[160px] text-left">
               {leftPanelLines.slice(0, revealedCount).map((line, i) => (
                 <div
                   key={i}
                   className={`font-mono text-[10px] leading-relaxed ${
-                    line.variant === "command"
-                      ? "text-primary"
-                      : line.variant === "success"
-                        ? "text-green-400"
-                        : line.variant === "muted"
-                          ? "text-zinc-500"
-                          : "text-zinc-400"
+                    line.variant === 'command'
+                      ? 'text-primary'
+                      : line.variant === 'success'
+                        ? 'text-green-400'
+                        : line.variant === 'muted'
+                          ? 'text-zinc-500'
+                          : 'text-zinc-400'
                   }`}
                 >
-                  {line.text || "\u00A0"}
+                  {line.text || '\u00A0'}
                 </div>
               ))}
             </div>
@@ -263,19 +250,17 @@ export function HeroSection({
             </div>
             <div
               className={`bg-background p-4 min-h-[160px] text-left transition-opacity duration-500 ${
-                rightPanelReady ? "opacity-100" : "opacity-0"
+                rightPanelReady ? 'opacity-100' : 'opacity-0'
               }`}
             >
               {rightPanelLines.map((line, i) => (
                 <div
                   key={i}
                   className={`font-mono text-[10px] leading-relaxed ${
-                    line.startsWith("# ")
-                      ? "text-foreground font-medium"
-                      : "text-muted-foreground"
+                    line.startsWith('# ') ? 'text-foreground font-medium' : 'text-muted-foreground'
                   }`}
                 >
-                  {line || "\u00A0"}
+                  {line || '\u00A0'}
                 </div>
               ))}
             </div>

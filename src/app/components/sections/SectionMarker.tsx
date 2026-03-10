@@ -8,8 +8,8 @@ interface SectionMarkerProps {
 }
 
 export function SectionMarker({ index, total, label }: SectionMarkerProps) {
-  const idx = String(index).padStart(2, "0");
-  const tot = String(total).padStart(2, "0");
+  const idx = String(index).padStart(2, '0');
+  const tot = String(total).padStart(2, '0');
 
   return (
     <div className="border-y border-border bg-background">

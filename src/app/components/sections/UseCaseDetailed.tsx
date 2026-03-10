@@ -1,6 +1,6 @@
-import type { LucideIcon } from "lucide-react";
-import type { ReactNode } from "react";
-import { ArrowRight } from "lucide-react";
+import type { LucideIcon } from 'lucide-react';
+import type { ReactNode } from 'react';
+import { ArrowRight } from 'lucide-react';
 
 interface UseCaseItem {
   icon: LucideIcon;
@@ -21,19 +21,9 @@ interface UseCaseDetailedProps {
   useCases: UseCaseItem[];
 }
 
-function AccentHeading({
-  heading,
-  accentWord,
-}: {
-  heading: string;
-  accentWord?: string;
-}) {
+function AccentHeading({ heading, accentWord }: { heading: string; accentWord?: string }) {
   if (!accentWord || !heading.includes(accentWord)) {
-    return (
-      <h2 className="text-3xl font-semibold tracking-tight text-center">
-        {heading}
-      </h2>
-    );
+    return <h2 className="text-3xl font-semibold tracking-tight text-center">{heading}</h2>;
   }
   const [before, after] = heading.split(accentWord);
   return (
@@ -89,12 +79,8 @@ export function UseCaseDetailed({
                     {item.label}
                   </span>
                 </div>
-                <h3 className="text-xl font-semibold tracking-tight mb-2">
-                  {item.title}
-                </h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {item.description}
-                </p>
+                <h3 className="text-xl font-semibold tracking-tight mb-2">{item.title}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{item.description}</p>
                 {item.href && (
                   <a
                     href={item.href}

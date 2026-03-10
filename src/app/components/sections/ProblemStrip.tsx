@@ -1,19 +1,19 @@
-import { AlertTriangle } from "lucide-react";
+import { AlertTriangle } from 'lucide-react';
 
 const problems = [
   {
-    index: "01",
-    label: "The blank slate",
+    index: '01',
+    label: 'The blank slate',
     body: "It's Monday. You open your editor. Your AI has no idea what you were working on Friday. You spend 10 minutes re-explaining your stack, your patterns, your decisions. Again.",
   },
   {
-    index: "02",
-    label: "Lost decisions",
+    index: '02',
+    label: 'Lost decisions',
     body: "Three weeks ago you chose JWT over session cookies. You remember the decision, but not the reasoning. It's buried in a Slack thread, a PR comment, or just... gone.",
   },
   {
-    index: "03",
-    label: "Siloed tools",
+    index: '03',
+    label: 'Siloed tools',
     body: "You told Claude Code about your database choice. Now you're in Cursor. It doesn't know. You told Windsurf your API patterns. Claude Code doesn't know. Every tool is an island.",
   },
 ];
@@ -29,10 +29,7 @@ export function ProblemStrip() {
               Sound familiar?
             </span>
           </div>
-          <h2
-            id="problem-heading"
-            className="text-3xl font-semibold tracking-tight"
-          >
+          <h2 id="problem-heading" className="text-3xl font-semibold tracking-tight">
             Three problems every developer knows
           </h2>
         </div>
@@ -54,16 +51,12 @@ export function ProblemStrip() {
                   {p.label}
                 </p>
               </div>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                {p.body}
-              </p>
+              <p className="text-sm text-muted-foreground leading-relaxed">{p.body}</p>
             </div>
           ))}
         </div>
         <div className="mt-10 text-center">
-          <p className="text-base font-medium text-foreground">
-            Context Vault solves all three.
-          </p>
+          <p className="text-base font-medium text-foreground">Context Vault solves all three.</p>
         </div>
       </div>
     </section>

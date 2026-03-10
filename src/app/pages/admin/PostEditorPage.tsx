@@ -1,63 +1,57 @@
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router";
-import { Plus, Trash2, ArrowLeft } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router';
+import { Plus, Trash2, ArrowLeft } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import type { BlogPost, BlogPostSection } from "../../content/posts";
+} from '@/components/ui/select';
+import type { BlogPost, BlogPostSection } from '../../content/posts';
 
-const CATEGORIES = [
-  "Integration",
-  "Playbook",
-  "Architecture",
-  "Education",
-  "Comparison",
-] as const;
+const CATEGORIES = ['Integration', 'Playbook', 'Architecture', 'Education', 'Comparison'] as const;
 
 function slugify(str: string) {
   return str
     .toLowerCase()
     .trim()
-    .replace(/[^a-z0-9\s-]/g, "")
-    .replace(/\s+/g, "-")
-    .replace(/-+/g, "-");
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-');
 }
 
 function emptyPost(): BlogPost {
   return {
-    slug: "",
-    title: "",
-    description: "",
-    category: "Integration",
+    slug: '',
+    title: '',
+    description: '',
+    category: 'Integration',
     publishedAt: new Date().toISOString().slice(0, 10),
     readTimeMinutes: 5,
-    ctaLabel: "Start free",
-    ctaHref: "/register",
-    sections: [{ heading: "", paragraphs: [""] }],
+    ctaLabel: 'Start free',
+    ctaHref: '/register',
+    sections: [{ heading: '', paragraphs: [''] }],
   };
 }
 
 export function PostEditorPage() {
   const { slug } = useParams<{ slug?: string }>();
   const navigate = useNavigate();
-  const isNew = !slug || slug === "new";
+  const isNew = !slug || slug === 'new';
 
   const [post, setPost] = useState<BlogPost>(emptyPost());
   const [slugManuallyEdited, setSlugManuallyEdited] = useState(false);
   const [saving, setSaving] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
 
   useEffect(() => {
     if (isNew) return;
-    fetch("/cms/posts")
+    fetch('/cms/posts')
       .then((r) => r.json())
       .then((posts: BlogPost[]) => {
         const found = posts.find((p) => p.slug === slug);
@@ -93,7 +87,7 @@ export function PostEditorPage() {
       const sections = [...prev.sections];
       sections[sectionIdx] = {
         ...sections[sectionIdx],
-        paragraphs: [...sections[sectionIdx].paragraphs, ""],
+        paragraphs: [...sections[sectionIdx].paragraphs, ''],
       };
       return { ...prev, sections };
     });
@@ -102,9 +96,7 @@ export function PostEditorPage() {
   function removeParagraph(sectionIdx: number, paraIdx: number) {
     setPost((prev) => {
       const sections = [...prev.sections];
-      const paragraphs = sections[sectionIdx].paragraphs.filter(
-        (_, i) => i !== paraIdx,
-      );
+      const paragraphs = sections[sectionIdx].paragraphs.filter((_, i) => i !== paraIdx);
       sections[sectionIdx] = { ...sections[sectionIdx], paragraphs };
       return { ...prev, sections };
     });
@@ -113,7 +105,7 @@ export function PostEditorPage() {
   function addSection() {
     setPost((prev) => ({
       ...prev,
-      sections: [...prev.sections, { heading: "", paragraphs: [""] }],
+      sections: [...prev.sections, { heading: '', paragraphs: [''] }],
     }));
   }
 
@@ -126,19 +118,17 @@ export function PostEditorPage() {
 
   async function save() {
     setSaving(true);
-    setError("");
+    setError('');
     try {
-      const method = isNew ? "POST" : "PUT";
-      const url = isNew
-        ? "/cms/posts"
-        : `/cms/posts/${encodeURIComponent(slug!)}`;
+      const method = isNew ? 'POST' : 'PUT';
+      const url = isNew ? '/cms/posts' : `/cms/posts/${encodeURIComponent(slug!)}`;
       const res = await fetch(url, {
         method,
-        headers: { "Content-Type": "application/json" },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(post),
       });
       if (!res.ok) throw new Error(await res.text());
-      navigate("/admin/posts");
+      navigate('/admin/posts');
     } catch (e) {
       setError(String(e));
     } finally {
@@ -152,20 +142,16 @@ export function PostEditorPage() {
         <Button
           variant="ghost"
           size="icon"
-          onClick={() => navigate("/admin/posts")}
+          onClick={() => navigate('/admin/posts')}
           className="size-8"
         >
           <ArrowLeft className="size-4" />
         </Button>
-        <h1 className="text-xl font-semibold tracking-tight">
-          {isNew ? "New post" : "Edit post"}
-        </h1>
+        <h1 className="text-xl font-semibold tracking-tight">{isNew ? 'New post' : 'Edit post'}</h1>
       </div>
 
       {error && (
-        <p className="text-sm text-destructive bg-destructive/10 rounded-md px-3 py-2">
-          {error}
-        </p>
+        <p className="text-sm text-destructive bg-destructive/10 rounded-md px-3 py-2">{error}</p>
       )}
 
       <div className="space-y-4">
@@ -188,7 +174,7 @@ export function PostEditorPage() {
             value={post.slug}
             onChange={(e) => {
               setSlugManuallyEdited(true);
-              setField("slug", e.target.value);
+              setField('slug', e.target.value);
             }}
             placeholder="url-slug"
             className="font-mono text-sm"
@@ -199,14 +185,12 @@ export function PostEditorPage() {
         <div className="space-y-1.5">
           <div className="flex items-center justify-between">
             <Label htmlFor="description">Description</Label>
-            <span className="text-xs text-muted-foreground">
-              {post.description.length} chars
-            </span>
+            <span className="text-xs text-muted-foreground">{post.description.length} chars</span>
           </div>
           <Textarea
             id="description"
             value={post.description}
-            onChange={(e) => setField("description", e.target.value)}
+            onChange={(e) => setField('description', e.target.value)}
             placeholder="One-sentence description for the blog index and SEO"
             rows={2}
           />
@@ -218,9 +202,7 @@ export function PostEditorPage() {
             <Label>Category</Label>
             <Select
               value={post.category}
-              onValueChange={(v) =>
-                setField("category", v as BlogPost["category"])
-              }
+              onValueChange={(v) => setField('category', v as BlogPost['category'])}
             >
               <SelectTrigger>
                 <SelectValue />
@@ -241,7 +223,7 @@ export function PostEditorPage() {
               id="publishedAt"
               type="date"
               value={post.publishedAt}
-              onChange={(e) => setField("publishedAt", e.target.value)}
+              onChange={(e) => setField('publishedAt', e.target.value)}
             />
           </div>
 
@@ -252,9 +234,7 @@ export function PostEditorPage() {
               type="number"
               min={1}
               value={post.readTimeMinutes}
-              onChange={(e) =>
-                setField("readTimeMinutes", parseInt(e.target.value) || 1)
-              }
+              onChange={(e) => setField('readTimeMinutes', parseInt(e.target.value) || 1)}
             />
           </div>
         </div>
@@ -266,7 +246,7 @@ export function PostEditorPage() {
             <Input
               id="ctaLabel"
               value={post.ctaLabel}
-              onChange={(e) => setField("ctaLabel", e.target.value)}
+              onChange={(e) => setField('ctaLabel', e.target.value)}
             />
           </div>
           <div className="space-y-1.5">
@@ -274,7 +254,7 @@ export function PostEditorPage() {
             <Input
               id="ctaHref"
               value={post.ctaHref}
-              onChange={(e) => setField("ctaHref", e.target.value)}
+              onChange={(e) => setField('ctaHref', e.target.value)}
             />
           </div>
         </div>
@@ -291,10 +271,7 @@ export function PostEditorPage() {
         </div>
 
         {post.sections.map((section, si) => (
-          <div
-            key={si}
-            className="rounded-lg border border-border p-4 space-y-3"
-          >
+          <div key={si} className="rounded-lg border border-border p-4 space-y-3">
             <div className="flex items-center justify-between gap-2">
               <Input
                 value={section.heading}
@@ -342,12 +319,7 @@ export function PostEditorPage() {
               ))}
             </div>
 
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => addParagraph(si)}
-              className="text-xs"
-            >
+            <Button variant="ghost" size="sm" onClick={() => addParagraph(si)} className="text-xs">
               <Plus className="size-3" />
               Add paragraph
             </Button>
@@ -357,9 +329,9 @@ export function PostEditorPage() {
 
       <div className="flex items-center gap-3 pt-2 border-t border-border">
         <Button onClick={save} disabled={saving}>
-          {saving ? "Saving…" : isNew ? "Create post" : "Save changes"}
+          {saving ? 'Saving…' : isNew ? 'Create post' : 'Save changes'}
         </Button>
-        <Button variant="ghost" onClick={() => navigate("/admin/posts")}>
+        <Button variant="ghost" onClick={() => navigate('/admin/posts')}>
           Cancel
         </Button>
       </div>

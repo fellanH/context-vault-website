@@ -1,12 +1,12 @@
-import { Link, NavLink, Outlet, useLocation } from "react-router";
-import { Database, FileText, Image, LayoutDashboard, Type } from "lucide-react";
-import { cn } from "@/components/ui/utils";
+import { Link, NavLink, Outlet, useLocation } from 'react-router';
+import { Database, FileText, Image, LayoutDashboard, Type } from 'lucide-react';
+import { cn } from '@/components/ui/utils';
 
 const navItems = [
-  { to: "/admin", label: "Dashboard", icon: LayoutDashboard, end: true },
-  { to: "/admin/posts", label: "Posts", icon: FileText },
-  { to: "/admin/copy", label: "Copy", icon: Type },
-  { to: "/admin/images", label: "Images", icon: Image },
+  { to: '/admin', label: 'Dashboard', icon: LayoutDashboard, end: true },
+  { to: '/admin/posts', label: 'Posts', icon: FileText },
+  { to: '/admin/copy', label: 'Copy', icon: Type },
+  { to: '/admin/images', label: 'Images', icon: Image },
 ];
 
 export function AdminLayout() {
@@ -31,10 +31,10 @@ export function AdminLayout() {
               end={end}
               className={({ isActive }) =>
                 cn(
-                  "flex items-center gap-2.5 rounded-md px-3 py-2 text-sm transition-colors",
+                  'flex items-center gap-2.5 rounded-md px-3 py-2 text-sm transition-colors',
                   isActive
-                    ? "bg-primary/10 text-primary font-medium"
-                    : "text-muted-foreground hover:bg-muted/50 hover:text-foreground",
+                    ? 'bg-primary/10 text-primary font-medium'
+                    : 'text-muted-foreground hover:bg-muted/50 hover:text-foreground'
                 )
               }
             >

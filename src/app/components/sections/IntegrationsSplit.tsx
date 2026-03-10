@@ -1,5 +1,5 @@
-import { Github, Puzzle } from "lucide-react";
-import { ArrowRight } from "lucide-react";
+import { Github, Puzzle } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 interface LogoItem {
   name: string;
@@ -28,18 +28,18 @@ interface IntegrationsSplitProps {
 }
 
 export function IntegrationsSplit({
-  integrationsHeading = "Works with your tools",
-  integrationsDescription = "Connect Context Vault to any MCP-compatible AI client in minutes.",
-  integrationsCTA = "Browse integrations",
-  integrationsCTAHref = "#",
+  integrationsHeading = 'Works with your tools',
+  integrationsDescription = 'Connect Context Vault to any MCP-compatible AI client in minutes.',
+  integrationsCTA = 'Browse integrations',
+  integrationsCTAHref = '#',
   integrations = [],
-  openSourceHeading = "Open source at its core",
-  openSourceDescription = "The Context Vault server is open-source. Self-host it, contribute to it, or build on top of it.",
+  openSourceHeading = 'Open source at its core',
+  openSourceDescription = 'The Context Vault server is open-source. Self-host it, contribute to it, or build on top of it.',
   repoName,
   stars,
   commits = [],
-  repoCTA = "View on GitHub",
-  repoCTAHref = "#",
+  repoCTA = 'View on GitHub',
+  repoCTAHref = '#',
 }: IntegrationsSplitProps) {
   return (
     <div className="py-16">
@@ -48,9 +48,7 @@ export function IntegrationsSplit({
           {/* Left: integrations */}
           <div className="rounded-2xl border border-border/60 bg-card p-8 shadow-[var(--shadow-card)]">
             <Puzzle className="size-5 text-muted-foreground/40 stroke-[1.25] mb-4" />
-            <h3 className="text-xl font-semibold tracking-tight mb-2">
-              {integrationsHeading}
-            </h3>
+            <h3 className="text-xl font-semibold tracking-tight mb-2">{integrationsHeading}</h3>
             <p className="text-sm text-muted-foreground leading-relaxed mb-4">
               {integrationsDescription}
             </p>
@@ -76,7 +74,7 @@ export function IntegrationsSplit({
                         alt=""
                         className="flex-shrink-0 opacity-60"
                         onError={(e) => {
-                          (e.target as HTMLImageElement).style.display = "none";
+                          (e.target as HTMLImageElement).style.display = 'none';
                         }}
                       />
                     )}
@@ -90,9 +88,7 @@ export function IntegrationsSplit({
           {/* Right: open source */}
           <div className="rounded-2xl border border-border/60 bg-card p-8 shadow-[var(--shadow-card)]">
             <Github className="size-5 text-muted-foreground/40 stroke-[1.25] mb-4" />
-            <h3 className="text-xl font-semibold tracking-tight mb-2">
-              {openSourceHeading}
-            </h3>
+            <h3 className="text-xl font-semibold tracking-tight mb-2">{openSourceHeading}</h3>
             <p className="text-sm text-muted-foreground leading-relaxed mb-4">
               {openSourceDescription}
             </p>
@@ -108,9 +104,7 @@ export function IntegrationsSplit({
             {repoName && (
               <div className="mt-6 rounded-md border border-border overflow-hidden">
                 <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-muted/10">
-                  <span className="font-mono text-xs text-primary">
-                    {repoName}
-                  </span>
+                  <span className="font-mono text-xs text-primary">{repoName}</span>
                   {stars && (
                     <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
                       ★ {stars}
@@ -122,9 +116,7 @@ export function IntegrationsSplit({
                     key={i}
                     className="flex items-center justify-between px-4 py-2.5 border-b last:border-0 border-border text-xs"
                   >
-                    <span className="text-foreground truncate mr-4">
-                      {commit.title}
-                    </span>
+                    <span className="text-foreground truncate mr-4">{commit.title}</span>
                     <span className="text-muted-foreground flex-shrink-0 font-mono">
                       {commit.number} · {commit.date}
                     </span>

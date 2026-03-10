@@ -1,6 +1,6 @@
-import { type ReactNode, useEffect, useState } from "react";
-import { Link } from "react-router";
-import { PageHead } from "../components/PageHead";
+import { type ReactNode, useEffect, useState } from 'react';
+import { Link } from 'react-router';
+import { PageHead } from '../components/PageHead';
 import {
   ArrowRight,
   BookOpen,
@@ -19,18 +19,12 @@ import {
   Terminal,
   Users,
   Zap,
-} from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { posts } from "../content/posts";
-import { formatDate } from "../lib/links";
+} from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { posts } from '../content/posts';
+import { formatDate } from '../lib/links';
 import {
   AnnouncementBar,
   HeroSection,
@@ -41,9 +35,9 @@ import {
   IntegrationsSplit,
   FAQSection,
   ProblemStrip,
-} from "../components/sections";
-import landingData from "../content/landing.json";
-import { useInView } from "../hooks/useInView";
+} from '../components/sections';
+import landingData from '../content/landing.json';
+import { useInView } from '../hooks/useInView';
 
 // ─── Icon map for features ─────────────────────────────────────────────────────
 
@@ -52,13 +46,7 @@ type IconName = keyof typeof iconMap;
 
 // ─── Reveal wrapper ────────────────────────────────────────────────────────────
 
-function Reveal({
-  children,
-  delay = "",
-}: {
-  children: ReactNode;
-  delay?: string;
-}) {
+function Reveal({ children, delay = '' }: { children: ReactNode; delay?: string }) {
   const { ref, inView } = useInView();
   return (
     <div
@@ -66,7 +54,7 @@ function Reveal({
       className={
         inView
           ? `animate-in fade-in-0 slide-in-from-bottom-6 duration-700 ease-out fill-mode-both ${delay}`
-          : "opacity-0"
+          : 'opacity-0'
       }
     >
       {children}
@@ -77,19 +65,19 @@ function Reveal({
 // ─── Data ───────────────────────────────────────────────────────────────────────
 
 const logos = [
-  { name: "Claude Code", logo: "anthropic" },
-  { name: "Cursor", logo: "cursor" },
-  { name: "Windsurf", logo: undefined },
-  { name: "Zed", logo: "zed" },
-  { name: "ChatGPT", logo: "openai" },
-  { name: "n8n", logo: "n8n" },
-  { name: "Raycast", logo: "raycast" },
-  { name: "VS Code", logo: "visualstudiocode" },
+  { name: 'Claude Code', logo: 'anthropic' },
+  { name: 'Cursor', logo: 'cursor' },
+  { name: 'Windsurf', logo: undefined },
+  { name: 'Zed', logo: 'zed' },
+  { name: 'ChatGPT', logo: 'openai' },
+  { name: 'n8n', logo: 'n8n' },
+  { name: 'Raycast', logo: 'raycast' },
+  { name: 'VS Code', logo: 'visualstudiocode' },
 ];
 
 const codeTabs = [
   {
-    label: "Python",
+    label: 'Python',
     code: `import context_vault
 vault = context_vault.Client()
 
@@ -102,10 +90,9 @@ results = vault.search("database")
 print(results[0].title)  # → Use SQLite`,
   },
   {
-    label: "CLI",
-    code: `# Install once
-npm install -g context-vault
-context-vault setup
+    label: 'CLI',
+    code: `# Install and setup in one command
+npx context-vault
 
 # Save from any session
 cv save --kind decision --title "Use SQLite" \\
@@ -137,40 +124,36 @@ Use JWT + refresh tokens
 const useCases = [
   {
     icon: Terminal,
-    label: "Solo developer",
-    title: "Monday morning. Zero re-explaining.",
+    label: 'Solo developer',
+    title: 'Monday morning. Zero re-explaining.',
     description:
-      "You open Cursor on Monday. Last Friday you were deep in an auth refactor. JWT chosen, Postgres rejected, a session handler edge case still open. Context Vault already loaded it all. You pick up mid-thought, as if the weekend never happened.",
-    mockupBadge: "session start · Monday 9:04am",
+      'You open Cursor on Monday. Last Friday you were deep in an auth refactor. JWT chosen, Postgres rejected, a session handler edge case still open. Context Vault already loaded it all. You pick up mid-thought, as if the weekend never happened.',
+    mockupBadge: 'session start · Monday 9:04am',
     mockupContent: (
       <div className="font-mono text-xs text-muted-foreground space-y-1.5 w-full px-2">
         <div className="text-primary">▸ context loaded: 3 entries</div>
         <div>• jwt-auth-decision: JWT over sessions (decision)</div>
         <div>• sqlite-arch: local-first, no Postgres (decision)</div>
         <div>• session-bug: edge case in refresh handler (note)</div>
-        <div className="text-muted-foreground/50 mt-2">
-          Ready. Picking up from Friday.
-        </div>
+        <div className="text-muted-foreground/50 mt-2">Ready. Picking up from Friday.</div>
       </div>
     ),
   },
   {
     icon: Users,
-    label: "Engineering team",
+    label: 'Engineering team',
     title: '"Why did we choose SQLite?" answered in 3 seconds.',
     description:
-      "A new team member asks about your database choice. Instead of digging through Slack threads, they run one search and get the full decision: context, trade-offs, date, author. Institutional knowledge that survives team changes.",
-    mockupBadge: "vault search · results",
+      'A new team member asks about your database choice. Instead of digging through Slack threads, they run one search and get the full decision: context, trade-offs, date, author. Institutional knowledge that survives team changes.',
+    mockupBadge: 'vault search · results',
     mockupContent: (
       <div className="font-mono text-xs text-muted-foreground space-y-1.5 w-full px-2">
         <div className="text-primary">▸ 1 result for "database"</div>
         <div className="mt-1 border border-border/40 rounded px-2 py-1.5 space-y-1">
-          <div className="text-foreground font-semibold">
-            Use SQLite for local storage
-          </div>
+          <div className="text-foreground font-semibold">Use SQLite for local storage</div>
           <div className="text-muted-foreground/70">
-            Chose SQLite over Postgres. Local-first, no infra, easier
-            onboarding. Benchmarks in /docs...
+            Chose SQLite over Postgres. Local-first, no infra, easier onboarding. Benchmarks in
+            /docs...
           </div>
           <div className="flex gap-2 text-muted-foreground/50">
             <span>[architecture]</span>
@@ -183,11 +166,11 @@ const useCases = [
   },
   {
     icon: Briefcase,
-    label: "Freelancer / consultant",
-    title: "Three clients. Zero context bleed.",
+    label: 'Freelancer / consultant',
+    title: 'Three clients. Zero context bleed.',
     description:
-      "Morning: a React fintech app. Afternoon: a Python data pipeline. Each project has different patterns, different decisions, different constraints. Context Vault keeps a separate namespace per project. Open the session, get the right context automatically.",
-    mockupBadge: "vault · project namespaces",
+      'Morning: a React fintech app. Afternoon: a Python data pipeline. Each project has different patterns, different decisions, different constraints. Context Vault keeps a separate namespace per project. Open the session, get the right context automatically.',
+    mockupBadge: 'vault · project namespaces',
     mockupContent: (
       <div className="font-mono text-xs text-muted-foreground space-y-1.5 w-full px-2">
         <div>vault/</div>
@@ -207,11 +190,11 @@ const useCases = [
         </div>
         <div className="pl-3">└── saas-startup/</div>
         <div className="pl-6">
-          {" "}
+          {' '}
           ├── decisions/ <span className="text-muted-foreground/40">(3)</span>
         </div>
         <div className="pl-6">
-          {" "}
+          {' '}
           └── patterns/ <span className="text-muted-foreground/40">(6)</span>
         </div>
       </div>
@@ -220,22 +203,22 @@ const useCases = [
 ];
 
 const integrationLogos = [
-  { name: "Claude Code", logo: "anthropic" },
-  { name: "Cursor", logo: "cursor" },
-  { name: "Windsurf", logo: undefined },
-  { name: "Zed", logo: "zed" },
-  { name: "VS Code", logo: "visualstudiocode" },
-  { name: "Raycast", logo: "raycast" },
+  { name: 'Claude Code', logo: 'anthropic' },
+  { name: 'Cursor', logo: 'cursor' },
+  { name: 'Windsurf', logo: undefined },
+  { name: 'Zed', logo: 'zed' },
+  { name: 'VS Code', logo: 'visualstudiocode' },
+  { name: 'Raycast', logo: 'raycast' },
 ];
 
 const commits = [
-  { title: "feat: hybrid search with FTS5", number: "#142", date: "2d ago" },
+  { title: 'feat: hybrid search with FTS5', number: '#142', date: '2d ago' },
   {
-    title: "fix: vault path resolution on Windows",
-    number: "#139",
-    date: "4d ago",
+    title: 'fix: vault path resolution on Windows',
+    number: '#139',
+    date: '4d ago',
   },
-  { title: "chore: add SQLite WAL mode", number: "#136", date: "1w ago" },
+  { title: 'chore: add SQLite WAL mode', number: '#136', date: '1w ago' },
 ];
 
 // ─── How it works steps ─────────────────────────────────────────────────────────
@@ -243,24 +226,24 @@ const commits = [
 const howItWorksSteps = [
   {
     icon: Download,
-    step: "01",
-    title: "Install in one command",
+    step: '01',
+    title: 'Install in one command',
     description:
-      "Run npm i -g context-vault, then context-vault setup. It auto-detects your AI editor and connects the memory layer. No config files, no API keys.",
+      'Run npx context-vault. It auto-detects your AI editor and connects the memory layer. No config files, no API keys.',
   },
   {
     icon: FileText,
-    step: "02",
-    title: "Work as usual. Context saves automatically.",
+    step: '02',
+    title: 'Work as usual. Context saves automatically.',
     description:
-      "As you code, your AI saves decisions, patterns, and project insights as plain markdown files in your vault. No extra steps.",
+      'As you code, your AI saves decisions, patterns, and project insights as plain markdown files in your vault. No extra steps.',
   },
   {
     icon: Repeat,
-    step: "03",
-    title: "Every session starts where you left off",
+    step: '03',
+    title: 'Every session starts where you left off',
     description:
-      "Open a new session tomorrow, next week, or next month. Your AI automatically retrieves the right context. No re-explaining.",
+      'Open a new session tomorrow, next week, or next month. Your AI automatically retrieves the right context. No re-explaining.',
   },
 ];
 
@@ -276,41 +259,41 @@ const features = rawFeatures.map((f) => ({
 // ─── JSON-LD Structured Data ───────────────────────────────────────────────────
 
 const jsonLdSoftware = {
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  name: "Context Vault",
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'Context Vault',
   description:
-    "Persistent memory layer for AI coding tools. Save decisions, patterns, and project context once. They are automatically retrieved in every future session.",
-  applicationCategory: "DeveloperApplication",
-  operatingSystem: "macOS, Windows, Linux",
+    'Persistent memory layer for AI coding tools. Save decisions, patterns, and project context once. They are automatically retrieved in every future session.',
+  applicationCategory: 'DeveloperApplication',
+  operatingSystem: 'macOS, Windows, Linux',
   offers: {
-    "@type": "Offer",
-    price: "0",
-    priceCurrency: "USD",
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'USD',
   },
-  license: "https://opensource.org/licenses/MIT",
-  url: "https://contextvault.dev",
-  downloadUrl: "https://www.npmjs.com/package/context-vault",
-  softwareRequirements: "Node.js 18+",
+  license: 'https://opensource.org/licenses/MIT',
+  url: 'https://contextvault.dev',
+  downloadUrl: 'https://www.npmjs.com/package/context-vault',
+  softwareRequirements: 'Node.js 18+',
   author: {
-    "@type": "Organization",
-    name: "Context Vault",
-    url: "https://contextvault.dev",
+    '@type': 'Organization',
+    name: 'Context Vault',
+    url: 'https://contextvault.dev',
   },
 };
 
 const jsonLdFaq = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
   mainEntity: faqs.flatMap((cat) =>
     cat.items.map((item) => ({
-      "@type": "Question",
+      '@type': 'Question',
       name: item.question,
       acceptedAnswer: {
-        "@type": "Answer",
+        '@type': 'Answer',
         text: item.answer,
       },
-    })),
+    }))
   ),
 };
 
@@ -322,14 +305,14 @@ export function LandingPage() {
   const [finalCopied, setFinalCopied] = useState(false);
 
   useEffect(() => {
-    fetch("https://api.github.com/repos/fellanH/context-vault")
+    fetch('https://api.github.com/repos/fellanH/context-vault')
       .then((r) => r.json())
       .then((d) => setStars(d.stargazers_count ?? null))
       .catch(() => {});
   }, []);
 
   function copyFinalCommand() {
-    navigator.clipboard.writeText("npm i -g context-vault");
+    navigator.clipboard.writeText('npx context-vault');
     setFinalCopied(true);
     setTimeout(() => setFinalCopied(false), 1500);
   }
@@ -371,18 +354,14 @@ export function LandingPage() {
         heading={hero.heading}
         accentWord={hero.accentWord}
         subtitle={hero.subtitle}
-        quickStartCommand="npm i -g context-vault"
+        quickStartCommand="npx context-vault"
         secondaryCta={{
           label: hero.secondaryCta.label,
           href: hero.secondaryCta.href,
         }}
         trustPoints={hero.trustPoints}
         leftPanelBadge={hero.leftPanelBadge}
-        leftPanelLines={
-          hero.leftPanelLines as Parameters<
-            typeof HeroSection
-          >[0]["leftPanelLines"]
-        }
+        leftPanelLines={hero.leftPanelLines as Parameters<typeof HeroSection>[0]['leftPanelLines']}
         rightPanelBadge={hero.rightPanelBadge}
         rightPanelLines={hero.rightPanelLines}
         dotGrid
@@ -440,16 +419,11 @@ export function LandingPage() {
                   How it works
                 </span>
               </div>
-              <h2
-                id="how-it-works-heading"
-                className="text-3xl font-semibold tracking-tight"
-              >
-                Three steps. Two minutes.{" "}
-                <span className="text-primary">Done.</span>
+              <h2 id="how-it-works-heading" className="text-3xl font-semibold tracking-tight">
+                Three steps. Two minutes. <span className="text-primary">Done.</span>
               </h2>
               <p className="mt-3 text-base text-muted-foreground max-w-lg mx-auto leading-relaxed">
-                No accounts, no config files, no cloud setup. Install it and
-                start working.
+                No accounts, no config files, no cloud setup. Install it and start working.
               </p>
             </div>
 
@@ -461,17 +435,12 @@ export function LandingPage() {
                   className="relative rounded-2xl border border-border/60 bg-card p-8 shadow-[var(--shadow-card)] text-center"
                 >
                   <div className="mx-auto mb-4 flex size-14 items-center justify-center rounded-2xl bg-primary/8">
-                    <step.icon
-                      className="size-6 text-primary"
-                      aria-hidden="true"
-                    />
+                    <step.icon className="size-6 text-primary" aria-hidden="true" />
                   </div>
                   <span className="text-xs font-mono text-primary mb-2 block">
                     Step {step.step}
                   </span>
-                  <h3 className="text-base font-semibold tracking-tight mb-2">
-                    {step.title}
-                  </h3>
+                  <h3 className="text-base font-semibold tracking-tight mb-2">{step.title}</h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">
                     {step.description}
                   </p>
@@ -506,7 +475,7 @@ export function LandingPage() {
           columns={4}
           cta={{
             label: "Get started, it's free",
-            href: "https://github.com/fellanH/context-vault",
+            href: 'https://github.com/fellanH/context-vault',
           }}
         />
       </Reveal>
@@ -521,10 +490,10 @@ export function LandingPage() {
           skillDescription="One command connects persistent memory to your AI editor."
           skillCommand="npm install -g context-vault"
           skillCapabilities={[
-            "Saves context across sessions automatically",
-            "Hybrid semantic + full-text search",
-            "Works with Claude Code, Cursor, Windsurf",
-            "Plain markdown files. Your data, your format.",
+            'Saves context across sessions automatically',
+            'Hybrid semantic + full-text search',
+            'Works with Claude Code, Cursor, Windsurf',
+            'Plain markdown files. Your data, your format.',
           ]}
         />
       </Reveal>
@@ -562,15 +531,12 @@ export function LandingPage() {
       {/* 12. Final CTA */}
       <section aria-labelledby="final-cta-heading" className="py-20">
         <div className="mx-auto w-full max-w-3xl px-6 text-center">
-          <h2
-            id="final-cta-heading"
-            className="text-3xl font-semibold tracking-tight sm:text-4xl"
-          >
+          <h2 id="final-cta-heading" className="text-3xl font-semibold tracking-tight sm:text-4xl">
             Ready to stop starting from zero?
           </h2>
           <p className="mt-4 text-base text-muted-foreground max-w-lg mx-auto leading-relaxed">
-            Install Context Vault in 2 minutes. Every AI session picks up
-            exactly where you left off, automatically.
+            Install Context Vault in 2 minutes. Every AI session picks up exactly where you left
+            off, automatically.
           </p>
 
           <div className="mt-8 flex flex-col items-center gap-4">
@@ -582,17 +548,14 @@ export function LandingPage() {
               <span className="text-zinc-500 select-none" aria-hidden="true">
                 $
               </span>
-              <span className="text-zinc-100">npm i -g context-vault</span>
+              <span className="text-zinc-100">npx context-vault</span>
               <button
                 onClick={copyFinalCommand}
                 aria-label="Copy install command"
                 className="ml-1 text-zinc-500 hover:text-zinc-200 transition-colors"
               >
                 {finalCopied ? (
-                  <Check
-                    className="size-3.5 text-green-400"
-                    aria-hidden="true"
-                  />
+                  <Check className="size-3.5 text-green-400" aria-hidden="true" />
                 ) : (
                   <Copy className="size-3.5" aria-hidden="true" />
                 )}
@@ -605,8 +568,7 @@ export function LandingPage() {
               rel="noreferrer"
               className="inline-flex items-center gap-2 rounded-full border border-border px-6 py-2.5 text-sm font-medium hover:bg-muted/30 transition-colors"
             >
-              View on GitHub{" "}
-              <ArrowRight className="size-4" aria-hidden="true" />
+              View on GitHub <ArrowRight className="size-4" aria-hidden="true" />
             </a>
           </div>
 
@@ -642,17 +604,11 @@ export function LandingPage() {
 
       {/* 13. Blog posts */}
       {featured.length > 0 && (
-        <section
-          aria-labelledby="blog-heading"
-          className="border-t border-border/60"
-        >
+        <section aria-labelledby="blog-heading" className="border-t border-border/60">
           <div className="mx-auto w-full max-w-6xl px-6 py-14">
             <div className="flex items-center justify-between gap-3 mb-8">
               <div className="inline-flex items-center gap-2">
-                <FileText
-                  className="size-3.5 text-primary"
-                  aria-hidden="true"
-                />
+                <FileText className="size-3.5 text-primary" aria-hidden="true" />
                 <span
                   id="blog-heading"
                   className="text-xs font-semibold uppercase tracking-widest text-muted-foreground"
@@ -677,25 +633,16 @@ export function LandingPage() {
                       <span>{post.readTimeMinutes} min read</span>
                     </div>
                     <CardTitle className="text-base">
-                      <Link
-                        to={`/blog/${post.slug}`}
-                        className="hover:underline"
-                      >
+                      <Link to={`/blog/${post.slug}`} className="hover:underline">
                         {post.title}
                       </Link>
                     </CardTitle>
                     <CardDescription>{post.description}</CardDescription>
                   </CardHeader>
                   <CardFooter>
-                    <Button
-                      asChild
-                      variant="outline"
-                      size="sm"
-                      className="w-fit"
-                    >
+                    <Button asChild variant="outline" size="sm" className="w-fit">
                       <Link to={`/blog/${post.slug}`}>
-                        Read post{" "}
-                        <ArrowRight className="size-4" aria-hidden="true" />
+                        Read post <ArrowRight className="size-4" aria-hidden="true" />
                       </Link>
                     </Button>
                   </CardFooter>

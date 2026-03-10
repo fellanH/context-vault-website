@@ -1,17 +1,17 @@
-import { useEffect, useState } from "react";
-import { Plus, Trash2, Save } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import { useEffect, useState } from 'react';
+import { Plus, Trash2, Save } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+} from '@/components/ui/select';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 // ─── Types (mirror landing.json shape) ────────────────────────────────────────
 
@@ -48,43 +48,22 @@ type LandingData = {
   faqs: FaqCategory[];
 };
 
-const ICON_OPTIONS = [
-  "FileText",
-  "Zap",
-  "Globe",
-  "Lock",
-  "Layers",
-  "Database",
-  "Shield",
-  "Star",
-];
+const ICON_OPTIONS = ['FileText', 'Zap', 'Globe', 'Lock', 'Layers', 'Database', 'Shield', 'Star'];
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
 
-function SaveButton({
-  onSave,
-  saving,
-}: {
-  onSave: () => void;
-  saving: boolean;
-}) {
+function SaveButton({ onSave, saving }: { onSave: () => void; saving: boolean }) {
   return (
     <Button onClick={onSave} disabled={saving} size="sm" className="gap-1.5">
       <Save className="size-3.5" />
-      {saving ? "Saving…" : "Save"}
+      {saving ? 'Saving…' : 'Save'}
     </Button>
   );
 }
 
 // ─── Hero Tab ─────────────────────────────────────────────────────────────────
 
-function HeroTab({
-  hero,
-  onChange,
-}: {
-  hero: HeroData;
-  onChange: (h: HeroData) => void;
-}) {
+function HeroTab({ hero, onChange }: { hero: HeroData; onChange: (h: HeroData) => void }) {
   function set<K extends keyof HeroData>(key: K, value: HeroData[K]) {
     onChange({ ...hero, [key]: value });
   }
@@ -92,19 +71,19 @@ function HeroTab({
   function updateTrustPoint(idx: number, val: string) {
     const tp = [...hero.trustPoints];
     tp[idx] = val;
-    set("trustPoints", tp);
+    set('trustPoints', tp);
   }
 
   function updateLeftLine(idx: number, field: keyof PanelLine, val: string) {
     const lines = [...hero.leftPanelLines];
     lines[idx] = { ...lines[idx], [field]: val };
-    set("leftPanelLines", lines);
+    set('leftPanelLines', lines);
   }
 
   function updateRightLine(idx: number, val: string) {
     const lines = [...hero.rightPanelLines];
     lines[idx] = val;
-    set("rightPanelLines", lines);
+    set('rightPanelLines', lines);
   }
 
   return (
@@ -112,41 +91,29 @@ function HeroTab({
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-1.5">
           <Label>Badge text</Label>
-          <Input
-            value={hero.badge}
-            onChange={(e) => set("badge", e.target.value)}
-          />
+          <Input value={hero.badge} onChange={(e) => set('badge', e.target.value)} />
         </div>
         <div className="space-y-1.5">
           <Label>Badge href</Label>
-          <Input
-            value={hero.badgeHref}
-            onChange={(e) => set("badgeHref", e.target.value)}
-          />
+          <Input value={hero.badgeHref} onChange={(e) => set('badgeHref', e.target.value)} />
         </div>
       </div>
 
       <div className="space-y-1.5">
         <Label>Heading</Label>
-        <Input
-          value={hero.heading}
-          onChange={(e) => set("heading", e.target.value)}
-        />
+        <Input value={hero.heading} onChange={(e) => set('heading', e.target.value)} />
       </div>
 
       <div className="space-y-1.5">
         <Label>Accent word (highlighted in heading)</Label>
-        <Input
-          value={hero.accentWord}
-          onChange={(e) => set("accentWord", e.target.value)}
-        />
+        <Input value={hero.accentWord} onChange={(e) => set('accentWord', e.target.value)} />
       </div>
 
       <div className="space-y-1.5">
         <Label>Subtitle</Label>
         <Textarea
           value={hero.subtitle}
-          onChange={(e) => set("subtitle", e.target.value)}
+          onChange={(e) => set('subtitle', e.target.value)}
           rows={2}
         />
       </div>
@@ -156,18 +123,14 @@ function HeroTab({
           <Label>Primary CTA label</Label>
           <Input
             value={hero.primaryCta.label}
-            onChange={(e) =>
-              set("primaryCta", { ...hero.primaryCta, label: e.target.value })
-            }
+            onChange={(e) => set('primaryCta', { ...hero.primaryCta, label: e.target.value })}
           />
         </div>
         <div className="space-y-1.5">
           <Label>Primary CTA href</Label>
           <Input
             value={hero.primaryCta.href}
-            onChange={(e) =>
-              set("primaryCta", { ...hero.primaryCta, href: e.target.value })
-            }
+            onChange={(e) => set('primaryCta', { ...hero.primaryCta, href: e.target.value })}
           />
         </div>
         <div className="space-y-1.5">
@@ -175,7 +138,7 @@ function HeroTab({
           <Input
             value={hero.secondaryCta.label}
             onChange={(e) =>
-              set("secondaryCta", {
+              set('secondaryCta', {
                 ...hero.secondaryCta,
                 label: e.target.value,
               })
@@ -187,7 +150,7 @@ function HeroTab({
           <Input
             value={hero.secondaryCta.href}
             onChange={(e) =>
-              set("secondaryCta", {
+              set('secondaryCta', {
                 ...hero.secondaryCta,
                 href: e.target.value,
               })
@@ -212,7 +175,7 @@ function HeroTab({
         <Label>Left panel badge</Label>
         <Input
           value={hero.leftPanelBadge}
-          onChange={(e) => set("leftPanelBadge", e.target.value)}
+          onChange={(e) => set('leftPanelBadge', e.target.value)}
         />
       </div>
 
@@ -222,15 +185,13 @@ function HeroTab({
           <div key={i} className="flex gap-2">
             <Input
               value={line.text}
-              onChange={(e) => updateLeftLine(i, "text", e.target.value)}
+              onChange={(e) => updateLeftLine(i, 'text', e.target.value)}
               placeholder="Line text"
               className="flex-1 font-mono text-xs"
             />
             <Select
-              value={line.variant ?? "default"}
-              onValueChange={(v) =>
-                updateLeftLine(i, "variant", v === "default" ? "" : v)
-              }
+              value={line.variant ?? 'default'}
+              onValueChange={(v) => updateLeftLine(i, 'variant', v === 'default' ? '' : v)}
             >
               <SelectTrigger className="w-28 text-xs">
                 <SelectValue />
@@ -247,9 +208,7 @@ function HeroTab({
         <Button
           variant="outline"
           size="sm"
-          onClick={() =>
-            set("leftPanelLines", [...hero.leftPanelLines, { text: "" }])
-          }
+          onClick={() => set('leftPanelLines', [...hero.leftPanelLines, { text: '' }])}
         >
           <Plus className="size-3.5" />
           Add line
@@ -270,7 +229,7 @@ function HeroTab({
         <Button
           variant="outline"
           size="sm"
-          onClick={() => set("rightPanelLines", [...hero.rightPanelLines, ""])}
+          onClick={() => set('rightPanelLines', [...hero.rightPanelLines, ''])}
         >
           <Plus className="size-3.5" />
           Add line
@@ -282,13 +241,7 @@ function HeroTab({
 
 // ─── Stats Tab ────────────────────────────────────────────────────────────────
 
-function StatsTab({
-  stats,
-  onChange,
-}: {
-  stats: StatItem[];
-  onChange: (s: StatItem[]) => void;
-}) {
+function StatsTab({ stats, onChange }: { stats: StatItem[]; onChange: (s: StatItem[]) => void }) {
   function update(idx: number, field: keyof StatItem, val: string) {
     const next = [...stats];
     next[idx] = { ...next[idx], [field]: val };
@@ -307,7 +260,7 @@ function StatsTab({
               <Label>Value</Label>
               <Input
                 value={stat.value}
-                onChange={(e) => update(i, "value", e.target.value)}
+                onChange={(e) => update(i, 'value', e.target.value)}
                 placeholder="e.g. < 5 min"
               />
             </div>
@@ -315,7 +268,7 @@ function StatsTab({
               <Label>Label</Label>
               <Input
                 value={stat.label}
-                onChange={(e) => update(i, "label", e.target.value)}
+                onChange={(e) => update(i, 'label', e.target.value)}
                 placeholder="e.g. Setup time"
               />
             </div>
@@ -324,7 +277,7 @@ function StatsTab({
             <Label>Description</Label>
             <Textarea
               value={stat.description}
-              onChange={(e) => update(i, "description", e.target.value)}
+              onChange={(e) => update(i, 'description', e.target.value)}
               rows={2}
             />
           </div>
@@ -359,10 +312,7 @@ function FeaturesTab({
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-1.5">
               <Label>Icon</Label>
-              <Select
-                value={feat.iconName}
-                onValueChange={(v) => update(i, "iconName", v)}
-              >
+              <Select value={feat.iconName} onValueChange={(v) => update(i, 'iconName', v)}>
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
@@ -377,17 +327,14 @@ function FeaturesTab({
             </div>
             <div className="space-y-1.5">
               <Label>Title</Label>
-              <Input
-                value={feat.title}
-                onChange={(e) => update(i, "title", e.target.value)}
-              />
+              <Input value={feat.title} onChange={(e) => update(i, 'title', e.target.value)} />
             </div>
           </div>
           <div className="space-y-1.5">
             <Label>Description</Label>
             <Textarea
               value={feat.description}
-              onChange={(e) => update(i, "description", e.target.value)}
+              onChange={(e) => update(i, 'description', e.target.value)}
               rows={2}
             />
           </div>
@@ -406,16 +353,11 @@ function FaqsTab({
   faqs: FaqCategory[];
   onChange: (f: FaqCategory[]) => void;
 }) {
-  function updateItem(
-    catIdx: number,
-    itemIdx: number,
-    field: keyof FaqItem,
-    val: string,
-  ) {
+  function updateItem(catIdx: number, itemIdx: number, field: keyof FaqItem, val: string) {
     const next = faqs.map((cat, ci) => {
       if (ci !== catIdx) return cat;
       const items = cat.items.map((item, ii) =>
-        ii === itemIdx ? { ...item, [field]: val } : item,
+        ii === itemIdx ? { ...item, [field]: val } : item
       );
       return { ...cat, items };
     });
@@ -425,7 +367,7 @@ function FaqsTab({
   function addItem(catIdx: number) {
     const next = faqs.map((cat, ci) => {
       if (ci !== catIdx) return cat;
-      return { ...cat, items: [...cat.items, { question: "", answer: "" }] };
+      return { ...cat, items: [...cat.items, { question: '', answer: '' }] };
     });
     onChange(next);
   }
@@ -444,16 +386,11 @@ function FaqsTab({
         <div key={ci} className="space-y-3">
           <h3 className="text-sm font-medium">{cat.category}</h3>
           {cat.items.map((item, ii) => (
-            <div
-              key={ii}
-              className="rounded-lg border border-border p-4 space-y-3"
-            >
+            <div key={ii} className="rounded-lg border border-border p-4 space-y-3">
               <div className="flex items-center justify-between gap-2">
                 <Input
                   value={item.question}
-                  onChange={(e) =>
-                    updateItem(ci, ii, "question", e.target.value)
-                  }
+                  onChange={(e) => updateItem(ci, ii, 'question', e.target.value)}
                   placeholder="Question"
                   className="font-medium"
                 />
@@ -470,7 +407,7 @@ function FaqsTab({
               </div>
               <Textarea
                 value={item.answer}
-                onChange={(e) => updateItem(ci, ii, "answer", e.target.value)}
+                onChange={(e) => updateItem(ci, ii, 'answer', e.target.value)}
                 placeholder="Answer"
                 rows={3}
                 className="text-sm"
@@ -493,10 +430,10 @@ export function CopyEditorPage() {
   const [data, setData] = useState<LandingData | null>(null);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
 
   useEffect(() => {
-    fetch("/cms/landing")
+    fetch('/cms/landing')
       .then((r) => r.json())
       .then((d: LandingData) => setData(d));
   }, []);
@@ -504,11 +441,11 @@ export function CopyEditorPage() {
   async function save() {
     if (!data) return;
     setSaving(true);
-    setError("");
+    setError('');
     try {
-      const res = await fetch("/cms/landing", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
+      const res = await fetch('/cms/landing', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       });
       if (!res.ok) throw new Error(await res.text());
@@ -531,22 +468,18 @@ export function CopyEditorPage() {
         <div>
           <h1 className="text-xl font-semibold tracking-tight">Copy editor</h1>
           <p className="text-sm text-muted-foreground mt-1">
-            Edit landing page content. Changes save to{" "}
+            Edit landing page content. Changes save to{' '}
             <code className="font-mono text-xs">landing.json</code>.
           </p>
         </div>
         <div className="flex items-center gap-2">
-          {saved && (
-            <span className="text-xs text-green-600 font-medium">Saved!</span>
-          )}
+          {saved && <span className="text-xs text-green-600 font-medium">Saved!</span>}
           <SaveButton onSave={save} saving={saving} />
         </div>
       </div>
 
       {error && (
-        <p className="text-sm text-destructive bg-destructive/10 rounded-md px-3 py-2">
-          {error}
-        </p>
+        <p className="text-sm text-destructive bg-destructive/10 rounded-md px-3 py-2">{error}</p>
       )}
 
       <Tabs defaultValue="hero">
@@ -574,9 +507,7 @@ export function CopyEditorPage() {
         <TabsContent value="features" className="pt-4">
           <FeaturesTab
             features={data.features}
-            onChange={(features) =>
-              setData((prev) => prev && { ...prev, features })
-            }
+            onChange={(features) => setData((prev) => prev && { ...prev, features })}
           />
         </TabsContent>
 
@@ -589,9 +520,7 @@ export function CopyEditorPage() {
       </Tabs>
 
       <div className="flex items-center gap-2 pt-4 border-t border-border">
-        {saved && (
-          <span className="text-xs text-green-600 font-medium">Saved!</span>
-        )}
+        {saved && <span className="text-xs text-green-600 font-medium">Saved!</span>}
         <SaveButton onSave={save} saving={saving} />
       </div>
     </div>

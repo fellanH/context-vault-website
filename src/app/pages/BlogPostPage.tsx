@@ -1,12 +1,12 @@
-import { useEffect } from "react";
-import { Link, useParams } from "react-router";
-import { PageHead } from "../components/PageHead";
-import { ArrowLeft, ArrowRight } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { getPostBySlug } from "../content/posts";
-import { appHref, formatDate } from "../lib/links";
+import { useEffect } from 'react';
+import { Link, useParams } from 'react-router';
+import { PageHead } from '../components/PageHead';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { getPostBySlug } from '../content/posts';
+import { appHref, formatDate } from '../lib/links';
 
 export function BlogPostPage() {
   const { slug } = useParams();
@@ -16,7 +16,7 @@ export function BlogPostPage() {
     if (!post) return;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (window as any).dataLayer?.push({
-      event: "blog_post_view",
+      event: 'blog_post_view',
       slug: post.slug,
     });
   }, [post?.slug]);
@@ -42,9 +42,7 @@ export function BlogPostPage() {
     );
   }
 
-  const ctaHref = post.ctaHref.startsWith("/")
-    ? appHref(post.ctaHref)
-    : post.ctaHref;
+  const ctaHref = post.ctaHref.startsWith('/') ? appHref(post.ctaHref) : post.ctaHref;
 
   return (
     <main className="mx-auto w-full max-w-3xl px-6 py-14 sm:py-16">
@@ -68,18 +66,14 @@ export function BlogPostPage() {
             <span>{formatDate(post.publishedAt)}</span>
             <span>{post.readTimeMinutes} min read</span>
           </div>
-          <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-            {post.title}
-          </h1>
+          <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">{post.title}</h1>
           <p className="text-base text-muted-foreground">{post.description}</p>
         </header>
 
         <div className="space-y-8">
           {post.sections.map((section) => (
             <section key={section.heading} className="space-y-3">
-              <h2 className="text-xl font-semibold tracking-tight">
-                {section.heading}
-              </h2>
+              <h2 className="text-xl font-semibold tracking-tight">{section.heading}</h2>
               <div className="space-y-3 text-foreground/90">
                 {section.paragraphs.map((paragraph) => (
                   <p key={paragraph}>{paragraph}</p>
@@ -92,9 +86,7 @@ export function BlogPostPage() {
         <Card className="border-primary/20 bg-primary/5">
           <CardContent className="flex flex-col gap-4 p-6 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <h3 className="text-base font-medium">
-                Ready to apply this in your workflow?
-              </h3>
+              <h3 className="text-base font-medium">Ready to apply this in your workflow?</h3>
               <p className="text-sm text-muted-foreground">
                 Connect Context Vault and validate your first memory retrieval.
               </p>
@@ -105,9 +97,9 @@ export function BlogPostPage() {
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 onClick={() =>
                   (window as any).dataLayer?.push({
-                    event: "cta_click",
+                    event: 'cta_click',
                     label: post.ctaLabel,
-                    source: "blog_post",
+                    source: 'blog_post',
                   })
                 }
               >

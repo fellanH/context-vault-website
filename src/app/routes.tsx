@@ -1,63 +1,63 @@
-import { createBrowserRouter } from "react-router";
-import { MarketingLayout } from "./components/MarketingLayout";
-import { LandingPage } from "./pages/LandingPage";
-import { GetStartedPage } from "./pages/GetStartedPage";
-import { BlogIndexPage } from "./pages/BlogIndexPage";
-import { BlogPostPage } from "./pages/BlogPostPage";
-import { PrivacyPage } from "./pages/PrivacyPage";
-import { SupportPage } from "./pages/SupportPage";
-import { TermsPage } from "./pages/TermsPage";
-import { SectionsPage } from "./pages/SectionsPage";
+import { createBrowserRouter } from 'react-router';
+import { MarketingLayout } from './components/MarketingLayout';
+import { LandingPage } from './pages/LandingPage';
+import { GetStartedPage } from './pages/GetStartedPage';
+import { BlogIndexPage } from './pages/BlogIndexPage';
+import { BlogPostPage } from './pages/BlogPostPage';
+import { PrivacyPage } from './pages/PrivacyPage';
+import { SupportPage } from './pages/SupportPage';
+import { TermsPage } from './pages/TermsPage';
+import { SectionsPage } from './pages/SectionsPage';
 
 // Admin routes — only registered in dev; entire branch tree-shaken in prod
 const adminRoutes = import.meta.env.DEV
   ? [
       {
-        path: "admin",
+        path: 'admin',
         lazy: () =>
-          import("./pages/admin/AdminLayout").then((m) => ({
+          import('./pages/admin/AdminLayout').then((m) => ({
             Component: m.AdminLayout,
           })),
         children: [
           {
             index: true,
             lazy: () =>
-              import("./pages/admin/DashboardPage").then((m) => ({
+              import('./pages/admin/DashboardPage').then((m) => ({
                 Component: m.DashboardPage,
               })),
           },
           {
-            path: "posts",
+            path: 'posts',
             lazy: () =>
-              import("./pages/admin/PostsListPage").then((m) => ({
+              import('./pages/admin/PostsListPage').then((m) => ({
                 Component: m.PostsListPage,
               })),
           },
           {
-            path: "posts/new",
+            path: 'posts/new',
             lazy: () =>
-              import("./pages/admin/PostEditorPage").then((m) => ({
+              import('./pages/admin/PostEditorPage').then((m) => ({
                 Component: m.PostEditorPage,
               })),
           },
           {
-            path: "posts/:slug",
+            path: 'posts/:slug',
             lazy: () =>
-              import("./pages/admin/PostEditorPage").then((m) => ({
+              import('./pages/admin/PostEditorPage').then((m) => ({
                 Component: m.PostEditorPage,
               })),
           },
           {
-            path: "copy",
+            path: 'copy',
             lazy: () =>
-              import("./pages/admin/CopyEditorPage").then((m) => ({
+              import('./pages/admin/CopyEditorPage').then((m) => ({
                 Component: m.CopyEditorPage,
               })),
           },
           {
-            path: "images",
+            path: 'images',
             lazy: () =>
-              import("./pages/admin/ImagesPage").then((m) => ({
+              import('./pages/admin/ImagesPage').then((m) => ({
                 Component: m.ImagesPage,
               })),
           },
@@ -68,17 +68,17 @@ const adminRoutes = import.meta.env.DEV
 
 export const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     Component: MarketingLayout,
     children: [
       { index: true, Component: LandingPage },
-      { path: "get-started", Component: GetStartedPage },
-      { path: "blog", Component: BlogIndexPage },
-      { path: "blog/:slug", Component: BlogPostPage },
-      { path: "privacy", Component: PrivacyPage },
-      { path: "terms", Component: TermsPage },
-      { path: "support", Component: SupportPage },
-      { path: "sections", Component: SectionsPage },
+      { path: 'get-started', Component: GetStartedPage },
+      { path: 'blog', Component: BlogIndexPage },
+      { path: 'blog/:slug', Component: BlogPostPage },
+      { path: 'privacy', Component: PrivacyPage },
+      { path: 'terms', Component: TermsPage },
+      { path: 'support', Component: SupportPage },
+      { path: 'sections', Component: SectionsPage },
     ],
   },
   ...adminRoutes,

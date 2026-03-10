@@ -1,7 +1,7 @@
-import { RouterProvider } from "react-router";
-import { ThemeProvider } from "next-themes";
-import { HelmetProvider } from "react-helmet-async";
-import { router } from "./routes";
+import { RouterProvider } from 'react-router';
+import { ThemeProvider } from 'next-themes';
+import { HelmetProvider } from 'react-helmet-async';
+import { router } from './routes';
 
 function App() {
   return (

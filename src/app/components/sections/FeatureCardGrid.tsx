@@ -1,5 +1,5 @@
-import type { LucideIcon } from "lucide-react";
-import { ArrowRight } from "lucide-react";
+import type { LucideIcon } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 interface FeatureCard {
   icon: LucideIcon;
@@ -23,29 +23,17 @@ interface FeatureCardGridProps {
   cta?: { label: string; href: string };
 }
 
-function AccentHeading({
-  heading,
-  accentWord,
-}: {
-  heading: string;
-  accentWord?: string;
-}) {
+function AccentHeading({ heading, accentWord }: { heading: string; accentWord?: string }) {
   if (!accentWord || !heading.includes(accentWord)) {
     return (
-      <h2
-        id="features-heading"
-        className="text-3xl font-semibold tracking-tight text-center"
-      >
+      <h2 id="features-heading" className="text-3xl font-semibold tracking-tight text-center">
         {heading}
       </h2>
     );
   }
   const [before, after] = heading.split(accentWord);
   return (
-    <h2
-      id="features-heading"
-      className="text-3xl font-semibold tracking-tight text-center"
-    >
+    <h2 id="features-heading" className="text-3xl font-semibold tracking-tight text-center">
       {before}
       <span className="text-primary">{accentWord}</span>
       {after}
@@ -87,11 +75,7 @@ export function FeatureCardGrid({
         {/* Feature card grid */}
         <div
           className={`grid gap-5 grid-cols-1 sm:grid-cols-2 ${
-            columns === 4
-              ? "lg:grid-cols-4"
-              : columns === 2
-                ? "sm:grid-cols-2"
-                : "md:grid-cols-3"
+            columns === 4 ? 'lg:grid-cols-4' : columns === 2 ? 'sm:grid-cols-2' : 'md:grid-cols-3'
           }`}
         >
           {features.map((feature) => (
@@ -103,9 +87,7 @@ export function FeatureCardGrid({
                 <feature.icon className="size-6 text-primary" />
               </div>
               <div>
-                <h3 className="text-sm font-semibold text-foreground">
-                  {feature.title}
-                </h3>
+                <h3 className="text-sm font-semibold text-foreground">{feature.title}</h3>
                 <p className="mt-1.5 text-sm text-muted-foreground leading-relaxed">
                   {feature.description}
                 </p>

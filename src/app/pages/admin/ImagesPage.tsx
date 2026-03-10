@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from "react";
-import { Copy, Trash2, Upload } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { useEffect, useRef, useState } from 'react';
+import { Copy, Trash2, Upload } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -11,7 +11,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
+} from '@/components/ui/alert-dialog';
 
 export function ImagesPage() {
   const [images, setImages] = useState<string[]>([]);
@@ -20,7 +20,7 @@ export function ImagesPage() {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   async function loadImages() {
-    const res = await fetch("/cms/images");
+    const res = await fetch('/cms/images');
     setImages(await res.json());
   }
 
@@ -31,8 +31,8 @@ export function ImagesPage() {
   async function uploadFile(file: File) {
     setUploading(true);
     const fd = new FormData();
-    fd.append("file", file);
-    await fetch("/cms/images", { method: "POST", body: fd });
+    fd.append('file', file);
+    await fetch('/cms/images', { method: 'POST', body: fd });
     await loadImages();
     setUploading(false);
   }
@@ -46,7 +46,7 @@ export function ImagesPage() {
 
   async function deleteImage(filename: string) {
     await fetch(`/cms/images/${encodeURIComponent(filename)}`, {
-      method: "DELETE",
+      method: 'DELETE',
     });
     setImages((prev) => prev.filter((f) => f !== filename));
   }
@@ -80,11 +80,9 @@ export function ImagesPage() {
       >
         <Upload className="size-6 mx-auto text-muted-foreground mb-2" />
         <p className="text-sm font-medium">
-          {uploading ? "Uploading…" : "Drop files here or click to upload"}
+          {uploading ? 'Uploading…' : 'Drop files here or click to upload'}
         </p>
-        <p className="text-xs text-muted-foreground mt-1">
-          PNG, JPG, WebP, SVG, GIF
-        </p>
+        <p className="text-xs text-muted-foreground mt-1">PNG, JPG, WebP, SVG, GIF</p>
         <input
           ref={fileInputRef}
           type="file"
@@ -118,15 +116,11 @@ export function ImagesPage() {
                   className="text-xs h-7"
                 >
                   <Copy className="size-3" />
-                  {copied === filename ? "Copied!" : "Copy path"}
+                  {copied === filename ? 'Copied!' : 'Copy path'}
                 </Button>
                 <AlertDialog>
                   <AlertDialogTrigger asChild>
-                    <Button
-                      size="sm"
-                      variant="destructive"
-                      className="text-xs h-7"
-                    >
+                    <Button size="sm" variant="destructive" className="text-xs h-7">
                       <Trash2 className="size-3" />
                       Delete
                     </Button>
@@ -150,9 +144,7 @@ export function ImagesPage() {
                   </AlertDialogContent>
                 </AlertDialog>
               </div>
-              <p className="text-xs text-muted-foreground truncate px-2 py-1.5">
-                {filename}
-              </p>
+              <p className="text-xs text-muted-foreground truncate px-2 py-1.5">{filename}</p>
             </div>
           ))}
         </div>

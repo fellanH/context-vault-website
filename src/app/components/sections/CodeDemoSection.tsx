@@ -1,5 +1,5 @@
-import React from "react";
-import { TerminalMockup } from "../TerminalMockup";
+import React from 'react';
+import { TerminalMockup } from '../TerminalMockup';
 
 interface CodeTab {
   label: string;
@@ -18,21 +18,17 @@ interface CodeDemoSectionProps {
 }
 
 function renderCodeLine(line: string, i: number) {
-  if (line.trimStart().startsWith("#") || line.trimStart().startsWith("//")) {
+  if (line.trimStart().startsWith('#') || line.trimStart().startsWith('//')) {
     return (
       <div key={i} className="flex gap-3">
-        <span className="select-none text-zinc-600 w-6 text-right flex-shrink-0">
-          {i + 1}
-        </span>
+        <span className="select-none text-zinc-600 w-6 text-right flex-shrink-0">{i + 1}</span>
         <span className="text-zinc-500">{line}</span>
       </div>
     );
   }
   return (
     <div key={i} className="flex gap-3">
-      <span className="select-none text-zinc-600 w-6 text-right flex-shrink-0">
-        {i + 1}
-      </span>
+      <span className="select-none text-zinc-600 w-6 text-right flex-shrink-0">{i + 1}</span>
       <span className="text-zinc-100">{line}</span>
     </div>
   );
@@ -41,8 +37,8 @@ function renderCodeLine(line: string, i: number) {
 export function CodeDemoSection({
   tabs,
   activeTab: initialTab = 0,
-  outputLabel = "[ .MD ]",
-  output = "",
+  outputLabel = '[ .MD ]',
+  output = '',
   skillHeading,
   skillDescription,
   skillCommand,
@@ -50,8 +46,8 @@ export function CodeDemoSection({
 }: CodeDemoSectionProps) {
   const [activeTab, setActiveTab] = React.useState(initialTab);
   const [copied, setCopied] = React.useState(false);
-  const currentCode = tabs[activeTab]?.code ?? "";
-  const lines = currentCode.split("\n");
+  const currentCode = tabs[activeTab]?.code ?? '';
+  const lines = currentCode.split('\n');
 
   function copyCode() {
     navigator.clipboard.writeText(currentCode);
@@ -75,8 +71,8 @@ export function CodeDemoSection({
                   onClick={() => setActiveTab(i)}
                   className={`px-3 py-1 rounded text-xs transition-colors ${
                     i === activeTab
-                      ? "bg-background shadow-sm text-foreground"
-                      : "text-muted-foreground hover:text-foreground"
+                      ? 'bg-background shadow-sm text-foreground'
+                      : 'text-muted-foreground hover:text-foreground'
                   }`}
                 >
                   {tab.label}
@@ -87,7 +83,7 @@ export function CodeDemoSection({
               onClick={copyCode}
               className="ml-auto text-xs text-muted-foreground hover:text-foreground transition-colors"
             >
-              {copied ? "Copied!" : "Copy code"}
+              {copied ? 'Copied!' : 'Copy code'}
             </button>
           </div>
 
@@ -100,9 +96,7 @@ export function CodeDemoSection({
               <span className="absolute top-3 right-4 text-[10px] font-mono text-muted-foreground">
                 {outputLabel}
               </span>
-              <pre className="text-muted-foreground whitespace-pre-wrap mt-4">
-                {output}
-              </pre>
+              <pre className="text-muted-foreground whitespace-pre-wrap mt-4">{output}</pre>
             </div>
           </div>
 
@@ -110,20 +104,14 @@ export function CodeDemoSection({
           {skillCommand && (
             <div className="border-t border-border bg-muted/10 px-8 py-6 grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
               <div>
-                {skillHeading && (
-                  <h3 className="text-base font-semibold mb-1">
-                    {skillHeading}
-                  </h3>
-                )}
+                {skillHeading && <h3 className="text-base font-semibold mb-1">{skillHeading}</h3>}
                 {skillDescription && (
-                  <p className="text-sm text-muted-foreground">
-                    {skillDescription}
-                  </p>
+                  <p className="text-sm text-muted-foreground">{skillDescription}</p>
                 )}
               </div>
               <TerminalMockup title="bash">
                 <div>
-                  <span className="text-green-400">$</span>{" "}
+                  <span className="text-green-400">$</span>{' '}
                   <span className="text-primary">{skillCommand}</span>
                 </div>
                 {skillCapabilities.map((cap, i) => (

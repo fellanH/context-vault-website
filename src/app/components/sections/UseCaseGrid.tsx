@@ -1,5 +1,5 @@
-import { Link } from "react-router";
-import { type LucideIcon, ArrowRight } from "lucide-react";
+import { Link } from 'react-router';
+import { type LucideIcon, ArrowRight } from 'lucide-react';
 
 interface UseCase {
   icon: LucideIcon;
@@ -16,19 +16,9 @@ interface UseCaseGridProps {
   useCases: Array<UseCase>;
 }
 
-function AccentHeading({
-  heading,
-  accentWord,
-}: {
-  heading: string;
-  accentWord?: string;
-}) {
+function AccentHeading({ heading, accentWord }: { heading: string; accentWord?: string }) {
   if (!accentWord || !heading.includes(accentWord)) {
-    return (
-      <h2 className="text-3xl font-semibold tracking-tight text-center">
-        {heading}
-      </h2>
-    );
+    return <h2 className="text-3xl font-semibold tracking-tight text-center">{heading}</h2>;
   }
   const [before, after] = heading.split(accentWord);
   return (
@@ -40,21 +30,14 @@ function AccentHeading({
   );
 }
 
-export function UseCaseGrid({
-  heading,
-  accentWord,
-  subtitle,
-  useCases,
-}: UseCaseGridProps) {
+export function UseCaseGrid({ heading, accentWord, subtitle, useCases }: UseCaseGridProps) {
   return (
     <div className="border-y border-border">
       <div className="mx-auto w-full max-w-[80rem] px-[5vw]">
         {/* Centered section header — no extra px, container inset handles it */}
         {(heading || subtitle) && (
           <div className="border-b border-border py-14 text-center">
-            {heading && (
-              <AccentHeading heading={heading} accentWord={accentWord} />
-            )}
+            {heading && <AccentHeading heading={heading} accentWord={accentWord} />}
             {subtitle && (
               <p className="mt-3 text-sm text-muted-foreground max-w-sm mx-auto leading-relaxed">
                 {subtitle}
@@ -75,9 +58,7 @@ export function UseCaseGrid({
                       <uc.icon className="size-3.5" />
                       {uc.label ?? uc.title}
                     </p>
-                    <h3 className="text-lg font-semibold tracking-tight">
-                      {uc.title}
-                    </h3>
+                    <h3 className="text-lg font-semibold tracking-tight">{uc.title}</h3>
                     <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
                       {uc.description}
                     </p>

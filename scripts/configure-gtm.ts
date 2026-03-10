@@ -11,52 +11,50 @@
  *   4. Run: npx tsx scripts/configure-gtm.ts
  */
 
-import { google } from "googleapis";
+import { google } from 'googleapis';
 
 // ─── CONFIGURATION ────────────────────────────────────────────────────────────
 // All IDs below are available from their respective dashboards. None of these
 // are secrets — they are client-side IDs visible in page source.
 
 /** Numeric account ID — from GTM URL: tagmanager.google.com/#/account/{ID}/... */
-const GTM_ACCOUNT_ID = "TODO_NUMERIC_ACCOUNT_ID";
+const GTM_ACCOUNT_ID = 'TODO_NUMERIC_ACCOUNT_ID';
 
 /** Numeric container ID — from GTM URL: .../containers/{ID}/workspaces/... */
-const GTM_CONTAINER_NUMERIC_ID = "TODO_NUMERIC_CONTAINER_ID";
+const GTM_CONTAINER_NUMERIC_ID = 'TODO_NUMERIC_CONTAINER_ID';
 
 /** GA4 Measurement ID — GA4 → Admin → Data Streams → your stream → Measurement ID */
-const GA4_MEASUREMENT_ID = "G-XXXXXXXXXX";
+const GA4_MEASUREMENT_ID = 'G-XXXXXXXXXX';
 
 /** Microsoft Clarity Project ID — Clarity → Settings → Setup (8-char alphanumeric) */
-const CLARITY_PROJECT_ID = "TODO_CLARITY_ID";
+const CLARITY_PROJECT_ID = 'TODO_CLARITY_ID';
 
 /** PostHog API key — PostHog → Project Settings → Project API Key */
-const POSTHOG_API_KEY = "phc_TODO";
+const POSTHOG_API_KEY = 'phc_TODO';
 
 /** PostHog ingest host — us.i.posthog.com or eu.i.posthog.com */
-const POSTHOG_HOST = "https://us.i.posthog.com";
+const POSTHOG_HOST = 'https://us.i.posthog.com';
 // ─────────────────────────────────────────────────────────────────────────────
 
 async function main() {
   const auth = new google.auth.GoogleAuth({
     scopes: [
-      "https://www.googleapis.com/auth/tagmanager.edit.containers",
-      "https://www.googleapis.com/auth/tagmanager.publish",
+      'https://www.googleapis.com/auth/tagmanager.edit.containers',
+      'https://www.googleapis.com/auth/tagmanager.publish',
     ],
   });
 
-  const gtm = google.tagmanager({ version: "v2", auth });
+  const gtm = google.tagmanager({ version: 'v2', auth });
   const containerParent = `accounts/${GTM_ACCOUNT_ID}/containers/${GTM_CONTAINER_NUMERIC_ID}`;
 
   // ── 1. Find default workspace ─────────────────────────────────────────────
   const wsListRes = await gtm.accounts.containers.workspaces.list({
     parent: containerParent,
   });
-  const workspace = wsListRes.data.workspace?.find(
-    (w) => w.name === "Default Workspace",
-  );
+  const workspace = wsListRes.data.workspace?.find((w) => w.name === 'Default Workspace');
   if (!workspace?.path) {
     throw new Error(
-      "Default Workspace not found. Check GTM_ACCOUNT_ID and GTM_CONTAINER_NUMERIC_ID.",
+      'Default Workspace not found. Check GTM_ACCOUNT_ID and GTM_CONTAINER_NUMERIC_ID.'
     );
   }
   const wp = workspace.path;
@@ -65,104 +63,92 @@ async function main() {
   // ── 2. Enable built-in variables ──────────────────────────────────────────
   await gtm.accounts.containers.workspaces.built_in_variables.create({
     parent: wp,
-    type: [
-      "PAGE_URL",
-      "PAGE_PATH",
-      "CLICK_ELEMENT",
-      "CLICK_TEXT",
-      "CLICK_URL",
-      "HISTORY_SOURCE",
-    ],
+    type: ['PAGE_URL', 'PAGE_PATH', 'CLICK_ELEMENT', 'CLICK_TEXT', 'CLICK_URL', 'HISTORY_SOURCE'],
   });
-  console.log("Built-in variables enabled");
+  console.log('Built-in variables enabled');
 
   // ── 3. Triggers ───────────────────────────────────────────────────────────
 
   const allPagesRes = await gtm.accounts.containers.workspaces.triggers.create({
     parent: wp,
-    requestBody: { name: "All Pages", type: "pageview" },
+    requestBody: { name: 'All Pages', type: 'pageview' },
   });
   const allPagesId = allPagesRes.data.triggerId!;
   console.log(`Trigger created: All Pages (${allPagesId})`);
 
-  const historyChangeRes =
-    await gtm.accounts.containers.workspaces.triggers.create({
-      parent: wp,
-      requestBody: { name: "History Change", type: "historyChange" },
-    });
+  const historyChangeRes = await gtm.accounts.containers.workspaces.triggers.create({
+    parent: wp,
+    requestBody: { name: 'History Change', type: 'historyChange' },
+  });
   const historyChangeId = historyChangeRes.data.triggerId!;
   console.log(`Trigger created: History Change (${historyChangeId})`);
 
   // History Change filtered to /blog/* paths — used for blog_post_view event
-  const historyBlogRes =
-    await gtm.accounts.containers.workspaces.triggers.create({
-      parent: wp,
-      requestBody: {
-        name: "History Change — Blog",
-        type: "historyChange",
-        filter: [
-          {
-            type: "matchRegex",
-            parameter: [
-              { type: "template", key: "arg0", value: "{{Page Path}}" },
-              { type: "template", key: "arg1", value: "^/blog/" },
-            ],
-          },
-        ],
-      },
-    });
+  const historyBlogRes = await gtm.accounts.containers.workspaces.triggers.create({
+    parent: wp,
+    requestBody: {
+      name: 'History Change — Blog',
+      type: 'historyChange',
+      filter: [
+        {
+          type: 'matchRegex',
+          parameter: [
+            { type: 'template', key: 'arg0', value: '{{Page Path}}' },
+            { type: 'template', key: 'arg1', value: '^/blog/' },
+          ],
+        },
+      ],
+    },
+  });
   const historyBlogId = historyBlogRes.data.triggerId!;
   console.log(`Trigger created: History Change — Blog (${historyBlogId})`);
 
   // History Change filtered to /get-started — used for get_started_view event
-  const historyGetStartedRes =
-    await gtm.accounts.containers.workspaces.triggers.create({
-      parent: wp,
-      requestBody: {
-        name: "History Change — Get Started",
-        type: "historyChange",
-        filter: [
-          {
-            type: "equals",
-            parameter: [
-              { type: "template", key: "arg0", value: "{{Page Path}}" },
-              { type: "template", key: "arg1", value: "/get-started" },
-            ],
-          },
-        ],
-      },
-    });
+  const historyGetStartedRes = await gtm.accounts.containers.workspaces.triggers.create({
+    parent: wp,
+    requestBody: {
+      name: 'History Change — Get Started',
+      type: 'historyChange',
+      filter: [
+        {
+          type: 'equals',
+          parameter: [
+            { type: 'template', key: 'arg0', value: '{{Page Path}}' },
+            { type: 'template', key: 'arg1', value: '/get-started' },
+          ],
+        },
+      ],
+    },
+  });
   const historyGetStartedId = historyGetStartedRes.data.triggerId!;
-  console.log(
-    `Trigger created: History Change — Get Started (${historyGetStartedId})`,
-  );
+  console.log(`Trigger created: History Change — Get Started (${historyGetStartedId})`);
 
   // Clicks on register links or CTA buttons with matching text
   const ctaClickRes = await gtm.accounts.containers.workspaces.triggers.create({
     parent: wp,
     requestBody: {
-      name: "CTA Click",
-      type: "click",
+      name: 'CTA Click',
+      type: 'click',
       filter: [
         {
-          type: "cssSelector",
+          type: 'cssSelector',
           parameter: [
-            { type: "template", key: "arg0", value: "{{Click Element}}" },
+            { type: 'template', key: 'arg0', value: '{{Click Element}}' },
             {
-              type: "template",
-              key: "arg1",
+              type: 'template',
+              key: 'arg1',
               value: 'a[href*="/register"], button',
             },
           ],
         },
         {
-          type: "matchRegex",
+          type: 'matchRegex',
           parameter: [
-            { type: "template", key: "arg0", value: "{{Click Text}}" },
+            { type: 'template', key: 'arg0', value: '{{Click Text}}' },
             {
-              type: "template",
-              key: "arg1",
-              value: "Start free|Register|Install now|Sign up",
+              type: 'template',
+              key: 'arg1',
+              value: 'Start free|Register|Install now|Sign up',
             },
           ],
         },
@@ -173,47 +159,45 @@ async function main() {
   console.log(`Trigger created: CTA Click (${ctaClickId})`);
 
   // All link clicks where the destination is NOT context-vault.com
-  const outboundClickRes =
-    await gtm.accounts.containers.workspaces.triggers.create({
-      parent: wp,
-      requestBody: {
-        name: "Outbound Click",
-        type: "linkClick",
-        checkValidation: true,
-        filter: [
-          {
-            type: "contains",
-            parameter: [
-              { type: "template", key: "arg0", value: "{{Click URL}}" },
-              { type: "template", key: "arg1", value: "context-vault.com" },
-              // negate: true means this condition must NOT match
-              { type: "boolean", key: "negate", value: "true" },
-            ],
-          },
-        ],
-      },
-    });
+  const outboundClickRes = await gtm.accounts.containers.workspaces.triggers.create({
+    parent: wp,
+    requestBody: {
+      name: 'Outbound Click',
+      type: 'linkClick',
+      checkValidation: true,
+      filter: [
+        {
+          type: 'contains',
+          parameter: [
+            { type: 'template', key: 'arg0', value: '{{Click URL}}' },
+            { type: 'template', key: 'arg1', value: 'context-vault.com' },
+            // negate: true means this condition must NOT match
+            { type: 'boolean', key: 'negate', value: 'true' },
+          ],
+        },
+      ],
+    },
+  });
   const outboundClickId = outboundClickRes.data.triggerId!;
   console.log(`Trigger created: Outbound Click (${outboundClickId})`);
 
   // Custom event pushed by GetStartedPage copyCommand handler
-  const copyCommandRes =
-    await gtm.accounts.containers.workspaces.triggers.create({
-      parent: wp,
-      requestBody: {
-        name: "Copy Command",
-        type: "customEvent",
-        customEventFilter: [
-          {
-            type: "equals",
-            parameter: [
-              { type: "template", key: "arg0", value: "{{_event}}" },
-              { type: "template", key: "arg1", value: "copy_command" },
-            ],
-          },
-        ],
-      },
-    });
+  const copyCommandRes = await gtm.accounts.containers.workspaces.triggers.create({
+    parent: wp,
+    requestBody: {
+      name: 'Copy Command',
+      type: 'customEvent',
+      customEventFilter: [
+        {
+          type: 'equals',
+          parameter: [
+            { type: 'template', key: 'arg0', value: '{{_event}}' },
+            { type: 'template', key: 'arg1', value: 'copy_command' },
+          ],
+        },
+      ],
+    },
+  });
   const copyCommandId = copyCommandRes.data.triggerId!;
   console.log(`Trigger created: Copy Command (${copyCommandId})`);
 
@@ -223,85 +207,83 @@ async function main() {
   await gtm.accounts.containers.workspaces.tags.create({
     parent: wp,
     requestBody: {
-      name: "GA4 Configuration",
-      type: "gaawc",
-      parameter: [
-        { type: "template", key: "measurementId", value: GA4_MEASUREMENT_ID },
-      ],
+      name: 'GA4 Configuration',
+      type: 'gaawc',
+      parameter: [{ type: 'template', key: 'measurementId', value: GA4_MEASUREMENT_ID }],
       firingTriggerId: [allPagesId, historyChangeId],
     },
   });
-  console.log("Tag created: GA4 Configuration");
+  console.log('Tag created: GA4 Configuration');
 
   await gtm.accounts.containers.workspaces.tags.create({
     parent: wp,
     requestBody: {
-      name: "GA4 Event — cta_click",
-      type: "gaawe",
+      name: 'GA4 Event — cta_click',
+      type: 'gaawe',
       parameter: [
-        { type: "template", key: "eventName", value: "cta_click" },
-        { type: "template", key: "measurementId", value: GA4_MEASUREMENT_ID },
+        { type: 'template', key: 'eventName', value: 'cta_click' },
+        { type: 'template', key: 'measurementId', value: GA4_MEASUREMENT_ID },
       ],
       firingTriggerId: [ctaClickId],
     },
   });
-  console.log("Tag created: GA4 Event — cta_click");
+  console.log('Tag created: GA4 Event — cta_click');
 
   await gtm.accounts.containers.workspaces.tags.create({
     parent: wp,
     requestBody: {
-      name: "GA4 Event — blog_post_view",
-      type: "gaawe",
+      name: 'GA4 Event — blog_post_view',
+      type: 'gaawe',
       parameter: [
-        { type: "template", key: "eventName", value: "blog_post_view" },
-        { type: "template", key: "measurementId", value: GA4_MEASUREMENT_ID },
+        { type: 'template', key: 'eventName', value: 'blog_post_view' },
+        { type: 'template', key: 'measurementId', value: GA4_MEASUREMENT_ID },
       ],
       firingTriggerId: [historyBlogId],
     },
   });
-  console.log("Tag created: GA4 Event — blog_post_view");
+  console.log('Tag created: GA4 Event — blog_post_view');
 
   await gtm.accounts.containers.workspaces.tags.create({
     parent: wp,
     requestBody: {
-      name: "GA4 Event — get_started_view",
-      type: "gaawe",
+      name: 'GA4 Event — get_started_view',
+      type: 'gaawe',
       parameter: [
-        { type: "template", key: "eventName", value: "get_started_view" },
-        { type: "template", key: "measurementId", value: GA4_MEASUREMENT_ID },
+        { type: 'template', key: 'eventName', value: 'get_started_view' },
+        { type: 'template', key: 'measurementId', value: GA4_MEASUREMENT_ID },
       ],
       firingTriggerId: [historyGetStartedId],
     },
   });
-  console.log("Tag created: GA4 Event — get_started_view");
+  console.log('Tag created: GA4 Event — get_started_view');
 
   await gtm.accounts.containers.workspaces.tags.create({
     parent: wp,
     requestBody: {
-      name: "GA4 Event — outbound_click",
-      type: "gaawe",
+      name: 'GA4 Event — outbound_click',
+      type: 'gaawe',
       parameter: [
-        { type: "template", key: "eventName", value: "outbound_click" },
-        { type: "template", key: "measurementId", value: GA4_MEASUREMENT_ID },
+        { type: 'template', key: 'eventName', value: 'outbound_click' },
+        { type: 'template', key: 'measurementId', value: GA4_MEASUREMENT_ID },
       ],
       firingTriggerId: [outboundClickId],
     },
   });
-  console.log("Tag created: GA4 Event — outbound_click");
+  console.log('Tag created: GA4 Event — outbound_click');
 
   await gtm.accounts.containers.workspaces.tags.create({
     parent: wp,
     requestBody: {
-      name: "GA4 Event — copy_command",
-      type: "gaawe",
+      name: 'GA4 Event — copy_command',
+      type: 'gaawe',
       parameter: [
-        { type: "template", key: "eventName", value: "copy_command" },
-        { type: "template", key: "measurementId", value: GA4_MEASUREMENT_ID },
+        { type: 'template', key: 'eventName', value: 'copy_command' },
+        { type: 'template', key: 'measurementId', value: GA4_MEASUREMENT_ID },
       ],
       firingTriggerId: [copyCommandId],
     },
   });
-  console.log("Tag created: GA4 Event — copy_command");
+  console.log('Tag created: GA4 Event — copy_command');
 
   // Microsoft Clarity
   const clarityHtml = `<script type="text/javascript">
@@ -315,16 +297,16 @@ async function main() {
   await gtm.accounts.containers.workspaces.tags.create({
     parent: wp,
     requestBody: {
-      name: "Microsoft Clarity",
-      type: "html",
+      name: 'Microsoft Clarity',
+      type: 'html',
       parameter: [
-        { type: "template", key: "html", value: clarityHtml },
-        { type: "boolean", key: "supportDocumentWrite", value: "false" },
+        { type: 'template', key: 'html', value: clarityHtml },
+        { type: 'boolean', key: 'supportDocumentWrite', value: 'false' },
       ],
       firingTriggerId: [allPagesId],
     },
   });
-  console.log("Tag created: Microsoft Clarity");
+  console.log('Tag created: Microsoft Clarity');
 
   // PostHog
   const posthogHtml = `<script>
@@ -335,40 +317,38 @@ async function main() {
   await gtm.accounts.containers.workspaces.tags.create({
     parent: wp,
     requestBody: {
-      name: "PostHog",
-      type: "html",
+      name: 'PostHog',
+      type: 'html',
       parameter: [
-        { type: "template", key: "html", value: posthogHtml },
-        { type: "boolean", key: "supportDocumentWrite", value: "false" },
+        { type: 'template', key: 'html', value: posthogHtml },
+        { type: 'boolean', key: 'supportDocumentWrite', value: 'false' },
       ],
       firingTriggerId: [allPagesId, historyChangeId],
     },
   });
-  console.log("Tag created: PostHog");
+  console.log('Tag created: PostHog');
 
   // ── 5. Create version and publish ─────────────────────────────────────────
-  console.log("\nCreating container version...");
+  console.log('\nCreating container version...');
   const versionRes = await gtm.accounts.containers.workspaces.create_version({
     path: wp,
     requestBody: {
-      name: "analytics-setup v1",
+      name: 'analytics-setup v1',
       notes:
-        "Initial analytics stack configured programmatically: GA4 configuration + events, Microsoft Clarity, PostHog.",
+        'Initial analytics stack configured programmatically: GA4 configuration + events, Microsoft Clarity, PostHog.',
     },
   });
 
   const versionPath = versionRes.data.containerVersion?.path;
-  if (!versionPath) throw new Error("Failed to create container version");
+  if (!versionPath) throw new Error('Failed to create container version');
   console.log(`Version created: ${versionPath}`);
 
   await gtm.accounts.containers.versions.publish({ path: versionPath });
-  console.log("\nSuccess — GTM container configured and published.");
-  console.log(
-    "Open GTM Preview mode to verify tags fire on navigation and clicks.",
-  );
+  console.log('\nSuccess — GTM container configured and published.');
+  console.log('Open GTM Preview mode to verify tags fire on navigation and clicks.');
 }
 
 main().catch((err) => {
-  console.error("Error:", err?.message ?? err);
+  console.error('Error:', err?.message ?? err);
   process.exit(1);
 });

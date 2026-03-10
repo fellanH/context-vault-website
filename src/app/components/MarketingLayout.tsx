@@ -1,19 +1,19 @@
-import { Link, Outlet, useLocation } from "react-router";
-import { Moon, Sun } from "lucide-react";
-import { useTheme } from "next-themes";
-import { Button } from "@/components/ui/button";
-import { docsQuickstartUrl } from "../lib/links";
+import { Link, Outlet, useLocation } from 'react-router';
+import { Moon, Sun } from 'lucide-react';
+import { useTheme } from 'next-themes';
+import { Button } from '@/components/ui/button';
+import { docsQuickstartUrl } from '../lib/links';
 
 function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme();
-  const isDark = resolvedTheme === "dark";
+  const isDark = resolvedTheme === 'dark';
 
   return (
     <Button
-      aria-label={isDark ? "Switch to light theme" : "Switch to dark theme"}
+      aria-label={isDark ? 'Switch to light theme' : 'Switch to dark theme'}
       variant="ghost"
       size="icon"
-      onClick={() => setTheme(isDark ? "light" : "dark")}
+      onClick={() => setTheme(isDark ? 'light' : 'dark')}
       className="hidden sm:inline-flex"
     >
       {isDark ? <Sun className="size-4" /> : <Moon className="size-4" />}
@@ -23,8 +23,8 @@ function ThemeToggle() {
 
 export function MarketingLayout() {
   const location = useLocation();
-  const onBlog = location.pathname.startsWith("/blog");
-  const onGetStarted = location.pathname === "/get-started";
+  const onBlog = location.pathname.startsWith('/blog');
+  const onGetStarted = location.pathname === '/get-started';
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -41,14 +41,10 @@ export function MarketingLayout() {
           </Link>
 
           <nav className="flex items-center gap-2">
-            <Button asChild variant={onBlog ? "secondary" : "ghost"} size="sm">
+            <Button asChild variant={onBlog ? 'secondary' : 'ghost'} size="sm">
               <Link to="/blog">Blog</Link>
             </Button>
-            <Button
-              asChild
-              variant={onGetStarted ? "secondary" : "ghost"}
-              size="sm"
-            >
+            <Button asChild variant={onGetStarted ? 'secondary' : 'ghost'} size="sm">
               <Link to="/get-started">Get Started</Link>
             </Button>
             <Button asChild variant="ghost" size="sm">
@@ -58,11 +54,7 @@ export function MarketingLayout() {
             </Button>
             <ThemeToggle />
             <Button asChild size="sm" className="rounded-full">
-              <a
-                href="https://github.com/fellanH/context-vault"
-                target="_blank"
-                rel="noreferrer"
-              >
+              <a href="https://github.com/fellanH/context-vault" target="_blank" rel="noreferrer">
                 GitHub
               </a>
             </Button>
@@ -76,16 +68,11 @@ export function MarketingLayout() {
         <div className="mx-auto w-full max-w-6xl px-6 py-8">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <p className="text-sm text-muted-foreground">
-              © {new Date().getFullYear()} Context Vault. Memory layer for AI
-              agents.
+              © {new Date().getFullYear()} Context Vault. Memory layer for AI agents.
             </p>
             <div className="flex items-center gap-3">
               <Button asChild variant="link" size="sm" className="px-0">
-                <a
-                  href="https://github.com/fellanH/context-vault"
-                  target="_blank"
-                  rel="noreferrer"
-                >
+                <a href="https://github.com/fellanH/context-vault" target="_blank" rel="noreferrer">
                   GitHub
                 </a>
               </Button>

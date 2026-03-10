@@ -1,63 +1,49 @@
-import {
-  Bug,
-  Lightbulb,
-  Chrome,
-  BookOpen,
-  ArrowRight,
-  Github,
-} from "lucide-react";
-import { PageHead } from "../components/PageHead";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Bug, Lightbulb, Chrome, BookOpen, ArrowRight, Github } from 'lucide-react';
+import { PageHead } from '../components/PageHead';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 
 const sections = [
   {
     icon: Bug,
-    title: "Report a Bug",
+    title: 'Report a Bug',
     description:
       "Found something that isn't working? Open an issue on GitHub and we'll look into it.",
     link: {
-      href: "https://github.com/fellanH/context-vault/issues",
-      label: "Open an Issue",
+      href: 'https://github.com/fellanH/context-vault/issues',
+      label: 'Open an Issue',
     },
   },
   {
     icon: Lightbulb,
-    title: "Feature Requests",
+    title: 'Feature Requests',
     description:
-      "Have an idea for improving Context Vault? Start a discussion and share your thoughts.",
+      'Have an idea for improving Context Vault? Start a discussion and share your thoughts.',
     link: {
-      href: "https://github.com/fellanH/context-vault/discussions",
-      label: "Start a Discussion",
+      href: 'https://github.com/fellanH/context-vault/discussions',
+      label: 'Start a Discussion',
     },
   },
   {
     icon: Chrome,
-    title: "Chrome Extension",
+    title: 'Chrome Extension',
     description:
-      "For extension-specific issues (connection errors, save failures, UI problems), please include when reporting:",
+      'For extension-specific issues (connection errors, save failures, UI problems), please include when reporting:',
     items: [
-      "Your Chrome version",
-      "Extension version (visible on the extension details page)",
-      "Steps to reproduce the issue",
-      "Any error messages from the extension popup or browser console",
+      'Your Chrome version',
+      'Extension version (visible on the extension details page)',
+      'Steps to reproduce the issue',
+      'Any error messages from the extension popup or browser console',
     ],
   },
   {
     icon: BookOpen,
-    title: "Documentation",
-    description:
-      "Setup guides, configuration options, and usage examples to get you started.",
+    title: 'Documentation',
+    description: 'Setup guides, configuration options, and usage examples to get you started.',
     link: {
-      href: "https://context-vault.com/docs",
-      label: "View Docs",
+      href: 'https://context-vault.com/docs',
+      label: 'View Docs',
     },
   },
 ];
@@ -76,9 +62,7 @@ export function SupportPage() {
           <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
             Get help with Context Vault
           </h1>
-          <p className="text-muted-foreground">
-            Bug reports, feature ideas, and documentation
-          </p>
+          <p className="text-muted-foreground">Bug reports, feature ideas, and documentation</p>
         </div>
 
         <div className="grid gap-4 md:grid-cols-2">
@@ -91,12 +75,10 @@ export function SupportPage() {
                   </div>
                   <CardTitle className="text-base">{section.title}</CardTitle>
                 </div>
-                <CardDescription className="text-sm">
-                  {section.description}
-                </CardDescription>
+                <CardDescription className="text-sm">{section.description}</CardDescription>
               </CardHeader>
               <CardContent>
-                {"items" in section && (
+                {'items' in section && (
                   <ul className="space-y-1.5 text-sm text-muted-foreground mb-4">
                     {section.items.map((item) => (
                       <li key={item} className="flex gap-2">
@@ -106,13 +88,9 @@ export function SupportPage() {
                     ))}
                   </ul>
                 )}
-                {"link" in section && (
+                {'link' in section && (
                   <Button variant="outline" size="sm" asChild>
-                    <a
-                      href={section.link.href}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
+                    <a href={section.link.href} target="_blank" rel="noreferrer">
                       {section.link.label}
                       <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
                     </a>
@@ -133,11 +111,7 @@ export function SupportPage() {
               </p>
             </div>
             <Button variant="outline" size="sm" asChild>
-              <a
-                href="https://github.com/fellanH/context-vault"
-                target="_blank"
-                rel="noreferrer"
-              >
+              <a href="https://github.com/fellanH/context-vault" target="_blank" rel="noreferrer">
                 GitHub Repository
                 <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
               </a>

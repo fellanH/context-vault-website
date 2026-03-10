@@ -14,11 +14,9 @@ interface TestimonialStripProps {
 }
 
 function Avatar({ testimonial }: { testimonial: Testimonial }) {
-  const isUrl = testimonial.avatar?.startsWith("http");
+  const isUrl = testimonial.avatar?.startsWith('http');
   const initials =
-    testimonial.avatar && !isUrl
-      ? testimonial.avatar
-      : testimonial.name.charAt(0).toUpperCase();
+    testimonial.avatar && !isUrl ? testimonial.avatar : testimonial.name.charAt(0).toUpperCase();
 
   if (isUrl) {
     return (
@@ -32,18 +30,12 @@ function Avatar({ testimonial }: { testimonial: Testimonial }) {
 
   return (
     <div className="size-8 rounded-full bg-muted flex items-center justify-center flex-shrink-0">
-      <span className="text-xs font-medium text-muted-foreground">
-        {initials}
-      </span>
+      <span className="text-xs font-medium text-muted-foreground">{initials}</span>
     </div>
   );
 }
 
-export function TestimonialStrip({
-  headline,
-  subtitle,
-  testimonials,
-}: TestimonialStripProps) {
+export function TestimonialStrip({ headline, subtitle, testimonials }: TestimonialStripProps) {
   const cols = testimonials.length;
 
   return (
@@ -52,14 +44,8 @@ export function TestimonialStrip({
         {/* Section header — no extra px, container inset handles it */}
         {(headline || subtitle) && (
           <div className="border-b border-border py-10">
-            {headline && (
-              <h2 className="text-2xl font-semibold tracking-tight">
-                {headline}
-              </h2>
-            )}
-            {subtitle && (
-              <p className="mt-1.5 text-sm text-muted-foreground">{subtitle}</p>
-            )}
+            {headline && <h2 className="text-2xl font-semibold tracking-tight">{headline}</h2>}
+            {subtitle && <p className="mt-1.5 text-sm text-muted-foreground">{subtitle}</p>}
           </div>
         )}
 
@@ -76,14 +62,8 @@ export function TestimonialStrip({
             >
               <Avatar testimonial={t} />
               <div className="min-w-0">
-                <p className="text-sm font-medium text-foreground truncate">
-                  {t.name}
-                </p>
-                {t.handle && (
-                  <p className="text-xs text-muted-foreground truncate">
-                    {t.handle}
-                  </p>
-                )}
+                <p className="text-sm font-medium text-foreground truncate">{t.name}</p>
+                {t.handle && <p className="text-xs text-muted-foreground truncate">{t.handle}</p>}
               </div>
             </div>
           ))}

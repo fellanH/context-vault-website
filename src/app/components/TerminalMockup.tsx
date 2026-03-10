@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { ReactNode } from 'react';
 
 interface TerminalMockupProps {
   title?: string;
@@ -12,15 +12,9 @@ export function TerminalMockup({ title, children }: TerminalMockupProps) {
         <span className="size-2.5 rounded-full bg-red-400/80" />
         <span className="size-2.5 rounded-full bg-yellow-400/80" />
         <span className="size-2.5 rounded-full bg-green-400/80" />
-        {title && (
-          <span className="ml-auto font-mono text-xs text-zinc-500">
-            {title}
-          </span>
-        )}
+        {title && <span className="ml-auto font-mono text-xs text-zinc-500">{title}</span>}
       </div>
-      <div className="p-4 font-mono text-xs leading-relaxed text-zinc-100">
-        {children}
-      </div>
+      <div className="p-4 font-mono text-xs leading-relaxed text-zinc-100">{children}</div>
     </div>
   );
 }

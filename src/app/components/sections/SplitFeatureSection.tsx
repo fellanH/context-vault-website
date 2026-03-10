@@ -1,5 +1,5 @@
-import type { LucideIcon } from "lucide-react";
-import { cn } from "@/components/ui/utils";
+import type { LucideIcon } from 'lucide-react';
+import { cn } from '@/components/ui/utils';
 
 interface FeatureBlock {
   icon: LucideIcon;
@@ -22,19 +22,9 @@ interface SplitFeatureSectionProps {
   blocks: Array<FeatureBlock>;
 }
 
-function AccentHeading({
-  heading,
-  accentWord,
-}: {
-  heading: string;
-  accentWord?: string;
-}) {
+function AccentHeading({ heading, accentWord }: { heading: string; accentWord?: string }) {
   if (!accentWord || !heading.includes(accentWord)) {
-    return (
-      <h2 className="text-3xl font-semibold tracking-tight text-center">
-        {heading}
-      </h2>
-    );
+    return <h2 className="text-3xl font-semibold tracking-tight text-center">{heading}</h2>;
   }
   const [before, after] = heading.split(accentWord);
   return (
@@ -56,8 +46,7 @@ function FeatureBlockCard({ block }: { block: FeatureBlock }) {
           {block.label}
         </p>
         <p className="text-sm leading-relaxed text-foreground">
-          <span className="font-semibold">{block.title}</span>{" "}
-          {block.description}
+          <span className="font-semibold">{block.title}</span> {block.description}
         </p>
       </div>
       {/* Visual placeholder — large dimmed icon */}
@@ -85,9 +74,7 @@ export function SplitFeatureSection({
             <div className="mb-4 inline-flex items-center gap-1.5 text-muted-foreground/60">
               <span className="font-mono text-xs">//</span>
               {TagIcon && <TagIcon className="size-3.5 text-primary" />}
-              <span className="text-xs font-medium text-muted-foreground">
-                {sectionTag}
-              </span>
+              <span className="text-xs font-medium text-muted-foreground">{sectionTag}</span>
               <span className="font-mono text-xs">\\</span>
             </div>
           )}
@@ -105,8 +92,8 @@ export function SplitFeatureSection({
             <div
               key={block.label}
               className={cn(
-                i % 2 === 0 ? "border-r border-border" : "",
-                i >= 2 ? "border-t border-border" : "",
+                i % 2 === 0 ? 'border-r border-border' : '',
+                i >= 2 ? 'border-t border-border' : ''
               )}
             >
               <FeatureBlockCard block={block} />

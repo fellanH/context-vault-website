@@ -1,25 +1,24 @@
-import { useState, useEffect } from "react";
-import { PageHead } from "../components/PageHead";
-import { HardDrive, Cloud, Copy, Check, ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { appHref, docsQuickstartUrl } from "../lib/links";
+import { useState, useEffect } from 'react';
+import { PageHead } from '../components/PageHead';
+import { HardDrive, Cloud, Copy, Check, ArrowRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { appHref, docsQuickstartUrl } from '../lib/links';
 
-type Mode = "local" | "hosted";
+type Mode = 'local' | 'hosted';
 
 const localSteps = [
-  { label: "Install", command: "npm install -g context-vault" },
-  { label: "Setup", command: "context-vault setup" },
-  { label: "Open dashboard (optional)", command: "context-vault ui" },
+  { label: 'Install & setup', command: 'npx context-vault' },
+  { label: 'Open dashboard (optional)', command: 'npx context-vault ui' },
 ];
 
 export function GetStartedPage() {
-  const [mode, setMode] = useState<Mode>("local");
+  const [mode, setMode] = useState<Mode>('local');
   const [copiedIdx, setCopiedIdx] = useState<number | null>(null);
 
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (window as any).dataLayer?.push({ event: "get_started_view" });
+    (window as any).dataLayer?.push({ event: 'get_started_view' });
   }, []);
 
   const copyCommand = async (command: string, idx: number) => {
@@ -27,7 +26,7 @@ export function GetStartedPage() {
     setCopiedIdx(idx);
     setTimeout(() => setCopiedIdx(null), 2000);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (window as any).dataLayer?.push({ event: "copy_command" });
+    (window as any).dataLayer?.push({ event: 'copy_command' });
   };
 
   return (
@@ -42,20 +41,18 @@ export function GetStartedPage() {
           <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
             Get Started with Context Vault
           </h1>
-          <p className="text-muted-foreground">
-            Choose how you want to run it.
-          </p>
+          <p className="text-muted-foreground">Choose how you want to run it.</p>
         </div>
 
         {/* Mode selector */}
         <div className="grid grid-cols-2 gap-4 mb-8">
           <button
             type="button"
-            onClick={() => setMode("local")}
+            onClick={() => setMode('local')}
             className={`rounded-lg border p-6 text-left transition-colors ${
-              mode === "local"
-                ? "border-primary ring-1 ring-primary/20"
-                : "border-border hover:border-primary/30"
+              mode === 'local'
+                ? 'border-primary ring-1 ring-primary/20'
+                : 'border-border hover:border-primary/30'
             }`}
           >
             <HardDrive className="size-6 mb-3" />
@@ -68,11 +65,11 @@ export function GetStartedPage() {
           </button>
           <button
             type="button"
-            onClick={() => setMode("hosted")}
+            onClick={() => setMode('hosted')}
             className={`rounded-lg border p-6 text-left transition-colors ${
-              mode === "hosted"
-                ? "border-primary ring-1 ring-primary/20"
-                : "border-border hover:border-primary/30"
+              mode === 'hosted'
+                ? 'border-primary ring-1 ring-primary/20'
+                : 'border-border hover:border-primary/30'
             }`}
           >
             <Cloud className="size-6 mb-3" />
@@ -86,7 +83,7 @@ export function GetStartedPage() {
         </div>
 
         {/* Conditional content */}
-        {mode === "local" ? (
+        {mode === 'local' ? (
           <Card>
             <CardContent className="p-6 space-y-5">
               {localSteps.map((step, idx) => (
@@ -120,8 +117,8 @@ export function GetStartedPage() {
                   // eslint-disable-next-line @typescript-eslint/no-explicit-any
                   onClick={() =>
                     (window as any).dataLayer?.push({
-                      event: "outbound_click",
-                      destination: "docs",
+                      event: 'outbound_click',
+                      destination: 'docs',
                     })
                   }
                 >
@@ -138,13 +135,13 @@ export function GetStartedPage() {
               </p>
               <Button asChild size="lg">
                 <a
-                  href={appHref("/register")}
+                  href={appHref('/register')}
                   // eslint-disable-next-line @typescript-eslint/no-explicit-any
                   onClick={() =>
                     (window as any).dataLayer?.push({
-                      event: "cta_click",
-                      label: "Start free",
-                      source: "get_started",
+                      event: 'cta_click',
+                      label: 'Start free',
+                      source: 'get_started',
                     })
                   }
                 >

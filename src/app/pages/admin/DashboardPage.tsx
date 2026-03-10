@@ -1,21 +1,16 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router";
-import { FileText, Image, PenSquare, Type } from "lucide-react";
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import type { BlogPost } from "../../content/posts";
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router';
+import { FileText, Image, PenSquare, Type } from 'lucide-react';
+import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import type { BlogPost } from '../../content/posts';
 
 export function DashboardPage() {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/cms/posts")
+    fetch('/cms/posts')
       .then((r) => r.json())
       .then((data: BlogPost[]) => {
         setPosts(data);
@@ -40,9 +35,7 @@ export function DashboardPage() {
         <Card>
           <CardHeader className="pb-2">
             <CardDescription>Total posts</CardDescription>
-            <CardTitle className="text-2xl">
-              {loading ? "—" : posts.length}
-            </CardTitle>
+            <CardTitle className="text-2xl">{loading ? '—' : posts.length}</CardTitle>
           </CardHeader>
         </Card>
       </div>
@@ -93,9 +86,7 @@ export function DashboardPage() {
                 <div className="flex items-center gap-3 min-w-0">
                   <FileText className="size-4 text-muted-foreground shrink-0" />
                   <span className="text-sm truncate">{post.title}</span>
-                  <span className="text-xs text-muted-foreground shrink-0">
-                    {post.category}
-                  </span>
+                  <span className="text-xs text-muted-foreground shrink-0">{post.category}</span>
                 </div>
                 <Button asChild variant="ghost" size="sm">
                   <Link to={`/admin/posts/${post.slug}`}>Edit</Link>

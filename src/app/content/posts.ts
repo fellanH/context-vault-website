@@ -1,4 +1,4 @@
-import raw from "./posts.json";
+import raw from './posts.json';
 
 export type BlogPostSection = {
   heading: string;
@@ -9,12 +9,7 @@ export type BlogPost = {
   slug: string;
   title: string;
   description: string;
-  category:
-    | "Integration"
-    | "Playbook"
-    | "Architecture"
-    | "Education"
-    | "Comparison";
+  category: 'Integration' | 'Playbook' | 'Architecture' | 'Education' | 'Comparison';
   publishedAt: string;
   readTimeMinutes: number;
   ctaLabel: string;

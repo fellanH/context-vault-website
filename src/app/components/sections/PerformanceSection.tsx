@@ -1,5 +1,5 @@
-import React from "react";
-import type { LucideIcon } from "lucide-react";
+import React from 'react';
+import type { LucideIcon } from 'lucide-react';
 
 interface CompetitorRow {
   name: string;
@@ -24,19 +24,9 @@ interface PerformanceSectionProps {
   asciiArt?: string;
 }
 
-function AccentHeading({
-  heading,
-  accentWord,
-}: {
-  heading: string;
-  accentWord?: string;
-}) {
+function AccentHeading({ heading, accentWord }: { heading: string; accentWord?: string }) {
   if (!accentWord || !heading.includes(accentWord)) {
-    return (
-      <h2 className="text-3xl font-semibold tracking-tight text-center">
-        {heading}
-      </h2>
-    );
+    return <h2 className="text-3xl font-semibold tracking-tight text-center">{heading}</h2>;
   }
   const [before, after] = heading.split(accentWord);
   return (
@@ -73,9 +63,7 @@ export function PerformanceSection({
             <div className="mb-4 inline-flex items-center gap-1.5 text-muted-foreground/60">
               <span className="font-mono text-xs">//</span>
               {TagIcon && <TagIcon className="size-3.5 text-primary" />}
-              <span className="text-xs font-medium text-muted-foreground">
-                {sectionTag}
-              </span>
+              <span className="text-xs font-medium text-muted-foreground">{sectionTag}</span>
               <span className="font-mono text-xs">\\</span>
             </div>
           )}
@@ -118,7 +106,7 @@ export function PerformanceSection({
                   <div className="flex-1 h-1.5 bg-muted rounded-full overflow-hidden">
                     <div
                       className="h-full bg-primary rounded-full transition-all duration-1000 ease-out"
-                      style={{ width: mounted ? `${c.fillPercent}%` : "0%" }}
+                      style={{ width: mounted ? `${c.fillPercent}%` : '0%' }}
                     />
                   </div>
                 </div>
@@ -131,9 +119,7 @@ export function PerformanceSection({
             <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground mb-2">
               Retrieval performance
             </p>
-            <p className="font-semibold text-foreground mb-6 text-sm">
-              Speed that feels invisible
-            </p>
+            <p className="font-semibold text-foreground mb-6 text-sm">Speed that feels invisible</p>
             <div className="w-full text-xs">
               <div className="grid grid-cols-3 gap-4 border-b border-border pb-2 mb-2 text-muted-foreground font-medium">
                 <span>Query</span>

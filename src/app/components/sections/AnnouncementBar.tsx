@@ -1,20 +1,20 @@
-import React from "react";
-import { X, ArrowRight } from "lucide-react";
-import { cn } from "@/components/ui/utils";
+import React from 'react';
+import { X, ArrowRight } from 'lucide-react';
+import { cn } from '@/components/ui/utils';
 
 interface AnnouncementBarProps {
   message: string;
   linkText?: string;
   linkHref?: string;
   /** "brand" = primary color bg; "neutral" = muted bg */
-  variant?: "brand" | "neutral";
+  variant?: 'brand' | 'neutral';
 }
 
 export function AnnouncementBar({
   message,
   linkText,
   linkHref,
-  variant = "brand",
+  variant = 'brand',
 }: AnnouncementBarProps) {
   const [dismissed, setDismissed] = React.useState(false);
   if (dismissed) return null;
@@ -22,10 +22,8 @@ export function AnnouncementBar({
   return (
     <div
       className={cn(
-        "relative flex items-center justify-center gap-2 px-10 py-2.5 text-sm border-b border-border",
-        variant === "brand"
-          ? "bg-primary text-primary-foreground"
-          : "bg-muted/60 text-foreground",
+        'relative flex items-center justify-center gap-2 px-10 py-2.5 text-sm border-b border-border',
+        variant === 'brand' ? 'bg-primary text-primary-foreground' : 'bg-muted/60 text-foreground'
       )}
     >
       <span>{message}</span>
