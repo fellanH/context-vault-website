@@ -77,19 +77,6 @@ const logos = [
 
 const codeTabs = [
   {
-    label: 'Python',
-    code: `import context_vault
-vault = context_vault.Client()
-
-# Save a decision once
-vault.save(kind="decision", title="Use SQLite",
-           body="Local-first, no infra overhead")
-
-# Retrieve it in any future session
-results = vault.search("database")
-print(results[0].title)  # → Use SQLite`,
-  },
-  {
     label: 'CLI',
     code: `# Install and setup in one command
 npx context-vault
@@ -272,13 +259,13 @@ const jsonLdSoftware = {
     priceCurrency: 'USD',
   },
   license: 'https://opensource.org/licenses/MIT',
-  url: 'https://contextvault.dev',
+  url: 'https://context-vault.com',
   downloadUrl: 'https://www.npmjs.com/package/context-vault',
-  softwareRequirements: 'Node.js 18+',
+  softwareRequirements: 'Node.js 22+',
   author: {
     '@type': 'Organization',
     name: 'Context Vault',
-    url: 'https://contextvault.dev',
+    url: 'https://context-vault.com',
   },
 };
 
