@@ -475,7 +475,7 @@ export function LandingPage() {
           output={codeOutput}
           skillHeading="Install the Context Vault MCP server"
           skillDescription="One command connects persistent memory to your AI editor."
-          skillCommand="npm install -g context-vault"
+          skillCommand="npx context-vault"
           skillCapabilities={[
             'Saves context across sessions automatically',
             'Hybrid semantic + full-text search',

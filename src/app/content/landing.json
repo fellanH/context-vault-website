@@ -98,7 +98,7 @@
         },
         {
           "question": "How long does setup take?",
-          "answer": "About 2 minutes. Run 'npm i -g context-vault' to install, then 'context-vault setup' to configure. It auto-detects your AI editor and sets up the MCP connection. No account, no API key, no configuration files to edit."
+          "answer": "About 2 minutes. Run 'npx context-vault' to install and configure. It auto-detects your AI editor and sets up the MCP connection. No account, no API key, no configuration files to edit. Updates happen automatically."
         },
         {
           "question": "Which AI tools are supported?",
