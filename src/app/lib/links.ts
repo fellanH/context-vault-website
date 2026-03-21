@@ -1,4 +1,4 @@
-const rawBaseUrl = import.meta.env.VITE_APP_BASE_URL || '';
+const rawBaseUrl = import.meta.env.VITE_APP_BASE_URL || 'https://app.context-vault.com';
 const normalizedBaseUrl = rawBaseUrl.trim().replace(/\/+$/, '');
 
 export const docsQuickstartUrl =

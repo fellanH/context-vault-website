@@ -2,7 +2,6 @@ import { Link, Outlet, useLocation } from 'react-router';
 import { Moon, Sun } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { Button } from '@/components/ui/button';
-import { docsQuickstartUrl } from '../lib/links';
 
 function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme();
@@ -25,6 +24,8 @@ export function MarketingLayout() {
   const location = useLocation();
   const onBlog = location.pathname.startsWith('/blog');
   const onGetStarted = location.pathname === '/get-started';
+  const onDocs = location.pathname.startsWith('/docs');
+  const onPricing = location.pathname === '/pricing';
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -44,13 +45,14 @@ export function MarketingLayout() {
             <Button asChild variant={onBlog ? 'secondary' : 'ghost'} size="sm">
               <Link to="/blog">Blog</Link>
             </Button>
+            <Button asChild variant={onDocs ? 'secondary' : 'ghost'} size="sm">
+              <Link to="/docs">Docs</Link>
+            </Button>
+            <Button asChild variant={onPricing ? 'secondary' : 'ghost'} size="sm">
+              <Link to="/pricing">Pricing</Link>
+            </Button>
             <Button asChild variant={onGetStarted ? 'secondary' : 'ghost'} size="sm">
               <Link to="/get-started">Get Started</Link>
-            </Button>
-            <Button asChild variant="ghost" size="sm">
-              <a href={docsQuickstartUrl} target="_blank" rel="noreferrer">
-                Docs
-              </a>
             </Button>
             <ThemeToggle />
             <Button asChild size="sm" className="rounded-full">
@@ -77,7 +79,16 @@ export function MarketingLayout() {
                 </a>
               </Button>
               <Button asChild variant="link" size="sm" className="px-0">
+                <Link to="/docs">Docs</Link>
+              </Button>
+              <Button asChild variant="link" size="sm" className="px-0">
+                <Link to="/pricing">Pricing</Link>
+              </Button>
+              <Button asChild variant="link" size="sm" className="px-0">
                 <Link to="/privacy">Privacy</Link>
+              </Button>
+              <Button asChild variant="link" size="sm" className="px-0">
+                <Link to="/terms">Terms</Link>
               </Button>
               <Button asChild variant="link" size="sm" className="px-0">
                 <Link to="/support">Support</Link>

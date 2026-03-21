@@ -522,7 +522,7 @@ export function SectionsPage() {
         description="Dismissible top banner — brand or neutral variant"
       >
         <AnnouncementBar
-          message="Context Vault 2.0 is here — team sharing, priority support, and more."
+          message="Context Vault v3 is here — team sharing, priority support, and more."
           linkText="Read more"
           linkHref="#"
           variant="brand"

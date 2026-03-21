@@ -1,4 +1,5 @@
 import { Bug, Lightbulb, Chrome, BookOpen, ArrowRight, Github } from 'lucide-react';
+import { Link } from 'react-router';
 import { PageHead } from '../components/PageHead';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -42,7 +43,7 @@ const sections = [
     title: 'Documentation',
     description: 'Setup guides, configuration options, and usage examples to get you started.',
     link: {
-      href: 'https://context-vault.com/docs',
+      href: '/docs',
       label: 'View Docs',
     },
   },
@@ -90,10 +91,17 @@ export function SupportPage() {
                 )}
                 {'link' in section && (
                   <Button variant="outline" size="sm" asChild>
-                    <a href={section.link.href} target="_blank" rel="noreferrer">
-                      {section.link.label}
-                      <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
-                    </a>
+                    {section.link.href.startsWith('/') ? (
+                      <Link to={section.link.href}>
+                        {section.link.label}
+                        <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
+                      </Link>
+                    ) : (
+                      <a href={section.link.href} target="_blank" rel="noreferrer">
+                        {section.link.label}
+                        <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
+                      </a>
+                    )}
                   </Button>
                 )}
               </CardContent>
