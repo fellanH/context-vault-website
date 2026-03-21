@@ -125,7 +125,7 @@ export function HeroSection({
 
         {/* Subtitle */}
         {subtitle && (
-          <p className="text-base text-muted-foreground leading-relaxed mb-8 max-w-md mx-auto">
+          <p className="text-base text-muted-foreground leading-relaxed mb-8 max-w-[60ch] mx-auto">
             {subtitle}
           </p>
         )}

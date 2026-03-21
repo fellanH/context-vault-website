@@ -26,7 +26,6 @@ import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/comp
 import { posts } from '../content/posts';
 import { formatDate } from '../lib/links';
 import {
-  AnnouncementBar,
   HeroSection,
   LogoCloud,
   FeatureCardGrid,
@@ -326,15 +325,7 @@ export function LandingPage() {
         }}
       />
 
-      {/* 1. Announcement Bar */}
-      <AnnouncementBar
-        message="Context Vault is open-source. Star the repo, contribute, or self-host."
-        linkText="View on GitHub"
-        linkHref="https://github.com/fellanH/context-vault"
-        variant="brand"
-      />
-
-      {/* 2. Hero */}
+      {/* 1. Hero */}
       <HeroSection
         badge={hero.badge}
         badgeHref={hero.badgeHref || undefined}
