@@ -27,7 +27,6 @@ import {
   HeroSection,
   LogoCloud,
   FeatureCardGrid,
-  CodeDemoSection,
   UseCaseDetailed,
   IntegrationsSplit,
   ProblemStrip,
@@ -71,38 +70,6 @@ const logos = [
   { name: 'VS Code', logo: 'visualstudiocode' },
 ];
 
-const codeTabs = [
-  {
-    label: 'CLI',
-    code: `# Install and setup in one command
-npx context-vault
-
-# Save from any session
-cv save --kind decision --title "Use SQLite" \\
-        --body "Local-first, no infra overhead"
-
-# Retrieve it anytime
-cv search "database"
-# → Use SQLite  [decision · 2d ago]`,
-  },
-];
-
-const codeOutput = `# Use SQLite for local storage
-
-**Decision:** Chose SQLite over Postgres
-for local-first architecture.
-
-**Tags:** architecture, database
-**Created:** 2026-02-21
-
----
-
-# Auth pattern
-
-Use JWT + refresh tokens
-
-**Tags:** authentication
-**Created:** 2026-02-20`;
 
 const useCases = [
   {
@@ -431,22 +398,45 @@ export function LandingPage() {
         />
       </Reveal>
 
-      {/* 8. Code demo */}
+      {/* 8. Session start terminal */}
       <Reveal>
-        <CodeDemoSection
-          tabs={codeTabs}
-          outputLabel="vault output"
-          output={codeOutput}
-          skillHeading="Install the Context Vault MCP server"
-          skillDescription="One command. Persistent memory for every session."
-          skillCommand="npx context-vault"
-          skillCapabilities={[
-            'Context retrieved automatically at session start',
-            'Hybrid semantic + full-text search',
-            'Works with Claude Code, Cursor, Windsurf',
-            'Plain markdown files. Your data, your format.',
-          ]}
-        />
+        <section className="py-16">
+          <div className="mx-auto w-full max-w-2xl px-6">
+            <div className="text-center mb-8">
+              <h2 className="text-2xl font-semibold tracking-tight">What Monday morning looks like</h2>
+              <p className="mt-2 text-sm text-muted-foreground">You open your editor. Context Vault already loaded what matters.</p>
+            </div>
+            <div className="rounded-2xl overflow-hidden border border-border/60 shadow-[var(--shadow-hero-panel)]">
+              <div className="flex items-center gap-1.5 border-b border-white/10 bg-zinc-950 px-4 py-2.5">
+                <span className="size-2.5 rounded-full bg-red-400/70" />
+                <span className="size-2.5 rounded-full bg-yellow-400/70" />
+                <span className="size-2.5 rounded-full bg-green-400/70" />
+                <span className="ml-auto font-mono text-[10px] text-zinc-500">Monday 9:04am</span>
+              </div>
+              <div className="bg-zinc-950 px-6 py-5 font-mono text-xs leading-7 space-y-0.5">
+                <div className="text-zinc-500">$ cursor .</div>
+                <div className="text-zinc-600">&nbsp;</div>
+                <div className="text-zinc-500">context-vault · loading session context...</div>
+                <div className="text-green-400">✓ 3 entries retrieved</div>
+                <div className="text-zinc-600">&nbsp;</div>
+                <div className="flex gap-6">
+                  <span className="text-zinc-300">jwt-auth-decision</span>
+                  <span className="text-zinc-600">decision&nbsp;&nbsp;· last session</span>
+                </div>
+                <div className="flex gap-6">
+                  <span className="text-zinc-300">sqlite-over-postgres</span>
+                  <span className="text-zinc-600">decision&nbsp;&nbsp;· 2d ago</span>
+                </div>
+                <div className="flex gap-6">
+                  <span className="text-zinc-300">session-handler-bug</span>
+                  <span className="text-zinc-600">note&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;· last session</span>
+                </div>
+                <div className="text-zinc-600">&nbsp;</div>
+                <div className="text-zinc-500">Ready. Picking up where you left off.</div>
+              </div>
+            </div>
+          </div>
+        </section>
       </Reveal>
 
       {/* 9. Integrations + open source */}
