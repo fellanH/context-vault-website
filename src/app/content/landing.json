@@ -13,7 +13,7 @@
       "label": "View on GitHub",
       "href": "https://github.com/fellanH/context-vault"
     },
-    "trustPoints": ["2-minute setup", "MIT License", "Free tier forever"],
+    "trustPoints": [],
     "leftPanelBadge": "Monday morning",
     "leftPanelLines": [
       { "text": "$ cursor .", "variant": "command" },
