@@ -338,10 +338,6 @@ export function LandingPage() {
           href: hero.secondaryCta.href,
         }}
         trustPoints={hero.trustPoints}
-        leftPanelBadge={hero.leftPanelBadge}
-        leftPanelLines={hero.leftPanelLines as Parameters<typeof HeroSection>[0]['leftPanelLines']}
-        rightPanelBadge={hero.rightPanelBadge}
-        rightPanelLines={hero.rightPanelLines}
         dotGrid
       />
 

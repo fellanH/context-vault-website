@@ -1,10 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { ArrowRight, Copy, Check } from 'lucide-react';
-
-interface TerminalLine {
-  text: string;
-  variant?: 'command' | 'success' | 'muted' | 'default';
-}
 
 interface HeroSectionProps {
   badge?: string;
@@ -17,10 +12,6 @@ interface HeroSectionProps {
   quickStartCommand?: string;
   installCommand?: string;
   trustPoints?: string[];
-  leftPanelBadge?: string;
-  leftPanelLines?: TerminalLine[];
-  rightPanelBadge?: string;
-  rightPanelLines?: string[];
   dotGrid?: boolean;
 }
 
@@ -35,34 +26,9 @@ export function HeroSection({
   quickStartCommand,
   installCommand,
   trustPoints,
-  leftPanelBadge = '[ terminal ]',
-  leftPanelLines = [],
-  rightPanelBadge = '[ .MD ]',
-  rightPanelLines = [],
   dotGrid = true,
 }: HeroSectionProps) {
   const [copied, setCopied] = useState(false);
-  const [revealedCount, setRevealedCount] = useState(0);
-
-  useEffect(() => {
-    if (leftPanelLines.length === 0) return;
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduced) {
-      setRevealedCount(leftPanelLines.length);
-      return;
-    }
-    let count = 0;
-    const timer = setInterval(() => {
-      count += 1;
-      setRevealedCount(count);
-      if (count >= leftPanelLines.length) {
-        clearInterval(timer);
-      }
-    }, 100);
-    return () => clearInterval(timer);
-  }, [leftPanelLines.length]);
-
-  const rightPanelReady = revealedCount >= leftPanelLines.length;
 
   const headingParts =
     accentWord && heading.includes(accentWord) ? heading.split(accentWord) : null;
@@ -91,7 +57,7 @@ export function HeroSection({
           : undefined
       }
     >
-      <div className="relative mx-auto w-full max-w-3xl px-6 pt-20 pb-10 sm:pt-28 sm:pb-16 text-center">
+      <div className="relative mx-auto w-full max-w-3xl px-6 pt-20 pb-16 sm:pt-28 sm:pb-24 text-center">
         {/* Badge */}
         {badge &&
           (badgeHref ? (
@@ -199,7 +165,7 @@ export function HeroSection({
 
         {/* Trust points */}
         {trustPoints && trustPoints.length > 0 && (
-          <div className="flex flex-wrap items-center justify-center gap-2 mb-10 text-xs text-muted-foreground">
+          <div className="flex flex-wrap items-center justify-center gap-2 text-xs text-muted-foreground">
             {trustPoints.map((point) => (
               <span key={point} className="rounded-full bg-muted/50 px-3 py-1">
                 {point}
@@ -207,65 +173,6 @@ export function HeroSection({
             ))}
           </div>
         )}
-
-        {/* Dual mockup panel */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {/* Left panel — dark terminal */}
-          <div className="overflow-hidden rounded-2xl border border-border/50 shadow-[var(--shadow-hero-panel)]">
-            <div className="flex items-center gap-1.5 border-b border-white/10 bg-zinc-950 px-3 py-2">
-              <span className="size-2 rounded-full bg-red-400/70" />
-              <span className="size-2 rounded-full bg-yellow-400/70" />
-              <span className="size-2 rounded-full bg-green-400/70" />
-              <span className="ml-auto font-mono text-[10px] text-zinc-500">{leftPanelBadge}</span>
-            </div>
-            <div className="bg-zinc-950 p-4 min-h-[160px] text-left">
-              {leftPanelLines.slice(0, revealedCount).map((line, i) => (
-                <div
-                  key={i}
-                  className={`font-mono text-[10px] leading-relaxed ${
-                    line.variant === 'command'
-                      ? 'text-primary'
-                      : line.variant === 'success'
-                        ? 'text-green-400'
-                        : line.variant === 'muted'
-                          ? 'text-zinc-500'
-                          : 'text-zinc-400'
-                  }`}
-                >
-                  {line.text || '\u00A0'}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Right panel — light markdown output */}
-          <div className="overflow-hidden rounded-2xl border border-border shadow-[var(--shadow-hero-panel)]">
-            <div className="flex items-center gap-1.5 border-b border-border bg-muted/10 px-3 py-2">
-              <span className="size-2 rounded-full bg-red-400/70" />
-              <span className="size-2 rounded-full bg-yellow-400/70" />
-              <span className="size-2 rounded-full bg-green-400/70" />
-              <span className="ml-auto font-mono text-[10px] text-muted-foreground">
-                {rightPanelBadge}
-              </span>
-            </div>
-            <div
-              className={`bg-background p-4 min-h-[160px] text-left transition-opacity duration-500 ${
-                rightPanelReady ? 'opacity-100' : 'opacity-0'
-              }`}
-            >
-              {rightPanelLines.map((line, i) => (
-                <div
-                  key={i}
-                  className={`font-mono text-[10px] leading-relaxed ${
-                    line.startsWith('# ') ? 'text-foreground font-medium' : 'text-muted-foreground'
-                  }`}
-                >
-                  {line || '\u00A0'}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   );
