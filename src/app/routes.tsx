@@ -8,6 +8,10 @@ import { PrivacyPage } from './pages/PrivacyPage';
 import { SupportPage } from './pages/SupportPage';
 import { TermsPage } from './pages/TermsPage';
 import { SectionsPage } from './pages/SectionsPage';
+import { PricingPage } from './pages/PricingPage';
+import { DocsIndexPage } from './pages/DocsIndexPage';
+import { DocsSetupPage } from './pages/DocsSetupPage';
+import { AgentRulesPage } from './pages/AgentRulesPage';
 
 // Admin routes — only registered in dev; entire branch tree-shaken in prod
 const adminRoutes = import.meta.env.DEV
@@ -78,7 +82,11 @@ export const router = createBrowserRouter([
       { path: 'privacy', Component: PrivacyPage },
       { path: 'terms', Component: TermsPage },
       { path: 'support', Component: SupportPage },
+      { path: 'pricing', Component: PricingPage },
       { path: 'sections', Component: SectionsPage },
+      { path: 'docs', Component: DocsIndexPage },
+      { path: 'docs/setup', Component: DocsSetupPage },
+      { path: 'docs/agent-rules', Component: AgentRulesPage },
     ],
   },
   ...adminRoutes,
