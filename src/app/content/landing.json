@@ -1,10 +1,10 @@
 {
   "hero": {
-    "badge": "Open source. Runs 100% on your machine.",
+    "badge": "Local-first. Open source. Free tier forever.",
     "badgeHref": "https://github.com/fellanH/context-vault",
     "heading": "Your AI forgets everything between sessions",
     "accentWord": "everything",
-    "subtitle": "Context Vault saves your decisions, patterns, and project context once, then retrieves them automatically in every future session. Works with Claude Code, Cursor, Windsurf, and any MCP-compatible tool.",
+    "subtitle": "Context Vault is a local-first memory layer for AI coding tools. Save decisions, patterns, and project context once. They are automatically retrieved in every future session — across Claude Code, Cursor, Windsurf, and any MCP-compatible tool.",
     "primaryCta": {
       "label": "Get started free",
       "href": "/get-started"
@@ -13,7 +13,7 @@
       "label": "View on GitHub",
       "href": "https://github.com/fellanH/context-vault"
     },
-    "trustPoints": ["2-minute setup", "MIT License", "No account needed"],
+    "trustPoints": ["2-minute setup", "MIT License", "Free tier forever"],
     "leftPanelBadge": "Monday morning",
     "leftPanelLines": [
       { "text": "$ cursor .", "variant": "command" },
@@ -61,9 +61,9 @@
       "description": "Claude Code, Cursor, Windsurf, Zed, ChatGPT, VS Code. One vault, every tool."
     },
     {
-      "value": "100%",
-      "label": "Local & yours",
-      "description": "Plain markdown files on your machine. No cloud, no account, no lock-in."
+      "value": "3 tiers",
+      "label": "Private / Team / Public",
+      "description": "Local free forever. Pro for cloud sync. Team for shared vaults and SSO."
     }
   ],
   "features": [
@@ -74,8 +74,8 @@
     },
     {
       "iconName": "Zap",
-      "title": "Find anything, however you described it",
-      "description": "Wrote 'SQLite' last month, search 'local database' today? It still finds it. Semantic and full-text search work together across your entire vault."
+      "title": "Recall tracking — your vault gets smarter",
+      "description": "Context Vault tracks which entries your AI recalls most. High-frequency entries rank higher, vault-brain shows your knowledge graph in 3D."
     },
     {
       "iconName": "Globe",
@@ -84,8 +84,8 @@
     },
     {
       "iconName": "Lock",
-      "title": "Your data stays on your machine",
-      "description": "Plain markdown files you can read, grep, and git push. No cloud dependency, no vendor lock-in. You own every byte."
+      "title": "Local-first. Cloud when you need it.",
+      "description": "Plain markdown files on your machine. Upgrade to Pro for hosted sync and multi-device access. Team plan adds shared vaults and SSO."
     }
   ],
   "faqs": [
@@ -94,11 +94,11 @@
       "items": [
         {
           "question": "What is Context Vault?",
-          "answer": "Context Vault is a persistent memory layer for AI coding tools. It saves your decisions, patterns, and project context as plain markdown files, then automatically retrieves them in every new AI session. Think of it as long-term memory for Claude Code, Cursor, Windsurf, and any MCP-compatible client."
+          "answer": "Context Vault is a local-first persistent memory layer for AI coding tools. It saves your decisions, patterns, and project context as plain markdown files, then automatically retrieves them in every new AI session. Free tier runs 100% on your machine. Pro adds cloud sync. Team adds shared vaults."
         },
         {
           "question": "How long does setup take?",
-          "answer": "About 2 minutes. Run 'npx context-vault' to install and configure. It auto-detects your AI editor and sets up the MCP connection. No account, no API key, no configuration files to edit. Updates happen automatically."
+          "answer": "About 2 minutes. Run 'npx context-vault setup' to install and configure. It auto-detects your AI editor and sets up the MCP connection. No account, no API key, no configuration files to edit."
         },
         {
           "question": "Which AI tools are supported?",
@@ -111,24 +111,24 @@
       "items": [
         {
           "question": "Where is my data stored?",
-          "answer": "On your machine, in a folder you choose. Context Vault stores everything as plain markdown files with a local SQLite index for search. Nothing is sent to the cloud. We never see or access your data."
+          "answer": "Free tier: on your machine in a folder you choose. Everything is plain markdown with a local SQLite index. Nothing is sent to the cloud. Pro tier: your vault syncs to Cloudflare R2 storage for multi-device access. You can export everything at any time."
         },
         {
           "question": "Can I move or back up my vault?",
-          "answer": "Yes, it's just a folder of markdown files. Copy it, git push it, sync it with Dropbox, or move it to another machine. No export step, no migration tool needed."
+          "answer": "Yes. The local vault is just a folder of markdown files. Copy it, git push it, sync it with Dropbox, or move it to another machine. No export step needed."
         }
       ]
     },
     {
-      "category": "Open Source",
+      "category": "Pricing",
       "items": [
         {
-          "question": "Is Context Vault free?",
-          "answer": "Yes, completely. Context Vault is MIT-licensed and free forever. The entire codebase is open source. You can self-host, modify, and redistribute it."
+          "question": "Is the free tier really free forever?",
+          "answer": "Yes. The local vault is MIT-licensed, runs on your machine, and has no limits on entries. Free tier will always exist. Pro ($9/mo) and Team ($29/mo + $9/seat) are optional upgrades for hosted features."
         },
         {
-          "question": "How can I contribute?",
-          "answer": "Context Vault is built in the open on GitHub. File issues, submit pull requests, or build your own integrations. The project is actively maintained and contributions are welcome."
+          "question": "What do Pro and Team add?",
+          "answer": "Pro adds hosted personal vault, multi-device sync via R2, recall tracking dashboard, and vault-brain 3D visualization. Team adds a shared vault for your team, member management, team-level agent rules, and SSO — included at no extra cost."
         }
       ]
     }

@@ -216,7 +216,7 @@ const howItWorksSteps = [
     step: '01',
     title: 'Install in one command',
     description:
-      'Run npx context-vault. It auto-detects your AI editor and connects the memory layer. No config files, no API keys.',
+      'Run npx context-vault setup. It auto-detects your AI editor, writes the MCP config, and installs agent rules. No config files, no API keys.',
   },
   {
     icon: FileText,
@@ -381,9 +381,12 @@ export function LandingPage() {
           >
             Built on MCP standard
           </a>
-          <span className="inline-flex items-center rounded-full bg-primary/10 px-4 py-1.5 text-xs font-medium text-primary">
-            Free forever
-          </span>
+          <Link
+            to="/pricing"
+            className="inline-flex items-center rounded-full bg-primary/10 px-4 py-1.5 text-xs font-medium text-primary hover:bg-primary/20 transition-colors"
+          >
+            Free tier forever · See pricing
+          </Link>
         </div>
       </div>
 
@@ -515,7 +518,51 @@ export function LandingPage() {
         />
       </Reveal>
 
-      {/* 12. Final CTA */}
+      {/* 12. Pricing teaser */}
+      <Reveal>
+        <section aria-labelledby="pricing-teaser-heading" className="py-16 border-t border-border/60">
+          <div className="mx-auto w-full max-w-4xl px-6">
+            <div className="text-center mb-8">
+              <div className="mb-3 inline-flex items-center gap-1.5">
+                <Star className="size-3.5 text-primary" aria-hidden="true" />
+                <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                  Pricing
+                </span>
+              </div>
+              <h2 id="pricing-teaser-heading" className="text-2xl font-semibold tracking-tight">
+                Local is free. Cloud scales with you.
+              </h2>
+              <p className="mt-2 text-sm text-muted-foreground max-w-md mx-auto">
+                Free tier runs 100% on your machine with no limits. Upgrade when you need hosted sync, recall insights, or team sharing.
+              </p>
+            </div>
+            <div className="grid gap-3 md:grid-cols-3 mb-6">
+              {[
+                { name: 'Free', price: '$0', desc: 'Local vault, unlimited entries, MIT licensed', cta: 'Get started', href: '/get-started', primary: false },
+                { name: 'Pro', price: '$9/mo', desc: 'Hosted vault, multi-device sync, recall tracking, vault-brain', cta: 'Start Pro', href: null, primary: true },
+                { name: 'Team', price: '$29 + $9/seat', desc: 'Shared team vault, SSO included, admin controls', cta: 'Start Team', href: null, primary: false },
+              ].map((tier) => (
+                <div key={tier.name} className={`rounded-xl border p-5 ${tier.primary ? 'border-primary/40 bg-primary/5' : 'border-border/60'}`}>
+                  <div className="flex items-start justify-between mb-2">
+                    <span className="font-semibold text-sm">{tier.name}</span>
+                    <span className="text-sm font-semibold text-primary">{tier.price}</span>
+                  </div>
+                  <p className="text-xs text-muted-foreground">{tier.desc}</p>
+                </div>
+              ))}
+            </div>
+            <div className="text-center">
+              <Button asChild variant="outline" size="sm">
+                <Link to="/pricing">
+                  Compare all features <ArrowRight className="ml-1.5 size-3.5" />
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </section>
+      </Reveal>
+
+      {/* 13. Final CTA */}
       <section aria-labelledby="final-cta-heading" className="py-20">
         <div className="mx-auto w-full max-w-3xl px-6 text-center">
           <h2 id="final-cta-heading" className="text-3xl font-semibold tracking-tight sm:text-4xl">
@@ -569,7 +616,7 @@ export function LandingPage() {
               className="inline-flex items-center gap-1.5 rounded-full bg-muted/50 px-3 py-1 text-xs text-muted-foreground"
             >
               <CheckCircle2 className="size-3.5" aria-hidden="true" />
-              MIT License, free forever
+              Free tier forever, Pro for teams
             </span>
             <span
               role="listitem"
@@ -589,7 +636,7 @@ export function LandingPage() {
         </div>
       </section>
 
-      {/* 13. Blog posts */}
+      {/* 14. Blog posts */}
       {featured.length > 0 && (
         <section aria-labelledby="blog-heading" className="border-t border-border/60">
           <div className="mx-auto w-full max-w-6xl px-6 py-14">
