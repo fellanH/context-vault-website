@@ -244,6 +244,15 @@
   }
 }
 
+@keyframes marquee-logo {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-33.333%, 0, 0);
+  }
+}
+
 .dot-grid {
   background-image: radial-gradient(circle, var(--border) 1px, transparent 1px);
   background-size: 32px 32px;

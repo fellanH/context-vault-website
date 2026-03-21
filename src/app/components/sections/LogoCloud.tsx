@@ -24,7 +24,14 @@ function LogoCell({ item }: { item: LogoItem }) {
 
   const visual =
     src && !failed ? (
-      <img src={src} alt={item.name} className="h-5 w-auto" onError={() => setFailed(true)} />
+      <img
+        src={src}
+        alt={item.name}
+        width={20}
+        height={20}
+        className="h-5 w-5 object-contain"
+        onError={() => setFailed(true)}
+      />
     ) : (
       <span className="text-xs font-medium text-muted-foreground whitespace-nowrap">
         {item.name}
@@ -32,7 +39,7 @@ function LogoCell({ item }: { item: LogoItem }) {
     );
 
   return (
-    <div className="flex-shrink-0 flex items-center justify-center px-8 py-5">
+    <div className="flex-shrink-0 flex items-center justify-center w-36 py-5">
       {item.href ? (
         <a href={item.href} target="_blank" rel="noopener noreferrer" className="flex items-center">
           {visual}
@@ -45,8 +52,8 @@ function LogoCell({ item }: { item: LogoItem }) {
 }
 
 export function LogoCloud({ headline, logos, animate = true }: LogoCloudProps) {
-  // Duplicate logos for a seamless loop
-  const items = [...logos, ...logos];
+  // Triplicate for a seamless loop with no visible seam
+  const items = [...logos, ...logos, ...logos];
 
   return (
     <section className="py-10">
@@ -62,14 +69,22 @@ export function LogoCloud({ headline, logos, animate = true }: LogoCloudProps) {
           <div
             className="overflow-hidden group"
             style={{
-              maskImage: 'linear-gradient(to right, transparent, black 4%, black 96%, transparent)',
+              maskImage: 'linear-gradient(to right, transparent, black 8%, black 92%, transparent)',
               WebkitMaskImage:
-                'linear-gradient(to right, transparent, black 4%, black 96%, transparent)',
+                'linear-gradient(to right, transparent, black 8%, black 92%, transparent)',
             }}
           >
             <div
-              className="flex w-max group-hover:[animation-play-state:paused]"
-              style={animate ? { animation: 'marquee 32s linear infinite' } : undefined}
+              className="flex group-hover:[animation-play-state:paused]"
+              style={
+                animate
+                  ? {
+                      animation: 'marquee-logo 24s linear infinite',
+                      willChange: 'transform',
+                      transform: 'translateZ(0)',
+                    }
+                  : undefined
+              }
             >
               {items.map((logo, i) => (
                 <LogoCell key={i} item={logo} />
