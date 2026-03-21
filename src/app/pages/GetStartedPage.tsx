@@ -9,7 +9,6 @@ type Mode = 'local' | 'hosted';
 
 const localSteps = [
   { label: 'Install & setup', command: 'npx context-vault' },
-  { label: 'Open dashboard (optional)', command: 'npx context-vault ui' },
 ];
 
 export function GetStartedPage() {
