@@ -1,10 +1,8 @@
-import { type ReactNode, useEffect, useState } from 'react';
+import { type ReactNode, useState } from 'react';
 import { Link } from 'react-router';
 import { PageHead } from '../components/PageHead';
 import {
   ArrowRight,
-  BookOpen,
-  Briefcase,
   CheckCircle2,
   Copy,
   Check,
@@ -14,8 +12,6 @@ import {
   Layers,
   Lock,
   Repeat,
-  Terminal,
-  Users,
   Zap,
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
@@ -27,7 +23,6 @@ import {
   HeroSection,
   LogoCloud,
   FeatureCardGrid,
-  UseCaseDetailed,
   IntegrationsSplit,
   ProblemStrip,
 } from '../components/sections';
@@ -71,81 +66,18 @@ const logos = [
 ];
 
 
-const useCases = [
+const scenarios = [
   {
-    icon: Terminal,
-    label: 'Solo developer',
-    title: 'Monday morning. Zero re-explaining.',
-    description: 'You open Cursor. Last Friday you were deep in an auth refactor. Context Vault already loaded it.',
-    mockupBadge: 'session start · Monday 9:04am',
-    mockupContent: (
-      <div className="font-mono text-xs text-muted-foreground space-y-1.5 w-full px-2">
-        <div className="text-primary">▸ context loaded: 3 entries</div>
-        <div>• jwt-auth-decision: JWT over sessions (decision)</div>
-        <div>• sqlite-arch: local-first, no Postgres (decision)</div>
-        <div>• session-bug: edge case in refresh handler (note)</div>
-        <div className="text-muted-foreground/50 mt-2">Ready. Picking up from Friday.</div>
-      </div>
-    ),
+    situation: 'Monday morning.',
+    detail: 'Your Friday auth refactor context loads automatically. You pick up mid-thought.',
   },
   {
-    icon: Users,
-    label: 'Engineering team',
-    title: '"Why did we choose SQLite?" Answered instantly.',
-    description: 'New team member runs one search and gets the full decision: context, trade-offs, date. No Slack archaeology.',
-    mockupBadge: 'vault search · results',
-    mockupContent: (
-      <div className="font-mono text-xs text-muted-foreground space-y-1.5 w-full px-2">
-        <div className="text-primary">▸ 1 result for "database"</div>
-        <div className="mt-1 border border-border/40 rounded px-2 py-1.5 space-y-1">
-          <div className="text-foreground font-semibold">Use SQLite for local storage</div>
-          <div className="text-muted-foreground/70">
-            Chose SQLite over Postgres. Local-first, no infra, easier onboarding. Benchmarks in
-            /docs...
-          </div>
-          <div className="flex gap-2 text-muted-foreground/50">
-            <span>[architecture]</span>
-            <span>[database]</span>
-            <span>· Aug 14</span>
-          </div>
-        </div>
-      </div>
-    ),
+    situation: '"Why did we choose SQLite?"',
+    detail: 'New teammate runs one search. Full decision, trade-offs, date. No Slack archaeology.',
   },
   {
-    icon: Briefcase,
-    label: 'Freelancer / consultant',
-    title: 'Three clients. Zero context bleed.',
-    description: 'Each project gets its own namespace. Open the session, get the right context. Nothing leaks across clients.',
-    mockupBadge: 'vault · project namespaces',
-    mockupContent: (
-      <div className="font-mono text-xs text-muted-foreground space-y-1.5 w-full px-2">
-        <div>vault/</div>
-        <div className="pl-3">├── acme-fintech/</div>
-        <div className="pl-6">
-          │ ├── decisions/ <span className="text-muted-foreground/40">(4)</span>
-        </div>
-        <div className="pl-6">
-          │ └── patterns/ <span className="text-muted-foreground/40">(7)</span>
-        </div>
-        <div className="pl-3">├── data-pipeline-co/</div>
-        <div className="pl-6">
-          │ ├── decisions/ <span className="text-muted-foreground/40">(2)</span>
-        </div>
-        <div className="pl-6">
-          │ └── notes/ <span className="text-muted-foreground/40">(5)</span>
-        </div>
-        <div className="pl-3">└── saas-startup/</div>
-        <div className="pl-6">
-          {' '}
-          ├── decisions/ <span className="text-muted-foreground/40">(3)</span>
-        </div>
-        <div className="pl-6">
-          {' '}
-          └── patterns/ <span className="text-muted-foreground/40">(6)</span>
-        </div>
-      </div>
-    ),
+    situation: 'Three clients.',
+    detail: 'Each project has its own namespace. Open the session, get the right context. Nothing bleeds across.',
   },
 ];
 
@@ -369,16 +301,18 @@ export function LandingPage() {
         </section>
       </Reveal>
 
-      {/* 6. Use cases */}
+      {/* 6. Scenarios */}
       <Reveal>
-        <UseCaseDetailed
-          sectionTagIcon={BookOpen}
-          sectionTag="Real scenarios"
-          heading="From your actual workday"
-          accentWord="actual"
-          subtitle="Three situations every developer recognises."
-          useCases={useCases}
-        />
+        <section className="py-16 border-t border-border/40">
+          <div className="mx-auto w-full max-w-3xl px-6 divide-y divide-border/40">
+            {scenarios.map((s) => (
+              <div key={s.situation} className="py-8 grid grid-cols-1 sm:grid-cols-[auto_1fr] gap-2 sm:gap-8 items-baseline">
+                <p className="font-semibold text-foreground whitespace-nowrap">{s.situation}</p>
+                <p className="text-muted-foreground">{s.detail}</p>
+              </div>
+            ))}
+          </div>
+        </section>
       </Reveal>
 
       {/* 7. Features */}
