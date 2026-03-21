@@ -11,11 +11,9 @@ import {
   Download,
   FileText,
   Globe,
-  HelpCircle,
   Layers,
   Lock,
   Repeat,
-  Star,
   Terminal,
   Users,
   Zap,
@@ -32,7 +30,6 @@ import {
   CodeDemoSection,
   UseCaseDetailed,
   IntegrationsSplit,
-  FAQSection,
   ProblemStrip,
 } from '../components/sections';
 import landingData from '../content/landing.json';
@@ -112,8 +109,7 @@ const useCases = [
     icon: Terminal,
     label: 'Solo developer',
     title: 'Monday morning. Zero re-explaining.',
-    description:
-      'You open Cursor on Monday. Last Friday you were deep in an auth refactor. JWT chosen, Postgres rejected, a session handler edge case still open. Context Vault already loaded it all. You pick up mid-thought, as if the weekend never happened.',
+    description: 'You open Cursor. Last Friday you were deep in an auth refactor. Context Vault already loaded it.',
     mockupBadge: 'session start · Monday 9:04am',
     mockupContent: (
       <div className="font-mono text-xs text-muted-foreground space-y-1.5 w-full px-2">
@@ -128,9 +124,8 @@ const useCases = [
   {
     icon: Users,
     label: 'Engineering team',
-    title: '"Why did we choose SQLite?" answered in 3 seconds.',
-    description:
-      'A new team member asks about your database choice. Instead of digging through Slack threads, they run one search and get the full decision: context, trade-offs, date, author. Institutional knowledge that survives team changes.',
+    title: '"Why did we choose SQLite?" Answered instantly.',
+    description: 'New team member runs one search and gets the full decision: context, trade-offs, date. No Slack archaeology.',
     mockupBadge: 'vault search · results',
     mockupContent: (
       <div className="font-mono text-xs text-muted-foreground space-y-1.5 w-full px-2">
@@ -154,8 +149,7 @@ const useCases = [
     icon: Briefcase,
     label: 'Freelancer / consultant',
     title: 'Three clients. Zero context bleed.',
-    description:
-      'Morning: a React fintech app. Afternoon: a Python data pipeline. Each project has different patterns, different decisions, different constraints. Context Vault keeps a separate namespace per project. Open the session, get the right context automatically.',
+    description: 'Each project gets its own namespace. Open the session, get the right context. Nothing leaks across clients.',
     mockupBadge: 'vault · project namespaces',
     mockupContent: (
       <div className="font-mono text-xs text-muted-foreground space-y-1.5 w-full px-2">
@@ -214,22 +208,19 @@ const howItWorksSteps = [
     icon: Download,
     step: '01',
     title: 'Install in one command',
-    description:
-      'Run npx context-vault setup. It auto-detects your AI editor, writes the MCP config, and installs agent rules. No config files, no API keys.',
+    description: 'Run npx context-vault. It auto-detects your editor and writes the MCP config.',
   },
   {
     icon: FileText,
     step: '02',
-    title: 'Work as usual. Context saves automatically.',
-    description:
-      'As you code, your AI saves decisions, patterns, and project insights as plain markdown files in your vault. No extra steps.',
+    title: 'Your AI saves as you work',
+    description: 'Decisions, patterns, and context saved as plain markdown. No extra steps.',
   },
   {
     icon: Repeat,
     step: '03',
-    title: 'Every session starts where you left off',
-    description:
-      'Open a new session tomorrow, next week, or next month. Your AI automatically retrieves the right context. No re-explaining.',
+    title: 'Every session picks up where you left off',
+    description: 'Open tomorrow or next month. The right context is already there.',
   },
 ];
 
@@ -287,15 +278,7 @@ const jsonLdFaq = {
 
 export function LandingPage() {
   const featured = posts.slice(0, 3);
-  const [stars, setStars] = useState<number | null>(null);
   const [finalCopied, setFinalCopied] = useState(false);
-
-  useEffect(() => {
-    fetch('https://api.github.com/repos/fellanH/context-vault')
-      .then((r) => r.json())
-      .then((d) => setStars(d.stargazers_count ?? null))
-      .catch(() => {});
-  }, []);
 
   function copyFinalCommand() {
     navigator.clipboard.writeText('npx context-vault');
@@ -337,11 +320,10 @@ export function LandingPage() {
           label: hero.secondaryCta.label,
           href: hero.secondaryCta.href,
         }}
-        trustPoints={hero.trustPoints}
         dotGrid
       />
 
-      {/* 3. Social proof */}
+      {/* 2. Trust strip */}
       <div className="py-4" role="region" aria-label="Trust signals">
         <div className="mx-auto flex w-full max-w-3xl flex-wrap items-center justify-center gap-3 px-6">
           <a
@@ -350,12 +332,7 @@ export function LandingPage() {
             rel="noreferrer"
             className="inline-flex items-center gap-1.5 rounded-full bg-muted/50 px-4 py-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
           >
-            <Star className="size-3.5" aria-hidden="true" />
-            {stars !== null ? (
-              <span>{stars.toLocaleString()} stars on GitHub</span>
-            ) : (
-              <span>Open source on GitHub</span>
-            )}
+            Open source on GitHub
           </a>
           <span className="inline-flex items-center rounded-full bg-muted/50 px-4 py-1.5 text-xs text-muted-foreground">
             MIT License
@@ -377,15 +354,15 @@ export function LandingPage() {
         </div>
       </div>
 
-      {/* 4. Logo cloud */}
+      {/* 3. Logo cloud */}
       <LogoCloud headline="Works with your AI tools" logos={logos} />
 
-      {/* 5. The problem */}
+      {/* 4. The problem */}
       <Reveal>
         <ProblemStrip />
       </Reveal>
 
-      {/* 6. How it works */}
+      {/* 5. How it works */}
       <Reveal>
         <section aria-labelledby="how-it-works-heading" className="py-16">
           <div className="mx-auto w-full max-w-6xl px-6">
@@ -397,11 +374,8 @@ export function LandingPage() {
                 </span>
               </div>
               <h2 id="how-it-works-heading" className="text-3xl font-semibold tracking-tight">
-                Three steps. Two minutes. <span className="text-primary">Done.</span>
+                Three steps. Two minutes.
               </h2>
-              <p className="mt-3 text-base text-muted-foreground max-w-lg mx-auto leading-relaxed">
-                No accounts, no config files, no cloud setup. Install it and start working.
-              </p>
             </div>
 
             <div className="grid gap-8 md:grid-cols-3" role="list">
@@ -411,11 +385,11 @@ export function LandingPage() {
                   role="listitem"
                   className="relative rounded-2xl border border-border/60 bg-card p-8 shadow-[var(--shadow-card)] text-center"
                 >
-                  <div className="mx-auto mb-4 flex size-14 items-center justify-center rounded-2xl bg-primary/8">
-                    <step.icon className="size-6 text-primary" aria-hidden="true" />
+                  <div className="mx-auto mb-4 flex size-14 items-center justify-center rounded-2xl bg-muted/50">
+                    <step.icon className="size-6 text-muted-foreground" aria-hidden="true" />
                   </div>
-                  <span className="text-xs font-mono text-primary mb-2 block">
-                    Step {step.step}
+                  <span className="text-xs font-mono text-muted-foreground/60 mb-2 block">
+                    {step.step}
                   </span>
                   <h3 className="text-base font-semibold tracking-tight mb-2">{step.title}</h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">
@@ -428,26 +402,26 @@ export function LandingPage() {
         </section>
       </Reveal>
 
-      {/* 7. Use cases */}
+      {/* 6. Use cases */}
       <Reveal>
         <UseCaseDetailed
           sectionTagIcon={BookOpen}
           sectionTag="Real scenarios"
           heading="From your actual workday"
           accentWord="actual"
-          subtitle="Three situations every developer recognises. One tool that solves all of them."
+          subtitle="Three situations every developer recognises."
           useCases={useCases}
         />
       </Reveal>
 
-      {/* 8. Features */}
+      {/* 7. Features */}
       <Reveal>
         <FeatureCardGrid
           sectionTagIcon={Layers}
           sectionTag="Core capabilities"
           heading="What Context Vault gives you"
           accentWord="gives you"
-          subtitle="Built for developers who use multiple AI tools and want to stop starting from zero."
+          subtitle="Built for developers who use multiple AI tools."
           features={features}
           columns={4}
           cta={{
@@ -457,17 +431,17 @@ export function LandingPage() {
         />
       </Reveal>
 
-      {/* 9. Code demo */}
+      {/* 8. Code demo */}
       <Reveal>
         <CodeDemoSection
           tabs={codeTabs}
           outputLabel="vault output"
           output={codeOutput}
           skillHeading="Install the Context Vault MCP server"
-          skillDescription="One command connects persistent memory to your AI editor."
+          skillDescription="One command. Persistent memory for every session."
           skillCommand="npx context-vault"
           skillCapabilities={[
-            'Saves context across sessions automatically',
+            'Context retrieved automatically at session start',
             'Hybrid semantic + full-text search',
             'Works with Claude Code, Cursor, Windsurf',
             'Plain markdown files. Your data, your format.',
@@ -475,89 +449,31 @@ export function LandingPage() {
         />
       </Reveal>
 
-      {/* 10. Integrations + open source */}
+      {/* 9. Integrations + open source */}
       <Reveal>
         <IntegrationsSplit
           integrationsHeading="Connects to your workflow"
-          integrationsDescription="Context Vault works with any MCP-compatible AI client. Claude Code, Cursor, Windsurf, Zed. One vault, every tool."
+          integrationsDescription="Works with any MCP-compatible AI client. One vault, every tool."
           integrationsCTA="Setup guide"
           integrationsCTAHref="/get-started"
           integrations={integrationLogos}
           openSourceHeading="Open source, MIT licensed"
-          openSourceDescription="The entire codebase is open source. Self-host it, audit it, extend it, contribute to it. Plain markdown files, no lock-in, no vendor dependency."
+          openSourceDescription="Self-host it, audit it, extend it. No lock-in. Plain markdown, no vendor dependency."
           repoName="fellanH/context-vault"
-          stars={stars !== null ? stars.toLocaleString() : undefined}
           commits={commits}
           repoCTA="View on GitHub"
           repoCTAHref="https://github.com/fellanH/context-vault"
         />
       </Reveal>
 
-      {/* 11. FAQ */}
-      <Reveal>
-        <FAQSection
-          sectionTagIcon={HelpCircle}
-          sectionTag="FAQ"
-          heading="Common questions"
-          accentWord="questions"
-          subtitle="Everything you need to know before installing."
-          categories={faqs}
-        />
-      </Reveal>
-
-      {/* 12. Pricing teaser */}
-      <Reveal>
-        <section aria-labelledby="pricing-teaser-heading" className="py-16 border-t border-border/60">
-          <div className="mx-auto w-full max-w-4xl px-6">
-            <div className="text-center mb-8">
-              <div className="mb-3 inline-flex items-center gap-1.5">
-                <Star className="size-3.5 text-primary" aria-hidden="true" />
-                <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-                  Pricing
-                </span>
-              </div>
-              <h2 id="pricing-teaser-heading" className="text-2xl font-semibold tracking-tight">
-                Local is free. Cloud scales with you.
-              </h2>
-              <p className="mt-2 text-sm text-muted-foreground max-w-md mx-auto">
-                Free tier runs 100% on your machine with no limits. Upgrade when you need hosted sync, recall insights, or team sharing.
-              </p>
-            </div>
-            <div className="grid gap-3 md:grid-cols-3 mb-6">
-              {[
-                { name: 'Free', price: '$0', desc: 'Local vault, unlimited entries, MIT licensed', cta: 'Get started', href: '/get-started', primary: false },
-                { name: 'Pro', price: '$9/mo', desc: 'Hosted vault, multi-device sync, recall tracking, vault-brain', cta: 'Start Pro', href: null, primary: true },
-                { name: 'Team', price: '$29 + $9/seat', desc: 'Shared team vault, SSO included, admin controls', cta: 'Start Team', href: null, primary: false },
-              ].map((tier) => (
-                <div key={tier.name} className={`rounded-xl border p-5 ${tier.primary ? 'border-primary/40 bg-primary/5' : 'border-border/60'}`}>
-                  <div className="flex items-start justify-between mb-2">
-                    <span className="font-semibold text-sm">{tier.name}</span>
-                    <span className="text-sm font-semibold text-primary">{tier.price}</span>
-                  </div>
-                  <p className="text-xs text-muted-foreground">{tier.desc}</p>
-                </div>
-              ))}
-            </div>
-            <div className="text-center">
-              <Button asChild variant="outline" size="sm">
-                <Link to="/pricing">
-                  Compare all features <ArrowRight className="ml-1.5 size-3.5" />
-                </Link>
-              </Button>
-            </div>
-          </div>
-        </section>
-      </Reveal>
-
-      {/* 13. Final CTA */}
+      {/* 10. Final CTA */}
       <section aria-labelledby="final-cta-heading" className="py-20">
         <div className="mx-auto w-full max-w-3xl px-6 text-center">
           <h2 id="final-cta-heading" className="text-3xl font-semibold tracking-tight sm:text-4xl">
-            Ready to stop starting from zero?
+            Stop starting from zero.
           </h2>
           <p className="mt-4 text-base text-muted-foreground max-w-lg mx-auto leading-relaxed">
-            Install Context Vault in 2 minutes. Every AI session picks up exactly where you left
-            off, automatically.
+            Two minutes to install. Every session picks up exactly where you left off.
           </p>
 
           <div className="mt-8 flex flex-col items-center gap-4">
@@ -583,47 +499,25 @@ export function LandingPage() {
               </button>
             </div>
 
-            <a
-              href="https://github.com/fellanH/context-vault"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-2 rounded-full border border-border px-6 py-2.5 text-sm font-medium hover:bg-muted/30 transition-colors"
-            >
-              View on GitHub <ArrowRight className="size-4" aria-hidden="true" />
-            </a>
-          </div>
-
-          <div
-            className="mt-8 flex flex-wrap items-center justify-center gap-3"
-            role="list"
-            aria-label="Product guarantees"
-          >
-            <span
-              role="listitem"
-              className="inline-flex items-center gap-1.5 rounded-full bg-muted/50 px-3 py-1 text-xs text-muted-foreground"
-            >
-              <CheckCircle2 className="size-3.5" aria-hidden="true" />
-              Free tier forever, Pro for teams
-            </span>
-            <span
-              role="listitem"
-              className="inline-flex items-center gap-1.5 rounded-full bg-muted/50 px-3 py-1 text-xs text-muted-foreground"
-            >
-              <CheckCircle2 className="size-3.5" aria-hidden="true" />
-              Data stays on your machine
-            </span>
-            <span
-              role="listitem"
-              className="inline-flex items-center gap-1.5 rounded-full bg-muted/50 px-3 py-1 text-xs text-muted-foreground"
-            >
-              <CheckCircle2 className="size-3.5" aria-hidden="true" />
-              2-minute setup
-            </span>
+            <div className="flex flex-wrap items-center justify-center gap-2 text-xs text-muted-foreground">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-muted/50 px-3 py-1">
+                <CheckCircle2 className="size-3.5" aria-hidden="true" />
+                Free tier forever
+              </span>
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-muted/50 px-3 py-1">
+                <CheckCircle2 className="size-3.5" aria-hidden="true" />
+                Data stays on your machine
+              </span>
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-muted/50 px-3 py-1">
+                <CheckCircle2 className="size-3.5" aria-hidden="true" />
+                MIT licensed
+              </span>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* 14. Blog posts */}
+      {/* 11. Blog posts */}
       {featured.length > 0 && (
         <section aria-labelledby="blog-heading" className="border-t border-border/60">
           <div className="mx-auto w-full max-w-6xl px-6 py-14">

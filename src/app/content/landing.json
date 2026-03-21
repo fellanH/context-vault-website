@@ -1,10 +1,10 @@
 {
   "hero": {
-    "badge": "Local-first. Open source. Free tier forever.",
+    "badge": "Open source · Free tier forever",
     "badgeHref": "https://github.com/fellanH/context-vault",
     "heading": "Your AI forgets everything between sessions",
     "accentWord": "everything",
-    "subtitle": "Context Vault is a local-first memory layer for AI coding tools. Save decisions, patterns, and project context once. They are automatically retrieved in every future session — across Claude Code, Cursor, Windsurf, and any MCP-compatible tool.",
+    "subtitle": "Context Vault gives it persistent memory. One command. Works with every tool you already use.",
     "primaryCta": {
       "label": "Get started free",
       "href": "/get-started"
@@ -69,23 +69,23 @@
   "features": [
     {
       "iconName": "FileText",
-      "title": "Never re-explain your stack",
-      "description": "Every decision, pattern, and convention you save persists forever. Start a new session next week and your AI already knows your architecture."
+      "title": "Persistent.",
+      "description": "Decisions, patterns, and conventions live in your vault forever — not just for today's session."
     },
     {
       "iconName": "Zap",
-      "title": "Recall tracking — your vault gets smarter",
-      "description": "Context Vault tracks which entries your AI recalls most. High-frequency entries rank higher, vault-brain shows your knowledge graph in 3D."
+      "title": "Automatic.",
+      "description": "Your AI retrieves the right context at session start. No prompting, no searching, no re-explaining."
     },
     {
       "iconName": "Globe",
-      "title": "One memory across every AI tool",
-      "description": "Same vault, every editor. Save context in Claude Code, retrieve it in Cursor. Your knowledge follows you, not the tool."
+      "title": "Universal.",
+      "description": "One vault. Every editor. Save in Claude Code, retrieve in Cursor — context follows you, not the tool."
     },
     {
       "iconName": "Lock",
-      "title": "Local-first. Cloud when you need it.",
-      "description": "Plain markdown files on your machine. Upgrade to Pro for hosted sync and multi-device access. Team plan adds shared vaults and SSO."
+      "title": "Local-first.",
+      "description": "Plain markdown files on your machine. Upgrade to Pro for cloud sync when you need it."
     }
   ],
   "faqs": [
