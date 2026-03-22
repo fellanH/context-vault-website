@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Check, Copy, ArrowRight } from 'lucide-react';
+import { Check, Copy, ArrowRight, History } from 'lucide-react';
 import { Link } from 'react-router';
 import { PageHead } from '../components/PageHead';
 import { Badge } from '@/components/ui/badge';
@@ -7,7 +7,8 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 
 // The agent rules file content (from mcp/assets/agent-rules.md)
-const RULES_CONTENT = `# Context Vault — Agent Rules
+const RULES_CONTENT = `<!-- context-vault-rules v1.0 -->
+# Context Vault — Agent Rules
 
 You have access to a persistent knowledge vault via MCP tools (\`get_context\`, \`save_context\`, \`list_context\`, \`delete_context\`). Use it to build lasting memory across sessions.
 
@@ -57,11 +58,39 @@ Capture what was learned (the insight), why it matters (what problem it prevents
 
 At the end of significant work sessions, review what you learned. If the session produced novel knowledge (not every session does), save 1-3 consolidated entries. Prefer one solid entry over multiple fragments.`;
 
+const ruleSections = [
+  {
+    title: 'When to Retrieve',
+    description:
+      'Triggers that tell the agent to search the vault before doing work. Covers session start, error debugging, architectural decisions, API integrations, and unfamiliar code. The key heuristic: "Might I or a previous session have encountered this before?"',
+  },
+  {
+    title: 'When to Save',
+    description:
+      'Triggers that tell the agent to preserve new knowledge. Covers non-obvious bugs, undocumented behavior, integration patterns, workarounds, and architectural decisions. The key heuristic: "Would I tell a colleague about this to save them time?"',
+  },
+  {
+    title: 'When NOT to Save',
+    description:
+      'Guardrails to prevent noise. Excludes facts derivable from code or git history, generic knowledge, the fix itself (belongs in the commit), and session-specific state. Keeps the vault signal-dense.',
+  },
+  {
+    title: 'How to Save',
+    description:
+      'Required fields for every entry: title (specific), tags (bucket scoped), kind (insight/pattern/reference/decision/event), and tier (working vs durable). Enforces findability by making entries structured from the start.',
+  },
+  {
+    title: 'Session Review',
+    description:
+      'End-of-session habit to consolidate learnings into 1-3 solid entries. Prevents fragmentation. Not every session produces novel knowledge, and that is fine.',
+  },
+];
+
 const clients = [
   {
     name: 'Claude Code',
     id: 'claude-code',
-    description: 'Save as a rules file in ~/.claude/rules/',
+    description: 'Installed as a rules file at ~/.claude/rules/context-vault.md',
     installPath: '~/.claude/rules/context-vault.md',
     manualSteps: [
       'Create the directory if it does not exist: mkdir -p ~/.claude/rules',
@@ -73,24 +102,24 @@ const clients = [
   {
     name: 'Cursor',
     id: 'cursor',
-    description: 'Append to .cursorrules in your project root',
-    installPath: '.cursorrules (project root)',
+    description: 'Installed as a rules file at ~/.cursor/rules/context-vault.mdc',
+    installPath: '~/.cursor/rules/context-vault.mdc',
     manualSteps: [
-      'Navigate to your project root.',
-      'Append the rules content to .cursorrules (create if it does not exist).',
-      'Cursor loads .cursorrules automatically for each project.',
+      'Create the directory if it does not exist: mkdir -p ~/.cursor/rules',
+      'Save the rules file: copy the content above to ~/.cursor/rules/context-vault.mdc',
+      'Cursor automatically loads .mdc files from ~/.cursor/rules/ globally.',
     ],
     autoInstall: 'npx context-vault setup',
   },
   {
     name: 'Windsurf',
     id: 'windsurf',
-    description: 'Append to .windsurfrules in your project root',
-    installPath: '.windsurfrules (project root)',
+    description: 'Appended to ~/.windsurfrules with delimiters',
+    installPath: '~/.windsurfrules',
     manualSteps: [
-      'Navigate to your project root.',
-      'Append the rules content to .windsurfrules (create if it does not exist).',
-      'Windsurf loads .windsurfrules automatically for each project.',
+      'Open ~/.windsurfrules in a text editor (create the file if it does not exist).',
+      'Append the rules content wrapped in delimiter comments: <!-- context-vault agent rules --> ... <!-- /context-vault agent rules -->',
+      'Windsurf loads ~/.windsurfrules on every session. The delimiters allow future upgrades without touching your other rules.',
     ],
     autoInstall: 'npx context-vault setup',
   },
@@ -101,10 +130,18 @@ const clients = [
     installPath: 'System prompt / agent instructions',
     manualSteps: [
       'Copy the rules content above.',
-      'Paste it into your client\'s system prompt, agent instructions, or rules configuration.',
+      "Paste it into your client's system prompt, agent instructions, or rules configuration.",
       'The rules work with any MCP-compatible client.',
     ],
     autoInstall: null,
+  },
+];
+
+const versionHistory = [
+  {
+    version: 'v1.0',
+    date: '2025-01',
+    changes: 'Initial release. Five sections: When to Retrieve, When to Save, When NOT to Save, How to Save, Session Review.',
   },
 ];
 
@@ -176,11 +213,28 @@ export function AgentRulesPage() {
           <div className="rounded-lg border border-border bg-muted/20 overflow-hidden">
             <div className="flex items-center justify-between px-4 py-2.5 border-b border-border bg-muted/40">
               <span className="text-xs text-muted-foreground font-mono">agent-rules.md</span>
-              <span className="text-xs text-muted-foreground">v3.1.7</span>
+              <span className="text-xs text-muted-foreground">v1.0</span>
             </div>
             <pre className="p-5 text-xs leading-relaxed overflow-x-auto text-muted-foreground whitespace-pre-wrap font-mono">
               {RULES_CONTENT}
             </pre>
+          </div>
+        </section>
+
+        {/* What each section does */}
+        <section className="space-y-4">
+          <h2 className="text-lg font-semibold">What each section does</h2>
+          <p className="text-sm text-muted-foreground">
+            The rules file has five sections. Each one addresses a different failure mode in how AI
+            agents use memory.
+          </p>
+          <div className="space-y-3">
+            {ruleSections.map((section) => (
+              <div key={section.title} className="rounded-lg border border-border px-4 py-3.5 space-y-1">
+                <p className="text-sm font-medium">{section.title}</p>
+                <p className="text-sm text-muted-foreground">{section.description}</p>
+              </div>
+            ))}
           </div>
         </section>
 
@@ -204,11 +258,11 @@ export function AgentRulesPage() {
         </section>
 
         {/* Per-client manual install */}
-        <section className="space-y-4">
+        <section className="space-y-4" id="claude-code">
           <h2 className="text-lg font-semibold">Manual install by client</h2>
           <div className="grid gap-3">
             {clients.map((client) => (
-              <Card key={client.id}>
+              <Card key={client.id} id={client.id}>
                 <CardHeader className="pb-2">
                   <div className="flex items-start justify-between gap-3">
                     <div>
@@ -252,7 +306,78 @@ export function AgentRulesPage() {
           </div>
         </section>
 
-        {/* Standalone agent setup prompt */}
+        {/* Managing rules */}
+        <section className="space-y-4">
+          <h2 className="text-lg font-semibold">Managing rules</h2>
+          <div className="space-y-3">
+            <div className="rounded-lg border border-border bg-muted/20 overflow-hidden">
+              <div className="flex items-center justify-between px-4 py-2.5 border-b border-border bg-muted/40">
+                <span className="text-xs text-muted-foreground">View installed rules</span>
+                <CopyButton text="context-vault rules show" />
+              </div>
+              <pre className="px-4 py-3 text-sm font-mono text-muted-foreground">context-vault rules show</pre>
+            </div>
+            <div className="rounded-lg border border-border bg-muted/20 overflow-hidden">
+              <div className="flex items-center justify-between px-4 py-2.5 border-b border-border bg-muted/40">
+                <span className="text-xs text-muted-foreground">Check for updates (diff your installed vs bundled version)</span>
+                <CopyButton text="context-vault rules diff" />
+              </div>
+              <pre className="px-4 py-3 text-sm font-mono text-muted-foreground">context-vault rules diff</pre>
+            </div>
+            <div className="rounded-lg border border-border bg-muted/20 overflow-hidden">
+              <div className="flex items-center justify-between px-4 py-2.5 border-b border-border bg-muted/40">
+                <span className="text-xs text-muted-foreground">Upgrade to latest (shows diff, asks for confirmation)</span>
+                <CopyButton text="context-vault setup --upgrade" />
+              </div>
+              <pre className="px-4 py-3 text-sm font-mono text-muted-foreground">context-vault setup --upgrade</pre>
+            </div>
+            <div className="rounded-lg border border-border bg-muted/20 overflow-hidden">
+              <div className="flex items-center justify-between px-4 py-2.5 border-b border-border bg-muted/40">
+                <span className="text-xs text-muted-foreground">Show install paths for all clients</span>
+                <CopyButton text="context-vault rules path" />
+              </div>
+              <pre className="px-4 py-3 text-sm font-mono text-muted-foreground">context-vault rules path</pre>
+            </div>
+          </div>
+          <p className="text-xs text-muted-foreground">
+            The rules file is plain markdown. You can edit it directly at the path shown by{' '}
+            <code className="text-foreground bg-muted px-1 rounded">context-vault rules path</code>.
+            Running{' '}
+            <code className="text-foreground bg-muted px-1 rounded">context-vault rules install</code>{' '}
+            will overwrite customizations. Back up first, or use{' '}
+            <code className="text-foreground bg-muted px-1 rounded">--no-rules</code> during setup to skip.
+          </p>
+        </section>
+
+        {/* Version history */}
+        <section className="space-y-4">
+          <div className="flex items-center gap-2">
+            <History className="h-4 w-4 text-muted-foreground" />
+            <h2 className="text-lg font-semibold">Version history</h2>
+          </div>
+          <div className="space-y-2">
+            {versionHistory.map((entry) => (
+              <div key={entry.version} className="rounded-lg border border-border px-4 py-3 flex gap-4 text-sm">
+                <code className="font-mono text-xs bg-muted px-1.5 py-0.5 rounded h-fit shrink-0">
+                  {entry.version}
+                </code>
+                <div className="space-y-0.5 min-w-0">
+                  <p className="text-muted-foreground/60 text-xs">{entry.date}</p>
+                  <p className="text-muted-foreground">{entry.changes}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+          <p className="text-xs text-muted-foreground">
+            Version is stored in the first line of the rules file as{' '}
+            <code className="text-foreground bg-muted px-1 rounded">
+              {'<!-- context-vault-rules v1.0 -->'}
+            </code>
+            . The upgrade command uses this to detect outdated installations.
+          </p>
+        </section>
+
+        {/* Agent-assisted setup prompt */}
         <section className="space-y-4">
           <h2 className="text-lg font-semibold">Agent-assisted setup</h2>
           <p className="text-sm text-muted-foreground">
