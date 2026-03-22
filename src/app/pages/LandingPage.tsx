@@ -3,6 +3,9 @@ import { Link } from 'react-router';
 import { PageHead } from '../components/PageHead';
 import {
   ArrowRight,
+  BarChart3,
+  Bot,
+  Brain,
   CheckCircle2,
   Copy,
   Check,
@@ -12,6 +15,7 @@ import {
   Layers,
   Lock,
   Repeat,
+  Users,
   Zap,
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
@@ -31,7 +35,7 @@ import { useInView } from '../hooks/useInView';
 
 // ─── Icon map for features ─────────────────────────────────────────────────────
 
-const iconMap = { FileText, Zap, Globe, Lock } as const;
+const iconMap = { FileText, Zap, Globe, Lock, BarChart3, Users, Brain, Bot } as const;
 type IconName = keyof typeof iconMap;
 
 // ─── Reveal wrapper ────────────────────────────────────────────────────────────
@@ -106,20 +110,20 @@ const howItWorksSteps = [
   {
     icon: Download,
     step: '01',
-    title: 'Install in one command',
-    description: 'Run npx context-vault. It auto-detects your editor and writes the MCP config.',
+    title: 'Set up in one command',
+    description: 'Run context-vault setup. It detects your editor, writes the MCP config, and teaches your agent what to save.',
   },
   {
     icon: FileText,
     step: '02',
     title: 'Your AI saves as you work',
-    description: 'Decisions, patterns, and context saved as plain markdown. No extra steps.',
+    description: 'Decisions, patterns, and context saved as plain markdown. No extra steps. Your vault learns what gets used.',
   },
   {
     icon: Repeat,
     step: '03',
     title: 'Every session picks up where you left off',
-    description: 'Open tomorrow or next month. The right context is already there.',
+    description: 'Open tomorrow or next month. The right context is already there. Share it with your team when you are ready.',
   },
 ];
 
@@ -139,7 +143,7 @@ const jsonLdSoftware = {
   '@type': 'SoftwareApplication',
   name: 'Context Vault',
   description:
-    'Persistent memory layer for AI coding tools. Save decisions, patterns, and project context once. They are automatically retrieved in every future session.',
+    'Local-first persistent memory layer for AI coding tools. Save decisions, patterns, and project context once. They are automatically retrieved in every future session. Free tier forever, Pro for teams.',
   applicationCategory: 'DeveloperApplication',
   operatingSystem: 'macOS, Windows, Linux',
   offers: {
@@ -180,7 +184,7 @@ export function LandingPage() {
   const [finalCopied, setFinalCopied] = useState(false);
 
   function copyFinalCommand() {
-    navigator.clipboard.writeText('npx context-vault');
+    navigator.clipboard.writeText('npx context-vault setup');
     setFinalCopied(true);
     setTimeout(() => setFinalCopied(false), 1500);
   }
@@ -189,7 +193,7 @@ export function LandingPage() {
     <main>
       <PageHead
         title="Context Vault: Persistent Memory for AI Coding Tools"
-        description="Your AI forgets everything between sessions. Context Vault saves decisions, patterns, and context once. Claude Code, Cursor, and Windsurf retrieve them automatically. Free, open source, 2-minute setup."
+        description="Your AI forgets everything between sessions. Context Vault saves decisions, patterns, and context once. Claude Code, Cursor, and Windsurf retrieve them automatically. Local-first, open source, 2-minute setup."
         canonical="/"
       />
 
@@ -214,7 +218,7 @@ export function LandingPage() {
         heading={hero.heading}
         accentWord={hero.accentWord}
         subtitle={hero.subtitle}
-        quickStartCommand="npx context-vault"
+        quickStartCommand="npx context-vault setup"
         secondaryCta={{
           label: hero.secondaryCta.label,
           href: hero.secondaryCta.href,
@@ -382,7 +386,7 @@ export function LandingPage() {
           integrationsCTAHref="/get-started"
           integrations={integrationLogos}
           openSourceHeading="Open source, MIT licensed"
-          openSourceDescription="Self-host it, audit it, extend it. No lock-in. Plain markdown, no vendor dependency."
+          openSourceDescription="Self-host it, audit it, extend it. No lock-in. Plain markdown on your machine by default, optional cloud sync when you need it."
           repoName="fellanH/context-vault"
           commits={commits}
           repoCTA="View on GitHub"
@@ -409,7 +413,7 @@ export function LandingPage() {
               <span className="text-zinc-500 select-none" aria-hidden="true">
                 $
               </span>
-              <span className="text-zinc-100">npx context-vault</span>
+              <span className="text-zinc-100">npx context-vault setup</span>
               <button
                 onClick={copyFinalCommand}
                 aria-label="Copy install command"
@@ -430,7 +434,7 @@ export function LandingPage() {
               </span>
               <span className="inline-flex items-center gap-1.5 rounded-full bg-muted/50 px-3 py-1">
                 <CheckCircle2 className="size-3.5" aria-hidden="true" />
-                Data stays on your machine
+                Local-first by default
               </span>
               <span className="inline-flex items-center gap-1.5 rounded-full bg-muted/50 px-3 py-1">
                 <CheckCircle2 className="size-3.5" aria-hidden="true" />

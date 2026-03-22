@@ -4,7 +4,7 @@
     "badgeHref": "https://github.com/fellanH/context-vault",
     "heading": "Your AI forgets everything between sessions",
     "accentWord": "everything",
-    "subtitle": "Context Vault gives it persistent memory. One command. Works with every tool you already use.",
+    "subtitle": "Context Vault gives it persistent memory that gets smarter over time. Local-first, works with every tool you already use.",
     "primaryCta": {
       "label": "Get started free",
       "href": "/get-started"
@@ -70,7 +70,7 @@
     {
       "iconName": "FileText",
       "title": "Persistent.",
-      "description": "Decisions, patterns, and conventions live in your vault forever — not just for today's session."
+      "description": "Decisions, patterns, and conventions live in your vault forever, not just for today's session."
     },
     {
       "iconName": "Zap",
@@ -80,12 +80,32 @@
     {
       "iconName": "Globe",
       "title": "Universal.",
-      "description": "One vault. Every editor. Save in Claude Code, retrieve in Cursor — context follows you, not the tool."
+      "description": "One vault. Every editor. Save in Claude Code, retrieve in Cursor. Context follows you, not the tool."
     },
     {
       "iconName": "Lock",
       "title": "Local-first.",
-      "description": "Plain markdown files on your machine. Upgrade to Pro for cloud sync when you need it."
+      "description": "Plain markdown on your machine by default. Upgrade to Pro for cloud sync when you need it."
+    },
+    {
+      "iconName": "BarChart3",
+      "title": "Recall tracking.",
+      "description": "Your vault learns what's useful. See which entries get retrieved, which stay dormant, and what matters most."
+    },
+    {
+      "iconName": "Users",
+      "title": "Team vaults.",
+      "description": "Share knowledge across your team. Onboarding context, architectural decisions, and project conventions in one place."
+    },
+    {
+      "iconName": "Brain",
+      "title": "Vault-brain.",
+      "description": "See your knowledge as a 3D neural network. Explore connections between entries and spot gaps in your context."
+    },
+    {
+      "iconName": "Bot",
+      "title": "Agent rules.",
+      "description": "Tell your agents what to save once. They learn your conventions and capture knowledge automatically after setup."
     }
   ],
   "faqs": [
@@ -94,7 +114,7 @@
       "items": [
         {
           "question": "What is Context Vault?",
-          "answer": "Context Vault is a local-first persistent memory layer for AI coding tools. It saves your decisions, patterns, and project context as plain markdown files, then automatically retrieves them in every new AI session. Free tier runs 100% on your machine. Pro adds cloud sync. Team adds shared vaults."
+          "answer": "Context Vault is a local-first persistent memory layer for AI coding tools. It saves your decisions, patterns, and project context as plain markdown files, then automatically retrieves them in every new AI session. Free tier runs entirely on your machine. Pro adds cloud sync and recall tracking. Team adds shared vaults."
         },
         {
           "question": "How long does setup take?",
