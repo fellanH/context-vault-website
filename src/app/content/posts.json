@@ -1,5 +1,105 @@
 [
   {
+    "slug": "three-data-categories-agent-memory",
+    "title": "Not All Memory is Created Equal: The Three Data Categories of Agent Memory",
+    "description": "Most agent memory systems treat everything the same. After a year running Context Vault in production, we discovered that data naturally falls into three categories, each demanding fundamentally different treatment.",
+    "category": "Architecture",
+    "publishedAt": "2026-03-22",
+    "readTimeMinutes": 12,
+    "ctaLabel": "Start free",
+    "ctaHref": "/register",
+    "sections": [
+      {
+        "heading": "The fundamental mistake",
+        "paragraphs": [
+          "Most agent memory systems make a fundamental mistake: they treat everything the same. An architectural insight about Express middleware ordering gets the same storage, the same embedding, and the same query path as a raw user prompt that says \"ok let's try it.\" Both get 1,536-dimensional vectors. Both compete in the same semantic search results. Both cost the same compute to index.",
+          "We built Context Vault as a local-first persistent memory layer for AI agents. After a year of running it in production across dozens of projects, one pattern became impossible to ignore: the data naturally falls into exactly three categories, and each category demands fundamentally different treatment at every layer of the stack.",
+          "This is not an abstract taxonomy. It emerged from observing a vault that grew to 3,178 files and a 331MB database, where 1,008 of those entries were raw user prompts that had no business being embedded or searched semantically. The categories are a discovery, not a design choice."
+        ]
+      },
+      {
+        "heading": "Knowledge: What You Learned",
+        "paragraphs": [
+          "Knowledge is the stuff worth remembering. Insights, decisions, patterns, references, debugging learnings, API quirks. When an agent discovers that Stripe webhook signature verification fails silently with Express 5's default body parser, that is knowledge. It is novel, actionable, and worth retrieving later.",
+          "Knowledge needs embeddings plus full-text search plus markdown files for storage. Semantic search is the right query model because the retrieval context (\"I'm having trouble with Stripe webhooks\") may not share exact keywords with the stored entry. You want fuzzy matching because the question framing varies every time.",
+          "Knowledge is what you share. It is the only category that cleanly maps to all three visibility tiers: private, team, and public. When you share knowledge with a team or the public, it makes a copy. The original stays in your private vault. Both copies track their own recall frequency independently."
+        ]
+      },
+      {
+        "heading": "Entities: What You Track",
+        "paragraphs": [
+          "Entities are things with stable identities. People, projects, tools, data sources. \"Johan at Stormfors, React developer, prefers Tailwind\" is an entity. So is \"Stripe: payment processing tool, API v2024-11-20, test mode key in 1Password.\"",
+          "Entities need key-value storage with relation edges. An entity has an identity_key that uniquely identifies it. You look up \"stripe\" by key, not by embedding similarity. \"Give me the entity for Stripe\" is an exact match, not a semantic search. \"What tools does this project use?\" is a graph walk from the project entity to its linked tool entities.",
+          "For sharing, entities use federation, not copying. When two team members both have a \"Stripe\" entity, the team vault merges them by identity_key into a single canonical entity. Metadata is merged field by field. This prevents five fragmented \"Stripe\" entries across team members."
+        ]
+      },
+      {
+        "heading": "Events: What Happened",
+        "paragraphs": [
+          "Events are historical records. Session logs, user prompts, activity streams, inbox items. They are append-only and time-ordered. \"User asked about auth middleware at 2:30 PM\" is an event.",
+          "Events need append-only, time-indexed storage. No embeddings. Events are rarely retrieved by semantic similarity; they are retrieved by time range or recency. \"What happened last week?\" and \"Show me the last 10 sessions\" are index scans, not vector searches.",
+          "Events are typically the highest-volume category. In our production vault, user prompts alone accounted for over 30% of all entries. Generating 1,536-dimensional embeddings for \"sounds good, let's do that\" is pure waste. Events are also structurally private: they never leave the device. Session history, prompt logs, and activity data stay local."
+        ]
+      },
+      {
+        "heading": "Why this matters: wasted compute",
+        "paragraphs": [
+          "The most immediate cost of treating all data uniformly is wasted embedding compute. In our vault at 3,178 files, excluding user prompts (1,008), activity logs (153), and inbox items (49) from indexing reduces the embedding table by roughly 38%. The database drops from about 331MB to about 130MB without deleting a single file. The files are still there. The markdown is still readable. The entries are still listable. They just do not have embeddings because they do not need them.",
+          "This is not a premature optimization. Embedding generation is the single most expensive operation in a vault system, both in compute and in database size. Skipping it for entries that will never be semantically searched is a straightforward win."
+        ]
+      },
+      {
+        "heading": "Why this matters: query precision",
+        "paragraphs": [
+          "When events and entities are mixed into the same semantic search index as knowledge, retrieval quality degrades. A search for \"express middleware\" might return a session log where someone mentioned Express in passing, ranking it alongside the actual insight about middleware ordering. The session log is noise. The insight is signal. Separating them by category means the search index contains only entries worth searching.",
+          "Entity lookups benefit even more. If you want the entity for \"Stripe,\" a key lookup on identity_key returns instantly with the exact result. Semantic search over the entire vault for \"Stripe\" returns the entity plus every insight, session log, and decision that mentions Stripe. The key lookup is faster, more precise, and cheaper."
+        ]
+      },
+      {
+        "heading": "Why this matters: privacy architecture",
+        "paragraphs": [
+          "The most consequential difference between the three categories is their sharing model. Knowledge participates in private, team, and public tiers via copy-based publishing. Entities participate in private and team tiers via federation on identity_key. Events are private only and never leave the device.",
+          "This matrix has a critical property: event privacy is structural, not filtered. The team and public databases physically do not contain event tables or data. There is no WHERE clause to get wrong. There is no ACL to misconfigure. There is no code path that could accidentally expose session history. The data simply is not there.",
+          "Compare this to a system that stores everything in one database and relies on row-level filtering for privacy. Every sharing feature, every API endpoint, every search query must correctly filter out events. One missed filter, one misapplied scope, and session history leaks. Structural privacy eliminates the entire class of bugs."
+        ]
+      },
+      {
+        "heading": "The architecture: from logical to physical separation",
+        "paragraphs": [
+          "In Context Vault v3.x, this separation is logical. All three categories live in the same SQLite database, but query paths are category-aware. Entity lookups use the identity_key index directly. Event queries use the scope: events parameter to hit the time index. Knowledge queries use the default semantic search path.",
+          "The selective indexing system enforces the storage difference: event-category entries default to indexed: false, meaning they get stored as markdown files and recorded in the database, but skip embedding generation entirely.",
+          "In v4, this separation becomes physical. Each category gets its own store. The Knowledge Store holds embeddings, FTS5, and markdown files, participating in private, team, and public scopes. The Entity Registry is a key-value store with relation edges, participating in private and team scopes. The Event Log is append-only and time-indexed, participating in private scope only.",
+          "Physical separation makes the privacy model trivially verifiable: if the team database does not have an events table, events cannot leak to the team. Cross-category queries fan out across stores. In the private vault, this means three local SQLite queries. In team scope, two queries. In public scope, one. The fan-out cost is bounded and decreases at higher visibility tiers."
+        ]
+      },
+      {
+        "heading": "Selective indexing: the proof",
+        "paragraphs": [
+          "The three-category model is not just theoretical. Selective indexing, shipped in Context Vault v3, is the practical proof that treating categories differently produces measurable improvements.",
+          "Before selective indexing, every save_context() call generated an embedding regardless of content. The result: a bloated database where a third of the embeddings were wasted on entries that would never be semantically searched.",
+          "After selective indexing, all entries are still stored as markdown files (the source of truth is preserved). Event-category entries skip embedding generation by default. The database drops by roughly 38% in size. Search results improve because the index only contains retrieval-worthy entries. No data is lost. list_context() still returns all entries, and reindex can retroactively apply or remove indexing rules.",
+          "The key insight is that storage and retrieval are separable concerns. Everything is worth storing. Not everything is worth indexing for retrieval."
+        ]
+      },
+      {
+        "heading": "Implications for agent memory systems",
+        "paragraphs": [
+          "Classify on write, not on read. When an entry is saved, determine its category immediately. This drives storage decisions (embed or not), privacy boundaries (shareable or not), and query routing (semantic search or key lookup or time scan). Trying to classify at read time means the wrong storage decisions have already been made.",
+          "Do not embed everything. Embedding generation is expensive and the resulting vectors are large. If an entry will only ever be retrieved by key lookup or time range, skip the embedding. You save compute, reduce database size, and improve search precision by keeping noise out of the index.",
+          "Make privacy structural. If a category of data should never be shared, do not put it in the shareable database and filter it out. Put it in a separate store that the sharing layer cannot access. The difference is between \"we filter correctly\" and \"there is nothing to leak.\"",
+          "Events are high-volume, low-retrieval. In our data, events accounted for over 30% of entries but less than 5% of retrievals (and most event retrievals were time-range scans, not semantic searches). Optimizing for this ratio by skipping embeddings and excluding from sync reduces costs without reducing utility."
+        ]
+      },
+      {
+        "heading": "Try it",
+        "paragraphs": [
+          "Context Vault is open source and available on npm. It runs entirely on your machine, stores your data as plain markdown files, and integrates with any MCP-compatible AI tool. Run npx context-vault setup to get started.",
+          "The three-category model is built into the core. Selective indexing works out of the box. Your events stay private, your entities stay canonical, and your knowledge stays searchable."
+        ]
+      }
+    ]
+  },
+  {
     "slug": "designing-kinds-tags-folders-for-long-term-memory-quality",
     "title": "Designing Kinds, Tags, and Folders for Long-Term Memory Quality",
     "description": "How to structure your vault taxonomy so retrieval stays precise as your knowledge base grows from dozens to thousands of entries.",
