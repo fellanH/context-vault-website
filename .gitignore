@@ -9,3 +9,5 @@ dist/
 .vercel
 public/apple-touch-startup-image-*.png
 .env*.local
+dist-ssr/
+.last-deploy

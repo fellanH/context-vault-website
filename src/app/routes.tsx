@@ -1,19 +1,7 @@
 import { createBrowserRouter } from 'react-router';
-import { MarketingLayout } from './components/MarketingLayout';
-import { LandingPage } from './pages/LandingPage';
-import { GetStartedPage } from './pages/GetStartedPage';
-import { BlogIndexPage } from './pages/BlogIndexPage';
-import { BlogPostPage } from './pages/BlogPostPage';
-import { PrivacyPage } from './pages/PrivacyPage';
-import { SupportPage } from './pages/SupportPage';
-import { TermsPage } from './pages/TermsPage';
-import { SectionsPage } from './pages/SectionsPage';
-import { PricingPage } from './pages/PricingPage';
-import { DocsIndexPage } from './pages/DocsIndexPage';
-import { DocsSetupPage } from './pages/DocsSetupPage';
-import { AgentRulesPage } from './pages/AgentRulesPage';
+import { routes } from './route-config';
 
-// Admin routes — only registered in dev; entire branch tree-shaken in prod
+// Admin routes -- only registered in dev; entire branch tree-shaken in prod
 const adminRoutes = import.meta.env.DEV
   ? [
       {
@@ -65,29 +53,16 @@ const adminRoutes = import.meta.env.DEV
                 Component: m.ImagesPage,
               })),
           },
+          {
+            path: 'patterns',
+            lazy: () =>
+              import('./pages/admin/PatternDemoPage').then((m) => ({
+                Component: m.PatternDemoPage,
+              })),
+          },
         ],
       },
     ]
   : [];
 
-export const router = createBrowserRouter([
-  {
-    path: '/',
-    Component: MarketingLayout,
-    children: [
-      { index: true, Component: LandingPage },
-      { path: 'get-started', Component: GetStartedPage },
-      { path: 'blog', Component: BlogIndexPage },
-      { path: 'blog/:slug', Component: BlogPostPage },
-      { path: 'privacy', Component: PrivacyPage },
-      { path: 'terms', Component: TermsPage },
-      { path: 'support', Component: SupportPage },
-      { path: 'pricing', Component: PricingPage },
-      { path: 'sections', Component: SectionsPage },
-      { path: 'docs', Component: DocsIndexPage },
-      { path: 'docs/setup', Component: DocsSetupPage },
-      { path: 'docs/agent-rules', Component: AgentRulesPage },
-    ],
-  },
-  ...adminRoutes,
-]);
+export const router = createBrowserRouter([...routes, ...adminRoutes]);

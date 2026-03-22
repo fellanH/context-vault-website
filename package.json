@@ -9,9 +9,11 @@
     "generate:favicons": "tsx scripts/generate-favicons.ts",
     "prebuild": "tsx scripts/generate-og.ts",
     "build": "vite build",
+    "build:ssr": "node scripts/prerender.mjs",
     "dev": "vite",
     "preview": "vite preview",
-    "deploy": "vite build && npx wrangler pages deploy dist --project-name context-vault-website --branch main --commit-dirty=true"
+    "deploy": "node scripts/prerender.mjs && npx wrangler pages deploy dist --project-name context-vault-website --branch main --commit-dirty=true",
+    "deploy:r2": "node scripts/prerender.mjs && node scripts/deploy-r2.mjs"
   },
   "dependencies": {
     "@radix-ui/react-alert-dialog": "^1.1.15",
