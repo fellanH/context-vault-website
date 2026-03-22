@@ -4,9 +4,9 @@ This file is the authoritative SOP for all agents and contributors working on
 this repository. Read it before starting any task.
 
 - **GitHub repo:** fellanH/context-vault-website
-- **Vercel project:** `context-vault-marketing` (scope: `klarhimmel`)
+- **Cloudflare Pages project:** `context-vault-website`
 - **Production domain:** context-vault.com
-- **Deploy:** `npm run deploy` (Vercel CLI, `--prod`)
+- **Deploy:** `npm run deploy` (SSR prerender + wrangler pages deploy)
 
 ---
 
@@ -16,7 +16,7 @@ this repository. Read it before starting any task.
 | ----------------- | --------------------------------------------------------------------------- |
 | Framework         | Vite 6 + React 18 + React Router 7                                          |
 | Styling           | Tailwind CSS 4, shadcn/ui, Radix UI                                         |
-| Deployment        | Vercel (CLI deploy, no CI pipeline)                                         |
+| Deployment        | Cloudflare Pages (wrangler CLI deploy, no CI pipeline)                      |
 | Analytics         | Google Tag Manager → GA4, Google Search Console, Microsoft Clarity, PostHog |
 | Email             | Resend                                                                      |
 | Social automation | n8n + Buffer + Claude API                                                   |
@@ -34,7 +34,7 @@ src/
     pages/         # Route-level page components
   styles/          # Global CSS (fonts, tailwind, theme)
 public/            # Static assets (robots.txt, sitemap.xml, og images)
-vercel.json        # Rewrites, headers, output config
+functions/         # Cloudflare Pages Functions (API/MCP proxy)
 ```
 
 ---
@@ -115,7 +115,7 @@ Set these up once and use them on every issue:
 | `growth`    | Distribution, listings, community   |
 | `social`    | Social media content and automation |
 | `bug`       | Something broken                    |
-| `infra`     | Vercel config, CI, build tooling    |
+| `infra`     | Cloudflare config, CI, build tooling |
 
 ---
 
@@ -146,20 +146,16 @@ git add <files>
 git commit -m "feat: ..."
 git push
 
-# 2. Deploy to Vercel production
+# 2. Deploy to Cloudflare Pages production
 npm run deploy
 ```
 
-`npm run deploy` runs `vite build && vercel --prod`.
+`npm run deploy` runs SSR prerender + `wrangler pages deploy`.
 
 ### Staging Before Production
 
-```bash
-npm run preview:deploy   # vite build && vercel (no --prod flag)
-```
-
-This produces a unique Vercel preview URL. Use it to review any change larger
-than a copy fix before running `npm run deploy`.
+Use Cloudflare Pages preview deployments for staging. Review the preview URL
+before running `npm run deploy`.
 
 ### Branch Naming
 
@@ -196,14 +192,13 @@ Closes #[issue number]
 
 ### CI (GitHub Actions)
 
-Runs on every PR — type-check and build only. No deployment from CI.
+Runs on every push/PR: build only. No deployment from CI.
 
 ```
-tsc --noEmit
-vite build
+npm run build
 ```
 
-Deployment always happens from the local CLI, never from CI.
+Deployment always happens from the local CLI via wrangler, never from CI.
 
 ### Release Tagging
 

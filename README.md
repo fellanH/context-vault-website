@@ -10,17 +10,10 @@ Standalone marketing website for Context Vault. Deployed to **context-vault.com*
 
 ## Deploy
 
-Vercel CLI to `klarhimmel/context-vault-marketing`. No CI pipeline.
+Cloudflare Pages via wrangler CLI. No CI deploy pipeline.
 
 ```bash
-npm run preview:deploy   # staging preview URL
-npm run deploy           # production → context-vault.com
-```
-
-If `.vercel/project.json` points to the wrong project, relink:
-
-```bash
-vercel link --scope klarhimmel --project context-vault-marketing --yes
+npm run deploy           # SSR prerender + wrangler pages deploy → context-vault.com
 ```
 
 ## Routes
@@ -36,23 +29,23 @@ vercel link --scope klarhimmel --project context-vault-marketing --yes
 ```bash
 npm install
 npm run dev      # Vite dev server
-npm run build    # production build
+npm run build    # production build (client only)
+npm run build:ssr  # SSR prerender (client + server + static HTML)
 ```
 
 ---
 
-## Vercel Configuration (`vercel.json`)
+## Cloudflare Pages Configuration
 
 | Setting          | Value                                            |
 | ---------------- | ------------------------------------------------ |
 | Output directory | `dist`                                           |
-| SPA fallback     | `/*` → `/index.html`                             |
-| API proxy        | `/api/*` → `https://api.context-vault.com/api/*` |
-| MCP proxy        | `/mcp` → `https://api.context-vault.com/mcp`     |
-| Asset cache      | `public, max-age=31536000, immutable`            |
+| Functions        | `functions/` (API and MCP proxy)                 |
+| API proxy        | `/api/*` via Cloudflare Pages Function            |
+| MCP proxy        | `/mcp` via Cloudflare Pages Function              |
 
 ## Environment Variables
 
-| Variable            | Purpose                                              | Where set                                           |
-| ------------------- | ---------------------------------------------------- | --------------------------------------------------- |
-| `VITE_APP_BASE_URL` | Base URL for app conversion links (e.g. `/register`) | `.env.local` (dev) / Vercel project settings (prod) |
+| Variable            | Purpose                                              | Where set                            |
+| ------------------- | ---------------------------------------------------- | ------------------------------------ |
+| `VITE_APP_BASE_URL` | Base URL for app conversion links (e.g. `/register`) | `.env.local` (dev) / CF Pages (prod) |
