@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Check, Copy, ArrowRight, History } from 'lucide-react';
+import { Check, Copy, ArrowRight, History, Pencil, Trash2 } from 'lucide-react';
 import { Link } from 'react-router';
 import { PageHead } from '../components/PageHead';
 import { Badge } from '@/components/ui/badge';
@@ -51,6 +51,54 @@ Every entry must have:
 - \`tags\`: at minimum a \`bucket:<project>\` tag for scoping
 - \`kind\`: insight, pattern, reference, decision, or event
 - \`tier\`: \`working\` for active context, \`durable\` for long-term reference
+
+Capture what was learned (the insight), why it matters (what problem it prevents), and when it applies (what context makes it relevant).
+
+## Session Review
+
+At the end of significant work sessions, review what you learned. If the session produced novel knowledge (not every session does), save 1-3 consolidated entries. Prefer one solid entry over multiple fragments.`;
+
+const STANDALONE_PROMPT = `You have access to a persistent knowledge vault via MCP tools (\`get_context\`, \`save_context\`, \`list_context\`, \`delete_context\`). Use it to build lasting memory across sessions. Follow these guidelines to use the vault effectively.
+
+## When to Retrieve
+
+Check the vault when you're about to invest effort that past knowledge could shortcut. Apply this test: "Might I or a previous session have encountered this before?" If yes, search first.
+
+Retrieval triggers:
+- Starting a session: call session_start() or get_context(query: "<project or task context>") to load relevant prior knowledge
+- Hitting an error: search for the error message or root cause before debugging from scratch
+- Making a decision: check if this architectural or design choice was already made and why
+- Integrating with an API, library, or service: search for known quirks, gotchas, or working patterns
+- Entering an unfamiliar area of the codebase: check for prior insights about that module or domain
+- Before saving: search to avoid duplicates and to update existing entries instead
+
+A vault search takes milliseconds. Debugging from scratch takes minutes. Always check first.
+
+## When to Save
+
+Save when you encounter something a future session would benefit from knowing. Apply this test: "Would I tell a colleague about this to save them time?" If yes, save it.
+
+Save triggers:
+- Solved a non-obvious bug (root cause was not apparent from the error)
+- Discovered undocumented API/library/tool behavior
+- Found a working integration pattern requiring non-obvious configuration
+- Hit a framework limitation and found a workaround
+- Made an architectural decision with tradeoffs worth preserving
+
+## When NOT to Save
+
+- Facts derivable from reading the current code or git history
+- The fix itself (that belongs in the commit, not the vault)
+- Generic programming knowledge the model already knows
+- Session-specific state (files edited, commands run)
+
+## How to Save
+
+Every entry must have:
+- title: clear, specific (not "auth fix" but "Express 5 raw body parser breaks Stripe webhook verification")
+- tags: at minimum a bucket:<project> tag for scoping
+- kind: insight, pattern, reference, decision, or event
+- tier: working for active context, durable for long-term reference
 
 Capture what was learned (the insight), why it matters (what problem it prevents), and when it applies (what context makes it relevant).
 
@@ -377,6 +425,62 @@ export function AgentRulesPage() {
           </p>
         </section>
 
+        {/* Customization */}
+        <section className="space-y-4">
+          <div className="flex items-center gap-2">
+            <Pencil className="h-4 w-4 text-muted-foreground" />
+            <h2 className="text-lg font-semibold">Customization</h2>
+          </div>
+          <p className="text-sm text-muted-foreground">
+            The rules file is plain markdown. You can edit it after installation to match your workflow:
+          </p>
+          <ul className="space-y-2 text-sm text-muted-foreground list-disc pl-5">
+            <li>Add project-specific save triggers (e.g., "always save when working with the payments module")</li>
+            <li>Adjust retrieval triggers to match your domain</li>
+            <li>Add custom "When NOT to Save" entries to reduce noise</li>
+          </ul>
+          <p className="text-sm text-muted-foreground">
+            For Claude Code and Cursor, edit the file directly at the path shown by{' '}
+            <code className="text-foreground bg-muted px-1 rounded text-xs">context-vault rules path</code>.
+            For Windsurf, edit the section between the{' '}
+            <code className="text-foreground bg-muted px-1 rounded text-xs">{'<!-- context-vault agent rules -->'}</code>{' '}
+            delimiters in <code className="text-foreground bg-muted px-1 rounded text-xs">~/.windsurfrules</code>.
+          </p>
+          <div className="rounded-md border border-yellow-500/20 bg-yellow-500/5 px-5 py-4 text-sm space-y-1">
+            <p className="font-medium text-foreground">Note</p>
+            <p className="text-muted-foreground">
+              Running <code className="text-foreground bg-muted px-1 rounded">context-vault rules install</code> or{' '}
+              <code className="text-foreground bg-muted px-1 rounded">context-vault setup --upgrade</code> will
+              overwrite your customizations. If you have changes you want to keep, back up the file before
+              upgrading, or skip the rules step during setup with{' '}
+              <code className="text-foreground bg-muted px-1 rounded">--no-rules</code>.
+            </p>
+          </div>
+        </section>
+
+        {/* Uninstalling */}
+        <section className="space-y-4">
+          <div className="flex items-center gap-2">
+            <Trash2 className="h-4 w-4 text-muted-foreground" />
+            <h2 className="text-lg font-semibold">Uninstalling</h2>
+          </div>
+          <p className="text-sm text-muted-foreground">
+            Rules are removed when you uninstall context-vault:
+          </p>
+          <div className="rounded-lg border border-border bg-muted/20 overflow-hidden">
+            <div className="flex items-center justify-between px-4 py-2.5 border-b border-border bg-muted/40">
+              <span className="text-xs text-muted-foreground">Remove all context-vault files</span>
+              <CopyButton text="context-vault uninstall" />
+            </div>
+            <pre className="px-4 py-3 text-sm font-mono text-muted-foreground">context-vault uninstall</pre>
+          </div>
+          <p className="text-xs text-muted-foreground">
+            This removes the Claude Code and Cursor rules files entirely, and strips the delimited
+            section from <code className="text-foreground bg-muted px-1 rounded">.windsurfrules</code>{' '}
+            (preserving any other content in that file).
+          </p>
+        </section>
+
         {/* Agent-assisted setup prompt */}
         <section className="space-y-4">
           <h2 className="text-lg font-semibold">Agent-assisted setup</h2>
@@ -401,6 +505,25 @@ export function AgentRulesPage() {
             projects, proposes vault bucket configuration, and resolves conflicts with existing
             rules.
           </p>
+        </section>
+
+        {/* Standalone prompt for non-CLI users */}
+        <section className="space-y-4">
+          <h2 className="text-lg font-semibold">Standalone prompt (no CLI required)</h2>
+          <p className="text-sm text-muted-foreground">
+            If you cannot run <code className="text-foreground bg-muted px-1 rounded text-xs">context-vault setup</code> or
+            prefer not to install files, copy this self-contained prompt into your AI tool's system prompt or
+            chat session. It includes the full agent rules and works with any MCP-compatible client.
+          </p>
+          <div className="rounded-lg border border-border bg-muted/20 overflow-hidden">
+            <div className="flex items-center justify-between px-4 py-2.5 border-b border-border bg-muted/40">
+              <span className="text-xs text-muted-foreground font-mono">standalone-prompt.md</span>
+              <CopyButton text={STANDALONE_PROMPT} label="Copy prompt" />
+            </div>
+            <pre className="p-5 text-xs leading-relaxed overflow-x-auto text-muted-foreground whitespace-pre-wrap font-mono max-h-64 overflow-y-auto">
+              {STANDALONE_PROMPT}
+            </pre>
+          </div>
         </section>
 
         <div className="flex items-center gap-3 pt-4 border-t border-border">
