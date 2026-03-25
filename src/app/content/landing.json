@@ -144,7 +144,7 @@
       "items": [
         {
           "question": "Is the free tier really free forever?",
-          "answer": "Yes. The local vault is MIT-licensed, runs on your machine, and has no limits on entries. Free tier will always exist. Pro ($9/mo) and Team ($29/mo + $9/seat) are optional upgrades for hosted features."
+          "answer": "Yes. The free tier includes 10K hosted entries, 1 GB storage, and 5,000 requests/day with no credit card required. Or run fully local with no account at all. Pro ($9/mo) and Team ($29/mo + $9/seat) add more capacity and team features."
         },
         {
           "question": "What do Pro and Team add?",
